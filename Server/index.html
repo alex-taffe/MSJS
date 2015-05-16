@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MSJS</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/demo.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+	
+	<div class="container">
+		<div id="large-header" class="large-header">
+			<canvas id="demo-canvas"></canvas>
+			<h1>MSJS</h1>
+			<div class="titleContainer">
+
+				<h2>I am a...</h2>
+				<div class="iAmAContainer">
+					<button class="iAmAButton" data-target="#loginModal" data-toggle="modal">Teacher</button>
+					<button class="iAmAButton">Student</button>
+				</div>
+			</div>
+
+			<!-- Teacher login modal -->
+			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="loginModalLabel">Teacher Login</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<input type="email" placeholder="Email" class="loginEmail">
+								<input type="password" placeholder="Password" class="loginPassword"><br>
+								<div class="loginButtonContainer">
+									<button type="button" class="loginLogin">Login</button><button type="button" class="loginRegister">Register</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/TweenLite.min.js"></script>
+		<script src="js/EasePack.min.js"></script>
+		<script src="js/demo-3.js"></script>
+	</body>
+	</html>

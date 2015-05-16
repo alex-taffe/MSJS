@@ -1,0 +1,144 @@
+body{
+	background-color: #08E5CA;
+}
+h1{
+	text-align:center;
+	font-family: 'Raleway', sans-serif;
+	color:white;
+	font-size: 4vw;
+	margin-bottom: 0px;
+	color:#FF5409;
+	text-shadow: 2px 2px 5px #B23903;
+}
+h2{
+	text-align:center;
+	font-family: 'Raleway', sans-serif;
+	color:white;
+	font-size: 2.6vw;
+	margin-top: 5px;
+}
+.iAmAContainer,.loginButtonContainer{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	
+}
+.titleContainer{
+	background-color: rgba(0,0,0,0.3);
+	width:30%;
+	border-radius: 5px;
+}
+.iAmAButton{
+	text-align: center;
+	background-color: rgba(255,255,255,0.95);
+	outline: 0;
+	border: 0;
+	width:175px;
+	height: 75px;
+	border-radius: 5px;
+	border:1px solid #FF3100;
+	margin-bottom: 10px;
+	font-family: 'Raleway', sans-serif;
+	font-size: 200%;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+canvas{
+	float:left;
+	width:100%;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: -1;
+}
+.titleContainer{
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%); /* IE 9 */
+	-webkit-transform: translateY(-50%); /* Safari */
+	transform: translateY(-50%);
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+}
+.loginEmail, .loginPassword{
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	height:30px;
+	width: 50%;
+	margin-bottom: 15px;
+	border:none;
+	border-bottom:1px solid #FF3100;
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	background-size: 15px auto;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 20px;
+	-webkit-transition: width 5s; /* Safari */
+    transition: width 5s;
+    font-family: 'Raleway', sans-serif;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+
+.loginEmail{
+	background-image: url('../img/login_avatar.svg');
+}
+
+.loginPassword{
+	background-image: url('../img/login_password.svg');
+}
+
+.loginEmail:focus{
+	background-image: url('../img/login_avatar_focus.svg');
+}
+.loginPassword:focus{
+	background-image: url('../img/login_password_focus.svg');
+}
+
+
+.loginEmail:focus,.loginPassword:focus {
+	outline: none;
+	box-shadow: 0px 2px 1px -2px #FF3100;
+}
+
+.loginLogin,.loginRegister{
+	text-align: center;
+	background-color: rgba(255,255,255,0.95);
+	outline: 0;
+	border: 0;
+	width:140px;
+	height: 45px;
+	border-radius: 5px;
+	border:1px solid #FF3100;
+	margin-bottom: 10px;
+	font-family: 'Raleway', sans-serif;
+	font-size: 200%;
+	margin-left: 10px;
+	margin-right: 10px;
+	-webkit-transition: width 5s; /* Safari */
+    transition: width 5s;
+}
+.loginLogin:hover,.loginRegister:hover{
+color: #FF3100;
+}
+.close{
+	
+}
