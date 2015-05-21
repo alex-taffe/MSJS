@@ -12,11 +12,14 @@
 </head>
 <body>
 
+	<canvas id="demo-canvas"></canvas>
+	<div id="panelNav"></div>
 	
 	<div class="container">
 		<div id="large-header" class="large-header">
-			<canvas id="demo-canvas"></canvas>
-			<h1>MSJS</h1>
+			
+<h1 class="link link--surinami"><span data-letters-l="MS" data-letters-r="JS">MSJS</span></h1><br>
+			
 			<div class="titleContainer">
 
 				<h2>I am a...</h2>
@@ -52,5 +55,21 @@
 		<script src="js/TweenLite.min.js"></script>
 		<script src="js/EasePack.min.js"></script>
 		<script src="js/demo-3.js"></script>
+		<script>
+			$(document).ready(function() {
+				$(".loginLogin").click(function() {
+					$('#loginModal').modal('hide');
+					$('#loginModal').on('hidden.bs.modal', function (e) {
+						var filterVal = 'blur(5px)';
+						$("#demo-canvas").css('filter',filterVal).css('-webkit-filter',filterVal).css('-moz-filter',filterVal).css('-o-filter',filterVal).css('-ms-filter',filterVal);
+						$(".container").load("panel.html", function() {
+						});
+						$("#panelNav").load("panel-nav.html", function() {
+						});
+					})
+					
+				});
+			});
+		</script>
 	</body>
 	</html>

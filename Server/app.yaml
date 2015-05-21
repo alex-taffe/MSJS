@@ -1,0 +1,28 @@
+application: sodium-pathway-93914
+version: 1
+runtime: php55
+api_version: 1
+module: default
+
+handlers:
+
+- url: /css
+  static_dir: css
+
+- url: /img
+  static_dir: img
+
+- url: /js
+  static_dir: js
+
+- url: /fonts
+  static_dir: fonts
+
+- url: /
+  script: index.html
+
+- url: /panel\.html
+  script: panel.html
+  
+- url: /panel-nav\.html
+  script: panel-nav.html

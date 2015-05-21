@@ -1,0 +1,87 @@
+<style type="text/css">
+#panelNav{
+  height: 100%;
+}
+	@media (min-width: 768px) {
+  .navbar-collapse {
+    height: auto;
+    border-top: 0;
+    box-shadow: none;
+    max-height: none;
+    padding-left:0;
+    padding-right:0;
+  }
+  .navbar-collapse.collapse {
+    display: block !important;
+    width: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+  .navbar-collapse.in {
+    overflow-x: visible;
+  }
+
+.navbar
+{
+	max-width:300px;
+	margin-right: 0;
+	margin-left: 0;
+  height:100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}	
+.link--surinami{
+  display: inline-block;
+}
+
+.container{
+  display: inline-block;
+  width: 40%;
+}
+
+.navbar-nav,
+.navbar-nav > li,
+.navbar-left,
+.navbar-right,
+.navbar-header
+{float:none !important;}
+
+.navbar-right .dropdown-menu {left:0;right:auto;}
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+}
+.navbar-brand{
+  color:white !important;
+  text-align: center;
+  font-size: 2.3em;
+}
+ul.navbar-nav li a{
+  color:white !important;
+  font-size: 2em;
+}
+ul.navbar-nav li.active a{
+  color:gray !important;
+}
+</style>
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">MSJS</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">My Classes</a></li>
+      <li><a href="#">Statistics</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#">Account</a></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
