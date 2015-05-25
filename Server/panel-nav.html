@@ -1,87 +1,152 @@
 <style type="text/css">
-#panelNav{
-  height: 100%;
-}
-	@media (min-width: 768px) {
-  .navbar-collapse {
-    height: auto;
-    border-top: 0;
-    box-shadow: none;
-    max-height: none;
-    padding-left:0;
-    padding-right:0;
-  }
-  .navbar-collapse.collapse {
-    display: block !important;
-    width: auto !important;
-    padding-bottom: 0;
-    overflow: visible !important;
-  }
-  .navbar-collapse.in {
-    overflow-x: visible;
-  }
-
-.navbar
-{
-	max-width:300px;
-	margin-right: 0;
-	margin-left: 0;
-  height:100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}	
-.link--surinami{
-  display: inline-block;
-}
-
-.container{
-  display: inline-block;
-  width: 40%;
-}
-
-.navbar-nav,
-.navbar-nav > li,
-.navbar-left,
-.navbar-right,
-.navbar-header
-{float:none !important;}
-
-.navbar-right .dropdown-menu {left:0;right:auto;}
-.navbar-collapse .navbar-nav.navbar-right:last-child {
-    margin-right: 0;
-}
-}
-.navbar-brand{
-  color:white !important;
-  text-align: center;
-  font-size: 2.3em;
-}
-ul.navbar-nav li a{
-  color:white !important;
-  font-size: 2em;
-}
-ul.navbar-nav li.active a{
-  color:gray !important;
-}
+    #panelNav {
+        height: 100%;
+    }
+    
+    @media (min-width: 768px) {
+        .navbar-collapse {
+            height: auto;
+            border-top: 0;
+            box-shadow: none;
+            max-height: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .navbar-collapse.collapse {
+            display: block !important;
+            width: auto !important;
+            padding-bottom: 0;
+            overflow: visible !important;
+        }
+        .navbar-collapse.in {
+            overflow-x: visible;
+        }
+        .navbar {
+            max-width: 300px;
+            margin-right: 0;
+            margin-left: 0;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .link--surinami {
+            display: inline-block;
+        }
+        .container {
+            width: 83%;
+            -webkit-transform: translateY(-120px);
+            -moz-transform: translateY(-120px);
+            -ms-transform: translateY(-120px);
+            -o-transform: translateY(-120px);
+            transform: translateY(-120px);
+            display: inline-block;
+        }
+        .navbar-nav,
+        .navbar-nav > li,
+        .navbar-left,
+        .navbar-right,
+        .navbar-header {
+            float: none !important;
+        }
+        .navbar-right .dropdown-menu {
+            left: 0;
+            right: auto;
+        }
+        .navbar-collapse .navbar-nav.navbar-right:last-child {
+            margin-right: 0;
+        }
+    }
+    
+    .navbar-brand {
+        color: white !important;
+        font-size: 2.3em;
+        float: none !important;
+        display: inline-block;
+    }
+    
+    ul.navbar-nav li a {
+        color: white !important;
+        font-size: 2em;
+    }
+    
+    ul.navbar-nav li.active a {
+        color: black !important;
+    }
+    
+    .navbar-nav li a svg {
+        max-width: 15px;
+        margin-right: 10px;
+        max-height: 15px;
+    }
+    
+    .navbar-nav li a svg path {
+        fill: white;
+    }
+    
+    .navbar-nav li.active a svg path {
+        fill: black;
+    }
+    
+    h1.link--surinami span {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        -webkit-transform: translateX(86%);
+        -moz-transform: translateX(86%);
+        -ms-transform: translateX(86%);
+        -o-transform: translateX(86%);
+        transform: translateX(86%);
+    }
+    
+    div.navbar-header {
+        text-align: center;
+    }
+    nav.navbar.navbar-default{
+        border:none !important;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+    }
 </style>
 <nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">MSJS</a>
-  </div>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">MSJS</a>
+    </div>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">My Classes</a></li>
-      <li><a href="#">Statistics</a></li>
-      <li><a href="#">Settings</a></li>
-      <li><a href="#">Account</a></li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="612" height="612" viewBox="0 0 612 612" xml:space="preserve">
+                        <path d="M578.8 51.5v-0.9h-3H35.9h-3v0.9C15.3 52.7 2.1 66.8 0 83.8v3 355.7c0 6.9 1.8 12.7 4.8 17.9 6.9 12.1 17.1 18.3 31.1 18.3h197v49.7h-37.4c-9.3 0-16.5 7.2-16.5 16.5 0 9.3 7.2 16.5 16.5 16.5h220.7c9.3 0 16.8-7.2 16.8-16.5 0-9.3-7.5-16.5-16.8-16.5h-37.4v-49.7H575.8c14.1 0 24.3-6.1 31.1-18.3 3.1-5.5 5.1-11.4 5.1-17.9V86.8v-3C609.9 66.8 595.8 52.7 578.8 51.5zM578.8 86.8v355.7c0 2.1-0.9 3-3 3H35.9c-2.1 0-3-0.9-3-3V86.8v-3h545.8V86.8z" />
+                    </svg><span>My Classes</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 525.2 525.2" xml:space="preserve">
+                        <path d="M196.9 525.2H328.2V0H196.9V525.2zM0 525.2h131.3V262.6H0V525.2zM393.9 164.1v361h131.3V164.1H393.9z" />
+                    </svg><span>Statistics</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 268.8 268.8" xml:space="preserve">
+                        <path d="M267.9 119.5c-0.4-3.8-4.8-6.6-8.6-6.6 -12.3 0-23.2-7.2-27.8-18.4 -4.7-11.5-1.7-24.8 7.5-33.2 2.9-2.6 3.2-7.1 0.8-10.1 -6.3-8-13.5-15.2-21.3-21.5 -3.1-2.5-7.6-2.1-10.2 0.8 -8 8.9-22.4 12.2-33.5 7.5 -11.6-4.9-18.9-16.6-18.2-29.2 0.2-4-2.7-7.4-6.6-7.8 -10-1.2-20.2-1.2-30.2-0.1 -3.9 0.4-6.8 3.8-6.7 7.7 0.4 12.5-6.9 24-18.4 28.7 -11 4.5-25.3 1.2-33.3-7.6 -2.6-2.9-7.1-3.3-10.1-0.9 -8.1 6.3-15.4 13.6-21.7 21.5 -2.5 3.1-2.1 7.6 0.8 10.2 9.4 8.5 12.4 21.9 7.5 33.5 -4.6 11-16.1 18.2-29.2 18.2 -4.3-0.1-7.3 2.7-7.8 6.6 -1.2 10.1-1.2 20.4-0.1 30.6 0.4 3.8 5 6.6 8.8 6.6 11.7-0.3 22.9 6.9 27.7 18.4 4.7 11.5 1.7 24.8-7.5 33.2 -2.9 2.6-3.2 7.1-0.8 10.1 6.2 8 13.4 15.2 21.3 21.5 3.1 2.5 7.6 2.1 10.2-0.8 8-8.9 22.4-12.2 33.5-7.5 11.6 4.9 18.9 16.6 18.2 29.2 -0.2 4 2.7 7.4 6.6 7.9 5.1 0.6 10.3 0.9 15.5 0.9 4.9 0 9.8-0.3 14.8-0.8 3.9-0.4 6.8-3.8 6.7-7.7 -0.5-12.5 6.9-24 18.4-28.7 11.1-4.5 25.3-1.2 33.3 7.6 2.7 2.9 7 3.2 10.1 0.8 8-6.3 15.3-13.5 21.7-21.5 2.5-3.1 2.1-7.6-0.8-10.2 -9.4-8.5-12.4-21.9-7.5-33.5 4.6-10.9 15.6-18.2 27.5-18.2l1.7 0c3.9 0.3 7.4-2.7 7.9-6.6C269 139.9 269.1 129.6 267.9 119.5zM134.6 179.5c-24.7 0-44.8-20.1-44.8-44.8 0-24.7 20.1-44.8 44.8-44.8 24.7 0 44.8 20.1 44.8 44.8C179.4 159.4 159.3 179.5 134.6 179.5z" />
+                    </svg><span>Settings</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="512" height="512" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                        <path d="M311.4 351.4c-11.1-1.8-11.3-32.2-11.3-32.2s32.5-32.2 39.6-75.4c19 0 30.8-46 11.8-62.1C352.2 164.6 375.9 48 256 48s-96.2 116.6-95.4 133.7c-19 16.2-7.3 62.1 11.8 62.1 7.1 43.2 39.6 75.4 39.6 75.4s-0.3 30.4-11.3 32.2C165 357 32 415.7 32 480h224 224C480 415.7 347 357 311.4 351.4z" />
+                    </svg><span>Account</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
 </nav>
