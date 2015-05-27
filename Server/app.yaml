@@ -20,6 +20,15 @@ handlers:
 
 - url: /
   script: index.html
+  
+- url: /register
+  script: register.php
+  
+- url: /user_dump
+  script: user_dump.php
+  
+- url: /test-login
+  script: test-login.php
 
 - url: /panel\.html
   script: panel.html
