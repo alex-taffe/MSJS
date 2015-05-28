@@ -27,9 +27,6 @@ handlers:
 - url: /login
   script: login.php
   
-- url: /user_dump
-  script: user_dump.php
-  
 - url: /test-login
   script: test-login.php
   
