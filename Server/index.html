@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/demo.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/loaders.min.css">
 </head>
 
 <body>
@@ -42,7 +43,8 @@
                         </div>
                         <div class="modal-body">
                             <div id="loginAlert"></div>
-                            <form>
+                            <div id="loginLoader" class="loader" style="visibility:hidden"><div class="loader-inner ball-scale-ripple-multiple"><div></div><div></div><div></div></div></div>
+                            <form id="loginForm">
                                 <input name="email" id="email" type="email" placeholder="Email" class="loginEmail">
                                 <input name="password" id="password" type="password" placeholder="Password" class="loginPassword">
                                 <br>
@@ -67,7 +69,8 @@
                         <div class="modal-body">
                             <h4 class="passwordConfirm">Please confirm your password</h4>
                             <div id="registerAlert"></div>
-                            <form>
+                            <div id="registerLoader" class="loader" style="visibility:hidden"><div class="loader-inner ball-scale-ripple-multiple"><div></div><div></div><div></div></div></div>
+                            <form id="registerForm">
                                 <input name="password2" id="password2" type="password" placeholder="Password" class="loginPassword">
                                 <br>
                                 <div class="g-recaptcha" data-sitekey="6LfjXAcTAAAAADwKNboGYMSuig01jWJE4Lk3kQR5"></div>
@@ -103,6 +106,9 @@
     <script>
         $(document).ready(function () {
             function login() {
+                $("#loginAlert").html('');
+                $("#loginForm").css("visibility","hidden");
+                $("#loginLoader").css("visibility","visible");
                 $.post("login", {
                         email: $("#email").val(),
                         password: $("#password").val()
@@ -119,12 +125,17 @@
                             })
                         } else {
                             $("#loginAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + loginInfo.message + '</div>');
-                            ($"#password").val("");
+                            $("#password").val("");
+                            $("#loginForm").css("visibility","visible");
+                            $("#loginLoader").css("visibility","hidden");
                         }
                     });
             }
 
             function register() {
+                $("#registerAlert").html('');
+                $("#registerForm").css("visibility","hidden");
+                $("#registerLoader").css("visibility","visible");
                 $.post("register", {
                         email: $("#email").val(),
                         password: $("#password").val(),
@@ -140,8 +151,10 @@
                             });
                         } else {
                             $("#registerAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + registerInfo.message + '</div>');
-                            ($"#password").val("");
-                            ($"#password2").val("");
+                            $("#password").val("");
+                            $("#password2").val("");
+                            $("#registerForm").css("visibility","visible");
+                            $("#registerLoader").css("visibility","hidden");
                         }
                     });
             }
