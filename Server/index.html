@@ -31,7 +31,7 @@
                     <button class="iAmAButton" data-target="#loginModal" data-toggle="modal">Teacher</button>
                 </div>
             </div>
- <!-- Teacher login modal -->
+            <!-- Teacher login modal -->
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -41,9 +41,10 @@
                             <h4 class="modal-title" id="loginModalLabel">Teacher Login</h4>
                         </div>
                         <div class="modal-body">
+                            <div id="loginAlert"></div>
                             <form>
-                                <input type="email" placeholder="Email" class="loginEmail">
-                                <input type="password" placeholder="Password" class="loginPassword">
+                                <input name="email" id="email" type="email" placeholder="Email" class="loginEmail">
+                                <input name="password" id="password" type="password" placeholder="Password" class="loginPassword">
                                 <br>
                                 <div class="loginButtonContainer">
                                     <button type="button" class="loginLogin">Login</button>
@@ -65,14 +66,15 @@
                         </div>
                         <div class="modal-body">
                             <h4 class="passwordConfirm">Please confirm your password</h4>
+                            <div id="registerAlert"></div>
                             <form>
-                                <input type="password" placeholder="Password" class="loginPassword">
+                                <input name="password2" id="password2" type="password" placeholder="Password" class="loginPassword">
                                 <br>
                                 <div class="g-recaptcha" data-sitekey="6LfjXAcTAAAAADwKNboGYMSuig01jWJE4Lk3kQR5"></div>
                                 <br>
                                 <div class="loginButtonContainer">
                                     <button type="button" class="loginClose" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="loginRegister">Register</button>
+                                    <button type="button" class="loginRegister" id="registerFinal">Register</button>
                                 </div>
                             </form>
                         </div>
@@ -97,18 +99,57 @@
     <script src="js/TweenLite.min.js"></script>
     <script src="js/EasePack.min.js"></script>
     <script src="js/demo-3.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <script>
         $(document).ready(function () {
-            $(".loginLogin").click(function () {
-                $('#loginModal').modal('hide');
-                $('#loginModal').on('hidden.bs.modal', function (e) {
-                    var filterVal = 'blur(5px)';
-                    $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
-                    $(".container").load("panel.html", function () {});
-                    $("#panelNav").load("panel-nav.html", function () {});
-                })
+            function login() {
+                $.post("login", {
+                        email: $("#email").val(),
+                        password: $("#password").val()
+                    })
+                    .done(function (data) {
+                        var loginInfo = jQuery.parseJSON(data);
+                        if (loginInfo.errorCode == 200) {
+                            $('#loginModal').modal('hide');
+                            $('#loginModal').on('hidden.bs.modal', function (e) {
+                                var filterVal = 'blur(5px)';
+                                $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
+                                $(".container").load("panel.html", function () {});
+                                $("#panelNav").load("panel-nav.html", function () {});
+                            })
+                        } else {
+                            $("#loginAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + loginInfo.message + '</div>');
+                            ($"#password").val("");
+                        }
+                    });
+            }
 
+            function register() {
+                $.post("register", {
+                        email: $("#email").val(),
+                        password: $("#password").val(),
+                        password2: $("#password2").val(),
+                        "g-recaptcha-response": grecaptcha.getResponse()
+                    })
+                    .done(function (data) {
+                        var registerInfo = jQuery.parseJSON(data);
+                        if (registerInfo.errorCode == 200) {
+                            $('#registerModal').modal('hide');
+                            $('#registerModal').on('hidden.bs.modal', function (e) {
+                                login();
+                            });
+                        } else {
+                            $("#registerAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + registerInfo.message + '</div>');
+                            ($"#password").val("");
+                            ($"#password2").val("");
+                        }
+                    });
+            }
+            $(".loginLogin").click(function () {
+                login();
+            });
+            $("#registerFinal").click(function () {
+                register();
             });
         });
     </script>
