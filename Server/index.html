@@ -68,6 +68,8 @@
                             <form>
                                 <input type="password" placeholder="Password" class="loginPassword">
                                 <br>
+                                <div class="g-recaptcha" data-sitekey="6LfjXAcTAAAAADwKNboGYMSuig01jWJE4Lk3kQR5"></div>
+                                <br>
                                 <div class="loginButtonContainer">
                                     <button type="button" class="loginClose" data-dismiss="modal">Cancel</button>
                                     <button type="button" class="loginRegister">Register</button>
@@ -95,6 +97,7 @@
     <script src="js/TweenLite.min.js"></script>
     <script src="js/EasePack.min.js"></script>
     <script src="js/demo-3.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
         $(document).ready(function () {
             $(".loginLogin").click(function () {

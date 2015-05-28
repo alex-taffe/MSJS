@@ -159,7 +159,7 @@ canvas {
 
 .loginLogin,
 .loginRegister,
-.loginClose{
+.loginClose {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.95);
     outline: 0;
@@ -185,12 +185,11 @@ canvas {
 
 .loginLogin:hover,
 .loginRegister:hover,
-.loginClose:hover{
+.loginClose:hover {
     color: #FF3100;
 }
 
 .close {}
-
 
 #panelNav {
     width: 16%;
@@ -236,9 +235,16 @@ canvas {
     color: rgb(98, 98, 98);
     width: 100%;
 }
-.footer span{
+
+.footer span {
     font-size: 15px;
 }
-.passwordConfirm{
+
+.passwordConfirm {
     text-align: center;
+}
+
+.g-recaptcha div div{
+    margin-left: auto;
+    margin-right: auto;
 }

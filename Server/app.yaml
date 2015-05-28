@@ -23,12 +23,18 @@ handlers:
   
 - url: /register
   script: register.php
+
+- url: /login
+  script: login.php
   
 - url: /user_dump
   script: user_dump.php
   
 - url: /test-login
   script: test-login.php
+  
+- url: /test-register
+  script: test-register.php
 
 - url: /panel\.html
   script: panel.html
