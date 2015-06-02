@@ -38,3 +38,15 @@ handlers:
   
 - url: /panel-nav\.html
   script: panel-nav.html
+  
+- url: /add-lesson
+  script: add-lesson.php
+  
+- url: /lessons
+  script: lessons.php
+  
+- url: /get-lesson
+  script: get-lesson.php
+  
+- url: /example
+  script: example.json

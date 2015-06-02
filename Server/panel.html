@@ -1,2 +1,223 @@
-<h1 class="link link--surinami"><span data-letters-l="MY CL" data-letters-r="ASSES">MY CLASSES</span></h1>
+<style>
+    .classContainer {
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    
+    .createClassTitle {
+        text-align: center;
+        color: white;
+    }
+    
+    .arrow {
+        display: block;
+        width: 2%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+        margin-bottom: 14px;
+        opacity: 0.6;
+        -webkit-animation-name: subtleMove;
+        -moz-animation-name: subtleMove;
+        -o-animation-name: subtleMove;
+        animation-name: subtleMove;
+        -webkit-animation-duration: 1.5s;
+        -moz-animation-duration: 1.5s;
+        -o-animation-duration: 1.5s;
+        animation-duration: 1.5s;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-timing-function: ease-in-out;
+        -moz-animation-timing-function: ease-in-out;
+        -o-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        -webkit-animation-direction: alternate;
+        -moz-animation-direction: alternate;
+        -o-animation-direction: alternate;
+        animation-direction: alternate;
+        -webkit-transform: translateY(2px);
+        -moz-transform: translateY(2px);
+        -ms-transform: translateY(2px);
+        -o-transform: translateY(2px);
+        transform: translateY(2px);
+    }
+    
+    .createLessonButton {
+        margin-left: auto;
+        margin-right: auto;
+        display: block !important;
+    }
+    
+    @-webkit-keyframes subtleMove {
+        from {
+            -webkit-transform: translateY(2px);
+            transform: translateY(2px);
+        }
+        to {
+            -webkit-transform: translateY(-2px);
+            transform: translateY(-2px);
+        }
+    }
+    
+    @-moz-keyframes subtleMove {
+        from {
+            -moz-transform: translateY(2px);
+            transform: translateY(2px);
+        }
+        to {
+            -moz-transform: translateY(-2px);
+            transform: translateY(-2px);
+        }
+    }
+    
+    @-o-keyframes subtleMove {
+        from {
+            -o-transform: translateY(2px);
+            transform: translateY(2px);
+        }
+        to {
+            -o-transform: translateY(-2px);
+            transform: translateY(-2px);
+        }
+    }
+    
+    @keyframes subtleMove {
+        from {
+            -webkit-transform: translateY(2px);
+            -moz-transform: translateY(2px);
+            -o-transform: translateY(2px);
+            transform: translateY(2px);
+        }
+        to {
+            -webkit-transform: translateY(-2px);
+            -moz-transform: translateY(-2px);
+            -o-transform: translateY(-2px);
+            transform: translateY(-2px);
+        }
+    }
+    
+    #enterJSON {
+        width: 483px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        display: block;
+        height: 30px;
+        min-height: 100px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 2px 1px -2px #FF3100;
+        -moz-box-shadow: 0px 2px 1px -2px #FF3100;
+        box-shadow: 0px 2px 1px -2px #FF3100;
+        border: 1px solid #FF3100;
+    }
+    
+    #enterJSON::-webkit-input-placeholder {
+        font-size: 20px;
+    }
+    
+    #enterJSON:-moz-placeholder {
+        /* Firefox 18- */
+        
+        font-size: 20px;
+    }
+    
+    #enterJSON::-moz-placeholder {
+        /* Firefox 19+ */
+        
+        font-size: 20px;
+    }
+    
+    #enterJSON:-ms-input-placeholder {
+        font-size: 20px;
+    }
+    
+    .lessonRow {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .lessonCol {
+        -webkit-box-shadow: 0px 0px 4px 0px #FF3100;
+        -moz-box-shadow: 0px 0px 4px 0px #FF3100;
+        box-shadow: 0px 0px 4px 0px #FF3100;
+        border: 1px solid #FF3100;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .lessonTitle, .lessonCode {
+        color: white;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    .lessonCode{
+        margin-bottom: 20px;
+    }
+    .lessonTitle{
+        margin-top: 20px;
+    }
+    #classes{
+        margin-bottom: 30px;
+    }
+</style>
+<h1 class="link link--surinami"><span data-letters-l="MY CL" data-letters-r="ASSES">MY LESSONS</span></h1>
 <br>
+<div class="classContainer">
+    <div id="noLessonWarning">
+        <h2 class="noClassTitle">No Lessons!</h2>
+        <h3 class="createClassTitle">Why not create one?</h3>
+        <img class="arrow" src="img/arrow.svg">
+    </div>
+
+    <div id="classes">
+
+    </div>
+    <button type="button" class="createLessonButton" data-target="#addLessonModal" data-toggle="modal">Create</button>
+
+</div>
+<script>
+    function getLessons() {
+        $.getJSON("lessons", function (data) {
+            if (data.length != 0) {
+                var lessonData = "";
+                var tempCounter = 1;
+                for (var i = 0; i < data.length; i++) {
+                    if (tempCounter == 1)
+                        lessonData += '<div class="row lessonRow">';
+                    lessonData += '<div class="col-md-3 col-xs-6 lessonCol">';
+
+                    var lessonJSON = $.parseJSON(data[i]["JSON"]);
+                    lessonData += '<h4 class="lessonTitle">'
+                    lessonData += lessonJSON["lessonTitle"];
+                    lessonData += '</h4>';
+
+                    lessonData += '<h3 class="lessonCode">'
+                    lessonData += data[i]["Code"];
+                    lessonData += '</h3>';
+
+                    lessonData += '</div>';
+                    tempCounter++;
+
+
+                    if (tempCounter == 5 || i == data.length - 1) {
+                        lessonData += '</div>';
+                        tempCounter = 1;
+                    }
+                }
+                $("#classes").html(lessonData);
+                $("#noLessonWarning").html('');
+            }
+        });
+    }
+</script>

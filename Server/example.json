@@ -1,0 +1,24 @@
+{
+    "status": "success",
+    "message": null,
+    "isDefault": false,
+    "lessonTitle": "test",
+    "lessonMessage": "Hello World",
+    "version": 0.1,
+    "sprites": [
+        {
+            "type": "friendly",
+            "x": 0,
+            "y": 1,
+            "orientation": "north",
+            "image": "friendly1.png"
+        },
+        {
+            "type": "enemy",
+            "x": 3,
+            "y": 4,
+            "orientation": "south",
+            "image": "enemy1.png"
+        }
+    ]
+}

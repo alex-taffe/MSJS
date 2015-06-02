@@ -32,7 +32,8 @@
                     <button class="iAmAButton" data-target="#loginModal" data-toggle="modal">Teacher</button>
                 </div>
             </div>
-            <!-- Teacher login modal --><!--sse-->
+            <!-- Teacher login modal -->
+            <!--sse-->
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -43,7 +44,13 @@
                         </div>
                         <div class="modal-body">
                             <div id="loginAlert"></div>
-                            <div id="loginLoader" class="loader" style="visibility:hidden"><div class="loader-inner ball-scale-ripple-multiple"><div></div><div></div><div></div></div></div>
+                            <div id="loginLoader" class="loader" style="visibility:hidden">
+                                <div class="loader-inner ball-scale-ripple-multiple">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
                             <form id="loginForm">
                                 <input name="email" id="email" type="email" placeholder="Email" class="loginEmail">
                                 <input name="password" id="password" type="password" placeholder="Password" class="loginPassword">
@@ -69,7 +76,13 @@
                         <div class="modal-body">
                             <h4 class="passwordConfirm">Please confirm your password</h4>
                             <div id="registerAlert"></div>
-                            <div id="registerLoader" class="loader" style="visibility:hidden"><div class="loader-inner ball-scale-ripple-multiple"><div></div><div></div><div></div></div></div>
+                            <div id="registerLoader" class="loader" style="visibility:hidden">
+                                <div class="loader-inner ball-scale-ripple-multiple">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
                             <form id="registerForm">
                                 <input name="password2" id="password2" type="password" placeholder="Password" class="loginPassword">
                                 <br>
@@ -83,8 +96,37 @@
                         </div>
                     </div>
                 </div>
-            </div> <!--/sse-->
+            </div>
+            <!--/sse-->
 
+
+        </div>
+    </div>
+    <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New Lesson</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="passwordConfirm">Please enter the JSON for your lesson</h4>
+                    <div id="newLessonAlert"></div>
+                    <div id="newLessonLoader" class="loader" style="visibility:hidden">
+                        <div class="loader-inner ball-scale-ripple-multiple">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <form id="registerForm">
+                        <textarea placeholder="JSON" name="JSON" id="enterJSON"></textarea>
+                        <div class="loginButtonContainer">
+                            <button type="button" class="loginClose" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="loginRegister" id="addLesson">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <footer class="footer">
@@ -108,8 +150,8 @@
         $(document).ready(function () {
             function login() {
                 $("#loginAlert").html('');
-                $("#loginForm").css("visibility","hidden");
-                $("#loginLoader").css("visibility","visible");
+                $("#loginForm").css("visibility", "hidden");
+                $("#loginLoader").css("visibility", "visible");
                 $.post("login", {
                         email: $("#email").val(),
                         password: $("#password").val()
@@ -121,22 +163,36 @@
                             $('#loginModal').on('hidden.bs.modal', function (e) {
                                 var filterVal = 'blur(5px)';
                                 $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
-                                $(".container").load("panel.html", function () {});
+                                $(".container").load("panel.html", function () {
+                                    getLessons();
+                                    $("#addLesson").click(function () {
+                                        $.post("add-lesson", {
+                                                JSON: $("#enterJSON").val()
+                                            })
+                                            .done(function (data) {
+                                                $('#addLessonModal').modal('hide');
+                                                $('#addLessonModal').on('hidden.bs.modal', function (e) {
+                                                    $("#enterJSON").val("");
+                                                });
+                                                getLessons();
+                                            });
+                                    });
+                                });
                                 $("#panelNav").load("panel-nav.html", function () {});
-                            })
+                            });
                         } else {
                             $("#loginAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + loginInfo.message + '</div>');
                             $("#password").val("");
-                            $("#loginForm").css("visibility","visible");
-                            $("#loginLoader").css("visibility","hidden");
+                            $("#loginForm").css("visibility", "visible");
+                            $("#loginLoader").css("visibility", "hidden");
                         }
                     });
-            }
+            };
 
             function register() {
                 $("#registerAlert").html('');
-                $("#registerForm").css("visibility","hidden");
-                $("#registerLoader").css("visibility","visible");
+                $("#registerForm").css("visibility", "hidden");
+                $("#registerLoader").css("visibility", "visible");
                 $.post("register", {
                         email: $("#email").val(),
                         password: $("#password").val(),
@@ -154,8 +210,8 @@
                             $("#registerAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + registerInfo.message + '</div>');
                             $("#password").val("");
                             $("#password2").val("");
-                            $("#registerForm").css("visibility","visible");
-                            $("#registerLoader").css("visibility","hidden");
+                            $("#registerForm").css("visibility", "visible");
+                            $("#registerLoader").css("visibility", "hidden");
                         }
                     });
             }
@@ -167,7 +223,7 @@
             });
         });
     </script>
-     <!--/sse-->
+    <!--/sse-->
 </body>
 
 </html>

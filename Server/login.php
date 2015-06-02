@@ -1,7 +1,5 @@
-
-
-
 <?php
+session_start();
 $currentCookieParams = session_get_cookie_params(); 
 
 $rootDomain = 'msjsapp.com'; 
@@ -13,7 +11,6 @@ session_set_cookie_params(
     $currentCookieParams["secure"], 
     $currentCookieParams["httponly"] 
 ); 
-session_start();
 //returns random string 15 characters in length (alphanumeric)
     function generateToken() {
         
@@ -54,7 +51,7 @@ session_start();
     }
 
     //attempt to query the database for the user
-    $stmt = $db->prepare('SELECT Email, Password, Salt FROM Users WHERE Email=? LIMIT 1');
+    $stmt = $db->prepare('SELECT Email, Password, Salt, ID FROM Users WHERE Email=? LIMIT 1');
     $stmt->execute(array($email));
     if ($stmt->rowCount() > 0 ) {
         $userResult = $stmt->fetch();
@@ -62,6 +59,8 @@ session_start();
             $token = generateToken();
             setcookie("Token", $token);
             $_SESSION["Token"] = $token;
+            $_SESSION["Email"] = $email;
+            $_SESSION["ID"] = $userResult["ID"];
             outputResponse(200,"");
         }
         else{
