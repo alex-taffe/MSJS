@@ -1,0 +1,62 @@
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class Sprite extends JLabel{
+
+	private int x;
+	private int y;
+	private Image image;
+	
+	public int getYCoords() {
+		return y;
+	}
+	public void setYCoords(int y) {
+		this.y = y;
+	}
+	public int getXCoords() {
+		return x;
+	}
+	public void setXCoords(int x) {
+		this.x = x;
+	}
+	
+	public void move(String direction)
+	{
+		if(direction.equals("up"))
+		{
+			
+		}
+		else if(direction.equals("down"))
+		{
+			
+		}
+		else if(direction.equals("left"))
+		{
+			
+		}
+		else if(direction.equals("right"))
+		{
+			
+		}
+	}
+	
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	public static Sprite create(String str) throws Exception
+	{
+		if(str.equals("hero"))
+			return new Hero();
+		else if(str.equals("villain"))
+			return new Villain();
+		else
+			return new Sprite();
+	}
+}

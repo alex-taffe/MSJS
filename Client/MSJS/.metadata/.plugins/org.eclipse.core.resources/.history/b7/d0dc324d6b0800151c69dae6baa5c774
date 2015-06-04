@@ -1,0 +1,27 @@
+import javax.swing.JOptionPane;
+
+
+public class Driver {
+
+	private static InfoFrame infoFrame;
+	public static void main(String [] args)
+	{
+		String url = "https://msjsapp.com/get-class";
+		String code = JOptionPane.showInputDialog(null, "Please enter your teacher's code: ","Code", JOptionPane.PLAIN_MESSAGE);
+		if(code == null)
+			System.exit(0);
+		code = code.toUpperCase();
+		
+		try
+		{
+			HttpClient client = new HTtpClient();
+			PostMethod method = new PostMethod(url);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		infoFrame = new InfoFrame();
+		infoFrame.setVisible(true);
+	}
+}

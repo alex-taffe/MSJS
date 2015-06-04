@@ -1,0 +1,133 @@
+2015-06-01 10:38:53,601 [main] INFO  o.a.c.i.c.DefaultTypeConverter - Loaded 182 type converters
+2015-06-01 10:38:53,842 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is starting
+2015-06-01 10:38:53,978 [main] INFO  o.a.c.m.ManagementStrategyFactory - JMX enabled.
+2015-06-01 10:38:54,085 [main] INFO  o.a.c.m.DefaultManagementLifecycleStrategy - StatisticsLevel at All so enabling load performance statistics
+2015-06-01 10:38:54,138 [main] INFO  o.a.camel.impl.DefaultCamelContext - Total 0 routes, of which 0 is started.
+2015-06-01 10:38:54,140 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) started in 0.297 seconds
+2015-06-01 10:39:19,133 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutting down
+2015-06-01 10:39:19,134 [main] INFO  o.a.c.i.c.DefaultTypeConverter - TypeConverterRegistry utilization[attempts=0, hits=0, misses=0, failures=0] mappings[total=189, misses=0]
+2015-06-01 10:39:19,135 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutdown in 0.002 seconds. Uptime 25.294 seconds.
+2015-06-04 17:16:15,596 [main] INFO  o.a.c.i.c.DefaultTypeConverter - Loaded 182 type converters
+2015-06-04 17:16:15,666 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is starting
+2015-06-04 17:16:15,731 [main] INFO  o.a.c.m.ManagementStrategyFactory - JMX enabled.
+2015-06-04 17:16:15,807 [main] INFO  o.a.c.m.DefaultManagementLifecycleStrategy - StatisticsLevel at All so enabling load performance statistics
+2015-06-04 17:16:15,823 [main] INFO  o.a.camel.impl.DefaultCamelContext - Total 0 routes, of which 0 is started.
+2015-06-04 17:16:15,824 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) started in 0.157 seconds
+2015-06-04 17:16:17,352 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route1 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 17:16:17,447 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:16:17,509 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route2 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 17:16:17,741 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route3 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 17:16:17,761 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:16:17,815 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route4 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 17:16:17,888 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route5 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 17:16:17,925 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:16:17,978 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route6 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 17:37:09,739 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutting down
+2015-06-04 17:37:09,740 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Starting to graceful shutdown 6 routes (timeout 300 seconds)
+2015-06-04 17:37:11,842 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route6 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 17:37:11,842 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route5 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 17:37:11,842 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route4 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 17:37:11,842 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route3 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 17:37:11,843 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route2 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 17:37:11,843 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route1 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 17:37:11,843 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Graceful shutdown of 6 routes completed in 2 seconds
+2015-06-04 17:37:11,852 [main] INFO  o.a.c.i.c.DefaultTypeConverter - TypeConverterRegistry utilization[attempts=9, hits=9, misses=0, failures=0] mappings[total=190, misses=0]
+2015-06-04 17:37:11,854 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutdown in 2.115 seconds. Uptime 20 minutes.
+2015-06-04 17:38:34,292 [main] INFO  o.a.c.i.c.DefaultTypeConverter - Loaded 182 type converters
+2015-06-04 17:38:34,301 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is starting
+2015-06-04 17:38:34,343 [main] INFO  o.a.c.m.ManagementStrategyFactory - JMX enabled.
+2015-06-04 17:38:34,401 [main] INFO  o.a.c.m.DefaultManagementLifecycleStrategy - StatisticsLevel at All so enabling load performance statistics
+2015-06-04 17:38:34,418 [main] INFO  o.a.camel.impl.DefaultCamelContext - Total 0 routes, of which 0 is started.
+2015-06-04 17:38:34,419 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) started in 0.118 seconds
+2015-06-04 17:38:35,083 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route1 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 17:38:35,141 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:38:35,196 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route2 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 17:38:35,345 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route3 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 17:38:35,393 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:38:35,436 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route4 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 17:38:35,487 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route5 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 17:38:35,501 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 17:38:35,543 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route6 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 18:09:30,420 [Worker-3] WARN  o.e.a.i.i.DefaultUpdateCheckManager - Failed to write tracking file /Volumes/SELENE/APCS/MSJS/.metadata/.plugins/com.codetrails.connect.hippie.rcp/repository/http___download_codetrails_com_models_freq_v2/jre/jre/0.0.0-SNAPSHOT/jre-0.0.0-20150604.191252-9709-freq.zip.lastUpdated
+java.io.IOException: null
+	at org.eclipse.aether.internal.impl.TrackingFileManager.lock(TrackingFileManager.java:210) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.TrackingFileManager.update(TrackingFileManager.java:97) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultUpdateCheckManager.write(DefaultUpdateCheckManager.java:617) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultUpdateCheckManager.touchArtifact(DefaultUpdateCheckManager.java:553) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.evaluateDownloads(DefaultArtifactResolver.java:645) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.performDownloads(DefaultArtifactResolver.java:535) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:421) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifacts(DefaultArtifactResolver.java:246) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifact(DefaultArtifactResolver.java:223) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultRepositorySystem.resolveArtifact(DefaultRepositorySystem.java:294) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.recommenders.models.ModelRepository.resolveInternal(ModelRepository.java:185) [org.eclipse.recommenders.models_2.1.9.v20140917-1240.jar:na]
+	at org.eclipse.recommenders.models.ModelRepository.resolve(ModelRepository.java:167) [org.eclipse.recommenders.models_2.1.9.v20140917-1240.jar:na]
+	at com.codetrails.connect.internal.hippie.rcp.WoodstockModelRepository.resolve(WoodstockModelRepository.java:85) [com.codetrails.connect.hippie.rcp_1.2.9.v20140819-0915-b737.jar:na]
+	at org.eclipse.recommenders.internal.models.rcp.DownloadModelArchiveJob.run(DownloadModelArchiveJob.java:73) [org.eclipse.recommenders.models.rcp_2.1.9.v20140917-1240.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54) [org.eclipse.core.jobs_3.6.0.v20140424-0053.jar:na]
+Caused by: java.nio.channels.OverlappingFileLockException: null
+	at sun.nio.ch.SharedFileLockTable.checkList(FileLockTable.java:255) ~[na:1.7.0_17]
+	at sun.nio.ch.SharedFileLockTable.add(FileLockTable.java:152) ~[na:1.7.0_17]
+	at sun.nio.ch.FileChannelImpl.lock(FileChannelImpl.java:972) ~[na:1.7.0_17]
+	at org.eclipse.aether.internal.impl.TrackingFileManager.lock(TrackingFileManager.java:203) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	... 14 common frames omitted
+2015-06-04 18:09:30,858 [Worker-16] WARN  o.e.a.i.i.DefaultUpdateCheckManager - Failed to read tracking file /Volumes/SELENE/APCS/MSJS/.metadata/.plugins/com.codetrails.connect.hippie.rcp/repository/http___download_codetrails_com_models_freq_v2/jre/jre/0.0.0-SNAPSHOT/jre-0.0.0-20150604.191252-9709-freq.zip.lastUpdated
+java.io.IOException: null
+	at org.eclipse.aether.internal.impl.TrackingFileManager.lock(TrackingFileManager.java:210) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.TrackingFileManager.read(TrackingFileManager.java:58) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultUpdateCheckManager.read(DefaultUpdateCheckManager.java:538) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultUpdateCheckManager.checkArtifact(DefaultUpdateCheckManager.java:135) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.gatherDownloads(DefaultArtifactResolver.java:585) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.performDownloads(DefaultArtifactResolver.java:503) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:421) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifacts(DefaultArtifactResolver.java:246) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifact(DefaultArtifactResolver.java:223) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.aether.internal.impl.DefaultRepositorySystem.resolveArtifact(DefaultRepositorySystem.java:294) [org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	at org.eclipse.recommenders.models.ModelRepository.resolveInternal(ModelRepository.java:185) [org.eclipse.recommenders.models_2.1.9.v20140917-1240.jar:na]
+	at org.eclipse.recommenders.models.ModelRepository.resolve(ModelRepository.java:167) [org.eclipse.recommenders.models_2.1.9.v20140917-1240.jar:na]
+	at com.codetrails.connect.internal.hippie.rcp.WoodstockModelRepository.resolve(WoodstockModelRepository.java:85) [com.codetrails.connect.hippie.rcp_1.2.9.v20140819-0915-b737.jar:na]
+	at org.eclipse.recommenders.internal.models.rcp.DownloadModelArchiveJob.run(DownloadModelArchiveJob.java:73) [org.eclipse.recommenders.models.rcp_2.1.9.v20140917-1240.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54) [org.eclipse.core.jobs_3.6.0.v20140424-0053.jar:na]
+Caused by: java.nio.channels.OverlappingFileLockException: null
+	at sun.nio.ch.SharedFileLockTable.checkList(FileLockTable.java:255) ~[na:1.7.0_17]
+	at sun.nio.ch.SharedFileLockTable.add(FileLockTable.java:152) ~[na:1.7.0_17]
+	at sun.nio.ch.FileChannelImpl.lock(FileChannelImpl.java:972) ~[na:1.7.0_17]
+	at org.eclipse.aether.internal.impl.TrackingFileManager.lock(TrackingFileManager.java:203) ~[org.eclipse.aether.impl_1.0.0.v20140518.jar:na]
+	... 14 common frames omitted
+2015-06-04 18:36:29,949 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutting down
+2015-06-04 18:36:29,950 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Starting to graceful shutdown 6 routes (timeout 300 seconds)
+2015-06-04 18:36:31,847 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route6 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 18:36:31,847 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route5 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 18:36:31,848 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route4 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 18:36:31,848 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route3 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 18:36:31,848 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route2 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 18:36:31,848 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route1 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 18:36:31,849 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Graceful shutdown of 6 routes completed in 1 seconds
+2015-06-04 18:36:31,857 [main] INFO  o.a.c.i.c.DefaultTypeConverter - TypeConverterRegistry utilization[attempts=9, hits=9, misses=0, failures=0] mappings[total=190, misses=0]
+2015-06-04 18:36:31,859 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutdown in 1.910 seconds. Uptime 57 minutes.
+2015-06-04 18:50:20,601 [main] INFO  o.a.c.i.c.DefaultTypeConverter - Loaded 182 type converters
+2015-06-04 18:50:20,608 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is starting
+2015-06-04 18:50:20,652 [main] INFO  o.a.c.m.ManagementStrategyFactory - JMX enabled.
+2015-06-04 18:50:20,712 [main] INFO  o.a.c.m.DefaultManagementLifecycleStrategy - StatisticsLevel at All so enabling load performance statistics
+2015-06-04 18:50:20,725 [main] INFO  o.a.camel.impl.DefaultCamelContext - Total 0 routes, of which 0 is started.
+2015-06-04 18:50:20,725 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) started in 0.117 seconds
+2015-06-04 18:50:21,451 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route1 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 18:50:21,499 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 18:50:21,551 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route2 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 18:50:21,591 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route3 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 18:50:21,629 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 18:50:21,678 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route4 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 18:50:21,721 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route5 started and consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 18:50:21,736 [main] INFO  o.a.c.p.a.AggregateProcessor - Using CompletionTimeout to trigger after 0 millis of inactivity.
+2015-06-04 18:50:21,781 [main] INFO  o.a.camel.impl.DefaultCamelContext - Route: route6 started and consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 19:15:01,946 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutting down
+2015-06-04 19:15:01,947 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Starting to graceful shutdown 6 routes (timeout 300 seconds)
+2015-06-04 19:15:03,981 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route6 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ovrd?waitForTaskToComplete=Never]
+2015-06-04 19:15:03,981 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route5 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ovrd]
+2015-06-04 19:15:03,982 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route4 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.call?waitForTaskToComplete=Never]
+2015-06-04 19:15:03,982 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route3 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.call]
+2015-06-04 19:15:03,982 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route2 shutdown complete, was consuming from: Endpoint[seda://com.codetrails.hippie.completion.rcp.ctor?waitForTaskToComplete=Never]
+2015-06-04 19:15:03,982 [Camel (camel-1) thread #7 - ShutdownTask] INFO  o.a.c.impl.DefaultShutdownStrategy - Route: route1 shutdown complete, was consuming from: Endpoint[direct://com.codetrails.hippie.completion.rcp.ctor]
+2015-06-04 19:15:03,983 [main] INFO  o.a.c.impl.DefaultShutdownStrategy - Graceful shutdown of 6 routes completed in 2 seconds
+2015-06-04 19:15:03,993 [main] INFO  o.a.c.i.c.DefaultTypeConverter - TypeConverterRegistry utilization[attempts=9, hits=9, misses=0, failures=0] mappings[total=190, misses=0]
+2015-06-04 19:15:03,994 [main] INFO  o.a.camel.impl.DefaultCamelContext - Apache Camel 2.10.2 (CamelContext: camel-1) is shutdown in 2.048 seconds. Uptime 24 minutes.

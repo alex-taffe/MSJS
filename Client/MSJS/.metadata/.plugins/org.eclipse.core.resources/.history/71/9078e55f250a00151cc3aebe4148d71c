@@ -1,0 +1,6 @@
+import org.json.JSONTokener;
+
+
+public class JSONTokener extends JSONTokener {
+
+}

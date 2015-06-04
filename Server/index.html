@@ -222,6 +222,39 @@
                 register();
             });
         });
+        function getLessons() {
+        $.getJSON("lessons", function (data) {
+            if (data.length != 0) {
+                var lessonData = "";
+                var tempCounter = 1;
+                for (var i = 0; i < data.length; i++) {
+                    if (tempCounter == 1)
+                        lessonData += '<div class="row lessonRow">';
+                    lessonData += '<div class="col-md-3 col-xs-6 lessonCol">';
+
+                    var lessonJSON = $.parseJSON(data[i]["JSON"]);
+                    lessonData += '<h4 class="lessonTitle">'
+                    lessonData += lessonJSON["lessonTitle"];
+                    lessonData += '</h4>';
+
+                    lessonData += '<h3 class="lessonCode">'
+                    lessonData += data[i]["Code"];
+                    lessonData += '</h3>';
+
+                    lessonData += '</div>';
+                    tempCounter++;
+
+
+                    if (tempCounter == 5 || i == data.length - 1) {
+                        lessonData += '</div>';
+                        tempCounter = 1;
+                    }
+                }
+                $("#classes").html(lessonData);
+                $("#noLessonWarning").html('');
+            }
+        });
+    }
     </script>
     <!--/sse-->
 </body>

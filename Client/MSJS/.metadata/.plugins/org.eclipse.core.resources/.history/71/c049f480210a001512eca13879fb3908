@@ -1,0 +1,12 @@
+import java.awt.Image;
+
+import javax.swing.JPanel;
+
+
+public abstract class Sprite extends JPanel{
+
+	private int x;
+	private int y;
+	
+	
+}

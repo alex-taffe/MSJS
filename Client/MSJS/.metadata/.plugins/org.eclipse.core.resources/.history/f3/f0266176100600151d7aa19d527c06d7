@@ -1,0 +1,38 @@
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+
+public class ButtonPanel extends JPanel
+{
+	public ButtonPanel()
+	{
+		setLayout(new GridLayout(0,3));
+		setVisible(true);
+		MyButton button1 = new MyButton("run");
+		add(button1);
+		
+		MyButton button2 = new MyButton("stop");
+		add(button2);
+		
+		MyButton button3 = new MyButton("submit");
+		add(button3);
+		
+		//JButton button4 = new JButton("");
+		//add(button4);
+	}
+	
+}
+class MyButton extends JButton
+	{
+		public MyButton(String name)
+		{
+			super(name);
+			setForeground(Color.WHITE);
+			setBackground(new Color(255,84,9));
+			setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
+		}
+	}
