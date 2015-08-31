@@ -1,0 +1,68 @@
+$backgroundColor: #D9D9D9;
+$canvasBackgroundColor: #08E5CA;
+$titleColor: #FF5409;
+body {
+    background-color: $backgroundColor;
+}
+
+#board {
+    background-color: $canvasBackgroundColor;
+    border: 1px solid black;
+    width: 30vw;
+    height: 30vw;
+    float: right;
+    margin-right: 10px;
+}
+
+.code {
+    float: left;
+    width: 30vw;
+    height: 30vw;
+    text-align: center;
+}
+
+.CodeMirror {
+    text-align: left;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    font-size: 4vw;
+    margin-bottom: 0px;
+    color: $titleColor;
+    text-shadow: 2px 2px 5px #B23903;
+    margin-top: -5px;
+}
+
+.runButton {
+    color: white !important;
+    text-decoration: none;
+    background-color: $titleColor;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 2em;
+    padding: 4px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0px 9px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+    -moz-box-shadow: 0px 9px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+    box-shadow: 0px 9px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+    margin-top: 10px;
+    width: 100px;
+    text-align: center;
+    -webkit-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -ms-transition: all .1s ease;
+    -o-transition: all .1s ease;
+    transition: all .1s ease;
+    border: none;
+}
+
+.runButton:active {
+    -webkit-box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    -moz-box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+}

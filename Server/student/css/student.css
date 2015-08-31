@@ -1,2 +1,67 @@
+/* line 4, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+body {
+  background-color: #D9D9D9; }
+
+/* line 8, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+#board {
+  background-color: #08E5CA;
+  border: 1px solid black;
+  width: 30vw;
+  height: 30vw;
+  float: right;
+  margin-right: 10px; }
+
+/* line 17, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+.code {
+  float: left;
+  width: 30vw;
+  height: 30vw;
+  text-align: center; }
+
+/* line 24, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+.CodeMirror {
+  text-align: left; }
+
+/* line 28, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+h1 {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  font-size: 4vw;
+  margin-bottom: 0px;
+  color: #FF5409;
+  text-shadow: 2px 2px 5px #B23903;
+  margin-top: -5px; }
+
+/* line 39, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+.runButton {
+  color: white !important;
+  text-decoration: none;
+  background-color: #FF5409;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 2em;
+  padding: 4px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0px 9px 0px #db1f05, 0px 9px 25px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 9px 0px #db1f05, 0px 9px 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 9px 0px #db1f05, 0px 9px 25px rgba(0, 0, 0, 0.7);
+  margin-top: 10px;
+  width: 100px;
+  text-align: center;
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+  border: none; }
+
+/* line 64, /Users/naapp/Documents/MSJS/Server/student/css/student.scss */
+.runButton:active {
+  -webkit-box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9); }
 
 /*# sourceMappingURL=student.css.map */

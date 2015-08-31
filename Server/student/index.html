@@ -5,13 +5,49 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/student.css">
     <title></title>
 </head>
 
 <body>
+    <h1 class="link link--surinami"><span data-letters-l="MS" data-letters-r="JS">MSJS</span></h1>
+    <div class="code">
+        <textarea id="codeArea"></textarea>
+        <button class="runButton" onclick="runCode()">Run!</button>
+    </div>
+    <br>
 
+
+    <canvas id="board">
+        UNSUPPORTED BROWSER
+    </canvas>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/student.js"></script>
+
+    <!--codemirror scripts-->
+    <link rel="stylesheet" href="code-mirror/lib/codemirror.css">
+    <link rel=stylesheet href="code-mirror/doc/docs.css">
+    <script src="code-mirror/lib/codemirror.js"></script>
+    <script src="code-mirror/mode/javascript/javascript.js"></script>
+    <script src="code-mirror/mode/css/css.js"></script>
+    <script src="code-mirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="code-mirror/addon/edit/matchbrackets.js"></script>
+    <script src="code-mirror/addon/fold/foldcode.js"></script>
+    <script>
+        var myCodeMirror = CodeMirror(function (elt) {
+            document.getElementById("codeArea").parentNode.replaceChild(elt, document.getElementById("codeArea"))
+        }, {
+            value: document.getElementById("codeArea").value,
+            mode: "javascript",
+            lineNumbers: true,
+            autofocus: true
+        });
+    </script>
+
 </body>
 
 </html>
+
+<!--https://github.com/codemirror/codemirror-->
+<!--http://cssdeck.com/labs/fancy-3d-button-->

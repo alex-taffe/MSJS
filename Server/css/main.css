@@ -40,7 +40,8 @@ h2 {
     border-radius: 5px;
 }
 
-.iAmAButton,.createLessonButton {
+.iAmAButton,
+.createLessonButton {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.95);
     outline: 0;
@@ -72,10 +73,8 @@ canvas {
     top: 50%;
     -ms-transform: translateY(-50%);
     /* IE 9 */
-    
     -webkit-transform: translateY(-50%);
     /* Safari */
-    
     -moz-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -106,7 +105,6 @@ canvas {
     font-size: 20px;
     -webkit-transition: width 5s;
     /* Safari */
-    
     -moz-transition: width 5s;
     -o-transition: width 5s;
     transition: width 5s;
@@ -119,13 +117,11 @@ canvas {
 
 :-moz-placeholder {
     /* Firefox 18- */
-    
     text-align: center;
 }
 
 ::-moz-placeholder {
     /* Firefox 19+ */
-    
     text-align: center;
 }
 
@@ -177,7 +173,6 @@ canvas {
     margin-right: 10px;
     -webkit-transition: width 5s;
     /* Safari */
-    
     -moz-transition: width 5s;
     -o-transition: width 5s;
     transition: width 5s;
@@ -199,7 +194,6 @@ canvas {
 #githubLogo {
     -webkit-transition: width 5s;
     /* Safari */
-    
     -moz-transition: width 5s;
     -o-transition: width 5s;
     transition: width 5s;
@@ -244,15 +238,17 @@ canvas {
     text-align: center;
 }
 
-.g-recaptcha div div{
+.g-recaptcha div div {
     margin-left: auto;
     margin-right: auto;
 }
-.loader{
+
+.loader {
     position: absolute;
-top:40%;
-left:50%;
+    top: 40%;
+    left: 50%;
 }
-.loader-inner div{
+
+.loader-inner div {
     border-color: #FF5409 !important;
 }
