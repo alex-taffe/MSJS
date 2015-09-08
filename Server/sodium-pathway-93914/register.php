@@ -1,4 +1,3 @@
-
 <?php
     //returns random string 15 characters in length (alphanumeric)
     function generateSalt() {

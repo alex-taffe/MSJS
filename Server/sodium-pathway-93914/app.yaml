@@ -17,6 +17,9 @@ handlers:
 
 - url: /fonts
   static_dir: fonts
+  
+- url: /student
+  static_dir: student
 
 - url: /
   script: index.html
