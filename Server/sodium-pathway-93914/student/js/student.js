@@ -71,7 +71,7 @@ function getIndicesOf(searchStr, str) {
 
 //check for likely new statements
 function isNewStatementCharacter(character) {
-    if (code.charAt(innerCounter - 1) == ' ' || code.charAt(innerCounter - 1) == ';' || code.charAt(innerCounter - 1) == ')' || code.charAt(innerCounter - 1) == '}' || code.charAt(innerCounter - 1) == '\n' || code.charAt(innerCounter - 1) == '\t')
+    if (character == ' ' || character == ';' || character == ')' || character == '}' || character == '\n' || character == '\t')
         return true;
     else
         return false;
@@ -79,7 +79,7 @@ function isNewStatementCharacter(character) {
 
 //compile code to avoid async results conflicting
 function compileCode(code) {
-    var imageIndices = getIndicesOf(code, ".setImage(");
+    var imageIndices = getIndicesOf(".setImage(", code, false);
     for (var i = 0; i < imageIndices.length; i++) {
         var innerCounter = imageIndices[i];
         while (!(isNewStatementCharacter(code.charAt(innerCounter - 1)))) {
