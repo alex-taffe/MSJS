@@ -111,6 +111,8 @@ function compileCode(code) {
 var sprite = Sprite.create();
 sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
 sprite.move();
+sprite.setLocation(9,9);
+
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
 sprite2.move();
@@ -146,6 +148,7 @@ var Sprite = {
                     //alert(image.width);
                     image.onLoad = function () {
                         setImageSize(image);
+                        //setLocation(xCoord, yCoord);
                         destination.next();
                     };
                 },
@@ -161,11 +164,13 @@ var Sprite = {
                     var tileHeight = canvasHeight / 10;
 
                     image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
+                    xCoord = x;
+                    yCoord = y;
                 },
                 id: 0,
                 xCoord: 0,
                 yCoord: 0,
-                move: function () {}
+                move: function () {},
                 moveTo: function () {}
             }
 
@@ -211,8 +216,16 @@ function setImageSize(image) {
 
 }
 
-function animate(sprite, direction, speed) {
-    view.onFrame = function (event) {
-        sprite.image.rotate(3);
-    };
+function animate(sprite, destination, speed, rotateTimes) {
+    paper.view.attach('frame', linearAnimation);
+
+    function linearAnimation(event) {
+        if (event.count < 50) {
+            console.log("animate");
+            console.log(sprite.image.position);
+            sprite.image.position += new Point(10, 20);
+        } else {
+            paper.view.detach('frame', linearAnimation);
+        }
+    }
 }
