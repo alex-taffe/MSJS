@@ -81,7 +81,7 @@ function isNewStatementCharacter(character) {
         return false;
 }
 
-//compile code to avoid async results conflicting and remove comments
+//compile code to avoid async results conflicting
 function compileCode(code) {
     var imageIndices = getIndicesOf(".setImage(", code, false);
     //iterate through all necessary changes
