@@ -58,10 +58,14 @@ function setCanvasSize() {
     canvas.height = canvasHeight;*/
 }
 //from Tim Down @ http://stackoverflow.com/questions/3410464/how-to-find-all-occurrences-of-one-string-in-another-in-javascript
-function getIndicesOf(searchStr, str) {
+function getIndicesOf(searchStr, str, caseSensitive) {
     var startIndex = 0,
         searchStrLen = searchStr.length;
     var index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
     while ((index = str.indexOf(searchStr, startIndex)) > -1) {
         indices.push(index);
         startIndex = index + searchStrLen;
@@ -77,21 +81,41 @@ function isNewStatementCharacter(character) {
         return false;
 }
 
-//compile code to avoid async results conflicting
+//compile code to avoid async results conflicting and remove comments
 function compileCode(code) {
     var imageIndices = getIndicesOf(".setImage(", code, false);
+    //iterate through all necessary changes
     for (var i = 0; i < imageIndices.length; i++) {
         var innerCounter = imageIndices[i];
-        while (!(isNewStatementCharacter(code.charAt(innerCounter - 1)))) {
-            innerCounter--;
-        }
-        code.splice(innerCounter, 0, "delay" + i + "().then(function(){");
+
+        //get index of where we should insert this time
         innerCounter = code.indexOf(")", innerCounter);
-        code.splice(innerCounter, 0, "});");
+
+        //splice the calling function in
+        var firstSplice = ",{next : function(){goToStatement" + i + "();}}";
+        code = code.splice(innerCounter, 0, firstSplice);
+        innerCounter += firstSplice.length + 2;
+
+        //splice the destination
+        code = code.splice(innerCounter, 0, "function goToStatement" + i + "(){");
+        code = code + "\n}";
+
+        //reset the indices because the string length has changed
+        imageIndices = getIndicesOf(".setImage(", code, false);
     }
+    alert(code);
     return code;
 }
 
+
+/*
+var sprite = Sprite.create();
+sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
+sprite.move();
+var sprite2 = Sprite.create();
+sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
+sprite2.move();
+*/
 
 //compileCode('var sprite = Sprite.create();sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");sprite.move();');
 
@@ -101,9 +125,10 @@ function runCode() {
     drawCanvasGrid();
     var code = "";
     if (debug) {
-        code = myCodeMirror.getValue();
+        code = compileCode(myCodeMirror.getValue());
+        //code = myCodeMirror.getValue();
     } else {
-        code = "try{" + myCodeMirror.getValue() + "}catch(err) {alert(err.message)}";
+        code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {alert(err.message)}";
     }
     window.eval(code);
 }
@@ -116,24 +141,20 @@ var Sprite = {
         create: function () {
             var temp = {
                 image: new Raster(),
-                setImage: function (URL) {
-                    return new Promise(function (resolve, reject) {
-                        image = null;
-                        console.log("outer");
-                        image = new Raster(URL);
-                        //alert(image.width);
-                        image.onLoad = function () {
-                            setImageSize(image);
-                            console.log("inner");
-                            resolve(1);
-                        };
-                    });
-
-
+                setImage: function (URL, destination) {
+                    image = null;
+                    console.log("outer");
+                    image = new Raster(URL);
                     //alert(image.width);
+                    image.onLoad = function () {
+                        setImageSize(image);
+                        console.log("inner");
+                        destination.next();
+                    };
                 },
-                xCoord: 0,
-                yCoord: 0,
+                setLocation: function (x, y) {
+                    image.source = new Point(x, y);
+                },
                 id: 0,
                 move: function () {}
             }
