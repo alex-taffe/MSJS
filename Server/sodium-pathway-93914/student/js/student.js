@@ -103,7 +103,6 @@ function compileCode(code) {
         //reset the indices because the string length has changed
         imageIndices = getIndicesOf(".setImage(", code, false);
     }
-    alert(code);
     return code;
 }
 
@@ -143,25 +142,39 @@ var Sprite = {
                 image: new Raster(),
                 setImage: function (URL, destination) {
                     image = null;
-                    console.log("outer");
                     image = new Raster(URL);
                     //alert(image.width);
                     image.onLoad = function () {
                         setImageSize(image);
-                        console.log("inner");
                         destination.next();
                     };
                 },
                 setLocation: function (x, y) {
-                    image.source = new Point(x, y);
+                    var imageXCenter = image.width / 2;
+                    var imageYCenter = image.height / 2;
+
+                    var canvas = document.getElementById("board");
+                    var canvasWidth = canvas.width;
+                    var canvasHeight = canvas.height;
+
+                    var tileWidth = canvasWidth / 10;
+                    var tileHeight = canvasHeight / 10;
+
+                    image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
                 },
                 id: 0,
+                xCoord: 0,
+                yCoord: 0,
                 move: function () {}
+                moveTo: function () {}
             }
 
             temp.move = function (direction, numSpaces, speed) {
                 animate(temp);
             };
+            temp.moveTo = function (x, y, speed) {
+
+            }
             temp.id = currentSpriteID;
             currentSpriteID++;
             return temp;
@@ -199,7 +212,6 @@ function setImageSize(image) {
 }
 
 function animate(sprite, direction, speed) {
-    console.log("test");
     view.onFrame = function (event) {
         sprite.image.rotate(3);
     };
