@@ -153,6 +153,7 @@ var Sprite = {
                     };
                 },
                 setLocation: function (x, y) {
+                    //get canvas and grid sizing
                     var imageXCenter = image.width / 2;
                     var imageYCenter = image.height / 2;
 
@@ -163,6 +164,7 @@ var Sprite = {
                     var tileWidth = canvasWidth / 10;
                     var tileHeight = canvasHeight / 10;
 
+                    //set position based on passed arguments and tile dimensions
                     image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
                     xCoord = x;
                     yCoord = y;
@@ -173,7 +175,9 @@ var Sprite = {
                 move: function (destinationX) {
                     animate(image.position, destinationX);
                 },
-                moveTo: function () {}
+                moveTo: function (x, y, speed) {
+
+                }
             };
 
             /*temp.move = function (direction, numSpaces, speed) {
@@ -202,6 +206,7 @@ function setImageSize(image) {
     var imageWidth = image.width;
     var imageHeight = image.height;
 
+    //scale image so it appropriately fits in the grid
     if (tileWidth - 5 < imageWidth || tileHeight - 5 < imageHeight) {
         if (imageWidth > imageHeight) {
             var scaleFactor = (tileWidth - 5) / imageWidth;
