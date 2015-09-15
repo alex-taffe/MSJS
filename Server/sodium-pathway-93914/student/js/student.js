@@ -170,13 +170,16 @@ var Sprite = {
                 id: 0,
                 xCoord: 0,
                 yCoord: 0,
-                move: function () {},
+                move: function (destinationX) {
+                    animate(image.position, destinationX);
+                },
                 moveTo: function () {}
-            }
-
-            temp.move = function (direction, numSpaces, speed) {
-                animate(temp);
             };
+
+            /*temp.move = function (direction, numSpaces, speed) {
+                console.log(temp.image);
+                animate(temp);
+            };*/
             temp.moveTo = function (x, y, speed) {
 
             }
@@ -216,16 +219,24 @@ function setImageSize(image) {
 
 }
 
-function animate(sprite, destination, speed, rotateTimes) {
+function animate(sprite, destinationX, destinationY, speed, rotateTimes) {
+    //get movement totals
+    var canvas = document.getElementById("board");
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+
+    var tileWidth = canvasWidth / 10;
+    var tileHeight = canvasHeight / 10;
+
     paper.view.attach('frame', linearAnimation);
 
     function linearAnimation(event) {
-        if (event.count < 50) {
-            console.log("animate");
-            console.log(sprite.image.position);
-            sprite.image.position += new Point(10, 20);
+        if (event.count < destinationX * tileWidth) {
+            sprite.x += 1;
+            sprite.y += 1;
         } else {
             paper.view.detach('frame', linearAnimation);
         }
     }
+    console.log(sprite);
 }
