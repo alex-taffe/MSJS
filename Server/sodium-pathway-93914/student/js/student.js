@@ -109,7 +109,7 @@ function compileCode(code) {
 
 
 /*
-var sprite = Sprite.create();
+var sprite = new Sprite();
 sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
 sprite.setLocation(1,1);
 sprite.move();
@@ -147,24 +147,24 @@ class Sprite {
             this.yCoord = 0;
             this.image = new Raster();
 
-            //increment sprite ID
+            //increment sprite ID before more instance creation can occur
             currentSpriteID++;
         }
         //sets the image based on the passed URL and then once the image is completed loading, continues the program flow based on the value of destination.next();
     setImage(URL, destination) {
-            image = null;
-            image = new Raster(URL);
+            this.image = null;
+            this.image = new Raster(URL);
             //alert(image.width);
-            image.onLoad = function () {
-                setImageSize(image);
+            this.image.onLoad = function () {
+                Sprite.setImageSize(this.image);
                 //setLocation(xCoord, yCoord);
                 destination.next();
             };
         }
         //sets the position of the sprite based on an X/Y coordinate (instant)
     setLocation(x, y) {
-        var imageXCenter = image.width / 2;
-        var imageYCenter = image.height / 2;
+        var imageXCenter = this.image.width / 2;
+        var imageYCenter = this.image.height / 2;
 
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -174,123 +174,66 @@ class Sprite {
         var tileHeight = canvasHeight / 10;
 
         //set position based on passed arguments and tile dimensions
-        image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
-        xCoord = x;
-        yCoord = y;
+        this.image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
+        this.xCoord = x;
+        this.yCoord = y;
     }
     move(direction, numSpaces, speed) {
-        animate(this, numSpaces);
+        Sprite.animate(this, numSpaces);
     }
     moveTo(x, y, speed) {
-        animate(temp, x, y, speed, currentX, currentY);
-    }
-}
-var Sprite = {
-        create: function () {
-            var temp = {
+            Sprite.animate(this, x, y, speed, currentX, currentY);
+        }
+        //appropriately size image for canvas
+    static setImageSize(image) {
+        var canvas = document.getElementById("board");
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
 
-                image: new Raster(),
-                setImage: function (URL, destination) {
-                    image = null;
-                    image = new Raster(URL);
-                    //alert(image.width);
-                    image.onLoad = function () {
-                        setImageSize(image);
-                        //setLocation(xCoord, yCoord);
-                        destination.next();
-                    };
-                },
-                setLocation: function (x, y) {
-                    //get canvas and grid sizing
-                    var imageXCenter = image.width / 2;
-                    var imageYCenter = image.height / 2;
+        var tileWidth = canvasWidth / 10;
+        var tileHeight = canvasHeight / 10;
+        //get image width and height
+        var imageWidth = image.width;
+        var imageHeight = image.height;
 
-                    var canvas = document.getElementById("board");
-                    var canvasWidth = canvas.width;
-                    var canvasHeight = canvas.height;
-
-                    var tileWidth = canvasWidth / 10;
-                    var tileHeight = canvasHeight / 10;
-
-                    //set position based on passed arguments and tile dimensions
-                    image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
-                    xCoord = x;
-                    yCoord = y;
-                },
-                id: 0,
-                xCoord: 0,
-                yCoord: 0,
-                move: function () {},
-                moveTo: function () {
-
-                }
-            };
-
-            temp.move = function (direction, numSpaces, speed) {
-                console.log(temp.image.position);
-                animate(temp, numSpaces);
-            };
-            temp.moveTo = function (x, y, speed) {
-                animate(temp, x, y, speed, currentX, currentY);
-            };
-
-            temp.id = currentSpriteID;
-            currentSpriteID++;
-            return temp;
+        //scale image so it appropriately fits in the grid
+        if (tileWidth - 5 < imageWidth || tileHeight - 5 < imageHeight) {
+            if (imageWidth > imageHeight) {
+                var scaleFactor = (tileWidth - 5) / imageWidth;
+                image.width = tileWidth - 5;
+                image.height = image.height * scaleFactor;
+            } else if (imageWidth < imageHeight) {
+                var scaleFactor = (tileHeight - 5) / imageHeight;
+                image.width = image.width * scaleFactor;
+                image.height = tileHeight - 5;
+            } else {
+                image.width = tileWidth - 5;
+                image.height = tileHeight - 5;
+            }
         }
 
     }
-    //appropriately size image for canvas
-function setImageSize(image) {
-    //get canvas width and height
-    var canvas = document.getElementById("board");
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
+    static animate(sprite, destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
+        //get movement totals
+        var canvas = document.getElementById("board");
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
 
-    var tileWidth = canvasWidth / 10;
-    var tileHeight = canvasHeight / 10;
-    //get image width and height
-    var imageWidth = image.width;
-    var imageHeight = image.height;
+        var tileWidth = canvasWidth / 10;
+        var tileHeight = canvasHeight / 10;
 
-    //scale image so it appropriately fits in the grid
-    if (tileWidth - 5 < imageWidth || tileHeight - 5 < imageHeight) {
-        if (imageWidth > imageHeight) {
-            var scaleFactor = (tileWidth - 5) / imageWidth;
-            image.width = tileWidth - 5;
-            image.height = image.height * scaleFactor;
-        } else if (imageWidth < imageHeight) {
-            var scaleFactor = (tileHeight - 5) / imageHeight;
-            image.width = image.width * scaleFactor;
-            image.height = tileHeight - 5;
-        } else {
-            image.width = tileWidth - 5;
-            image.height = tileHeight - 5;
+        var fullDistance = Math.sqrt(Math.pow)
+
+        paper.view.attach('frame', linearAnimation);
+
+        function linearAnimation(event) {
+            if (event.count < destinationX * tileWidth) {
+                sprite.image.position.x += 1;
+                sprite.imag.position.y += 1;
+            } else {
+                paper.view.detach('frame', linearAnimation);
+            }
         }
+        console.log(sprite);
     }
-
-}
-
-function animate(sprite, destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
-    //get movement totals
-    var canvas = document.getElementById("board");
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
-
-    var tileWidth = canvasWidth / 10;
-    var tileHeight = canvasHeight / 10;
-
-    var fullDistance = Math.sqrt(Math.pow)
-
-    paper.view.attach('frame', linearAnimation);
-
-    function linearAnimation(event) {
-        if (event.count < destinationX * tileWidth) {
-            sprite.image.position.x += 1;
-            sprite.imag.position.y += 1;
-        } else {
-            paper.view.detach('frame', linearAnimation);
-        }
-    }
-    console.log(sprite);
 }
