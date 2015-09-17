@@ -1,3 +1,4 @@
+"use strict";
 var debug = true;
 
 //create custom splice method. From user113716 @ http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
@@ -110,8 +111,8 @@ function compileCode(code) {
 /*
 var sprite = Sprite.create();
 sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
+sprite.setLocation(1,1);
 sprite.move();
-sprite.setLocation(9,9);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -138,9 +139,56 @@ function runCode() {
 
 //persitent data
 var currentSpriteID = 0;
+class Sprite {
+    //constructor
+    constructor() {
+            this.id = currentSpriteID;
+            this.xCoord = 0;
+            this.yCoord = 0;
+            this.image = new Raster();
+
+            //increment sprite ID
+            currentSpriteID++;
+        }
+        //sets the image based on the passed URL and then once the image is completed loading, continues the program flow based on the value of destination.next();
+    setImage(URL, destination) {
+            image = null;
+            image = new Raster(URL);
+            //alert(image.width);
+            image.onLoad = function () {
+                setImageSize(image);
+                //setLocation(xCoord, yCoord);
+                destination.next();
+            };
+        }
+        //sets the position of the sprite based on an X/Y coordinate (instant)
+    setLocation(x, y) {
+        var imageXCenter = image.width / 2;
+        var imageYCenter = image.height / 2;
+
+        var canvas = document.getElementById("board");
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
+
+        var tileWidth = canvasWidth / 10;
+        var tileHeight = canvasHeight / 10;
+
+        //set position based on passed arguments and tile dimensions
+        image.position = new Point(imageXCenter + tileWidth * x, imageYCenter + tileHeight * y);
+        xCoord = x;
+        yCoord = y;
+    }
+    move(direction, numSpaces, speed) {
+        animate(this, numSpaces);
+    }
+    moveTo(x, y, speed) {
+        animate(temp, x, y, speed, currentX, currentY);
+    }
+}
 var Sprite = {
         create: function () {
             var temp = {
+
                 image: new Raster(),
                 setImage: function (URL, destination) {
                     image = null;
@@ -172,21 +220,20 @@ var Sprite = {
                 id: 0,
                 xCoord: 0,
                 yCoord: 0,
-                move: function (destinationX) {
-                    animate(image.position, destinationX);
-                },
-                moveTo: function (x, y, speed) {
+                move: function () {},
+                moveTo: function () {
 
                 }
             };
 
-            /*temp.move = function (direction, numSpaces, speed) {
-                console.log(temp.image);
-                animate(temp);
-            };*/
+            temp.move = function (direction, numSpaces, speed) {
+                console.log(temp.image.position);
+                animate(temp, numSpaces);
+            };
             temp.moveTo = function (x, y, speed) {
+                animate(temp, x, y, speed, currentX, currentY);
+            };
 
-            }
             temp.id = currentSpriteID;
             currentSpriteID++;
             return temp;
@@ -224,7 +271,7 @@ function setImageSize(image) {
 
 }
 
-function animate(sprite, destinationX, destinationY, speed, rotateTimes) {
+function animate(sprite, destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
     //get movement totals
     var canvas = document.getElementById("board");
     var canvasWidth = canvas.width;
@@ -233,12 +280,14 @@ function animate(sprite, destinationX, destinationY, speed, rotateTimes) {
     var tileWidth = canvasWidth / 10;
     var tileHeight = canvasHeight / 10;
 
+    var fullDistance = Math.sqrt(Math.pow)
+
     paper.view.attach('frame', linearAnimation);
 
     function linearAnimation(event) {
         if (event.count < destinationX * tileWidth) {
-            sprite.x += 1;
-            sprite.y += 1;
+            sprite.image.position.x += 1;
+            sprite.imag.position.y += 1;
         } else {
             paper.view.detach('frame', linearAnimation);
         }
