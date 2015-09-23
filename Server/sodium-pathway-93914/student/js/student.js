@@ -112,7 +112,7 @@ function compileCode(code) {
 var sprite = new Sprite();
 sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
 sprite.setLocation(1,1);
-sprite.move();
+sprite.move(2);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -155,8 +155,9 @@ class Sprite {
             this.image = null;
             this.image = new Raster(URL);
             //alert(image.width);
+            var tempThis = this;
             this.image.onLoad = function () {
-                Sprite.setImageSize(this.image);
+                tempThis.setImageSize();
                 //setLocation(xCoord, yCoord);
                 destination.next();
             };
@@ -179,13 +180,13 @@ class Sprite {
         this.yCoord = y;
     }
     move(direction, numSpaces, speed) {
-        Sprite.animate(this, numSpaces);
+        this.animate(numSpaces);
     }
     moveTo(x, y, speed) {
-            Sprite.animate(this, x, y, speed, currentX, currentY);
+            this.animate(x, y, speed, currentX, currentY);
         }
         //appropriately size image for canvas
-    static setImageSize(image) {
+    setImageSize() {
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
@@ -193,27 +194,29 @@ class Sprite {
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
         //get image width and height
-        var imageWidth = image.width;
-        var imageHeight = image.height;
+        var imageWidth = this.image.width;
+        var imageHeight = this.image.height;
+        console.log(imageWidth);
 
         //scale image so it appropriately fits in the grid
         if (tileWidth - 5 < imageWidth || tileHeight - 5 < imageHeight) {
             if (imageWidth > imageHeight) {
                 var scaleFactor = (tileWidth - 5) / imageWidth;
-                image.width = tileWidth - 5;
-                image.height = image.height * scaleFactor;
+                this.image.width = tileWidth - 5;
+                this.image.height = this.image.height * scaleFactor;
             } else if (imageWidth < imageHeight) {
                 var scaleFactor = (tileHeight - 5) / imageHeight;
-                image.width = image.width * scaleFactor;
-                image.height = tileHeight - 5;
+                this.image.width = this.image.width * scaleFactor;
+                this.image.height = tileHeight - 5;
             } else {
-                image.width = tileWidth - 5;
-                image.height = tileHeight - 5;
+                this.image.width = tileWidth - 5;
+                this.image.height = tileHeight - 5;
             }
         }
+        console.log(this.image.width);
 
     }
-    static animate(sprite, destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
+    animate(destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
         //get movement totals
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -223,17 +226,18 @@ class Sprite {
         var tileHeight = canvasHeight / 10;
 
         var fullDistance = Math.sqrt(Math.pow)
-
-        paper.view.attach('frame', linearAnimation);
-
-        function linearAnimation(event) {
+        var sprite = this;
+        paper.view.attach('frame', function (event) {
+            //console.log(sprite.image.position.x);
             if (event.count < destinationX * tileWidth) {
                 sprite.image.position.x += 1;
                 sprite.imag.position.y += 1;
             } else {
-                paper.view.detach('frame', linearAnimation);
+                console.log("exit");
+                paper.view.detach('frame', this);
             }
-        }
-        console.log(sprite);
+        });
+
+
     }
 }
