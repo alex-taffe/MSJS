@@ -110,9 +110,9 @@ function compileCode(code) {
 
 /*
 var sprite = new Sprite();
-sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
+sprite.setImage("img/giphy.gif");
 sprite.setLocation(1,1);
-sprite.move(2);
+sprite.move("left",3,1);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -180,7 +180,30 @@ class Sprite {
         this.yCoord = y;
     }
     move(direction, numSpaces, speed) {
-        this.animate(numSpaces);
+        //sanitize the string to remove any obscure characters
+        direction = direction.replace(/[^a-zA-Z0-9! ]+/g, "");
+        //make it all lower case for consistency
+        direction = direction.toLowerCase();
+
+        //get existing coordinates for further use and instantiate the final value variables
+        var finalX = this.xCoord;
+        var finalY = this.yCoord;
+
+        //decide where we need to go
+        if (direction == "left") {
+            finalX -= numSpaces;
+        } else if (direction == "right") {
+            finalX += numSpaces;
+        } else if (direction == "up") {
+            finalY += numSpaces;
+        } else if (direction == "down") {
+            finalY -= numSpaces;
+        } else {
+            //they screwed up, the program can't continue so let's just throw an error and let them know
+            throw "Direction invalid. Try the directions left, right, up, or down";
+        }
+
+        this.animate(this.xCoord, this.yCoord, finalX, finalY, speed);
     }
     moveTo(x, y, speed) {
             this.animate(x, y, speed, currentX, currentY);
@@ -196,7 +219,6 @@ class Sprite {
         //get image width and height
         var imageWidth = this.image.width;
         var imageHeight = this.image.height;
-        console.log(imageWidth);
 
         //scale image so it appropriately fits in the grid
         if (tileWidth - 5 < imageWidth || tileHeight - 5 < imageHeight) {
@@ -213,10 +235,9 @@ class Sprite {
                 this.image.height = tileHeight - 5;
             }
         }
-        console.log(this.image.width);
 
     }
-    animate(destinationX, destinationY, currentX, currentY, speed, rotateTimes) {
+    animate(currentX, currentY, destinationX, destinationY, speed, rotateTimes, destination) {
         //get movement totals
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -224,20 +245,22 @@ class Sprite {
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
+        console.log(`X original: ${currentX}\nY original: ${currentY}\nDestination X: ${destinationX}\nDestination Y: ${destinationY}`);
 
-        var fullDistance = Math.sqrt(Math.pow)
+        var fullDistance = Math.sqrt(Math.pow(destinationX - currentX, 2) + Math.pow(destinationY - currentY, 2));
+        console.log(fullDistance);
         var sprite = this;
-        paper.view.attach('frame', function (event) {
-            //console.log(sprite.image.position.x);
-            if (event.count < destinationX * tileWidth) {
+        paper.view.attach('frame', animateLinear);
+
+        function animateLinear(event) {
+            if (event.count < fullDistance * tileWidth) {
                 sprite.image.position.x += 1;
-                sprite.imag.position.y += 1;
+                sprite.image.position.y += 1;
             } else {
                 console.log("exit");
-                paper.view.detach('frame', this);
+                paper.view.detach('frame', animateLinear);
             }
-        });
-
+        }
 
     }
 }
