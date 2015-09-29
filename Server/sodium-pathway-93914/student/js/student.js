@@ -82,12 +82,19 @@ function isNewStatementCharacter(character) {
         return false;
 }
 
+function getReplaceIndices(code) {
+    var imageIndices = getIndicesOf(".setImage(", code, false);
+    var moveIndices = getIndicesOf(".move(", code, false);
+
+    return imageIndices.concat(moveIndices);
+}
+
 //compile code to avoid async results conflicting
 function compileCode(code) {
-    var imageIndices = getIndicesOf(".setImage(", code, false);
+    var searchIndices = getReplaceIndices(code);
     //iterate through all necessary changes
-    for (var i = 0; i < imageIndices.length; i++) {
-        var innerCounter = imageIndices[i];
+    for (var i = 0; i < searchIndices.length; i++) {
+        var innerCounter = searchIndices[i];
 
         //get index of where we should insert this time
         innerCounter = code.indexOf(")", innerCounter);
@@ -102,8 +109,9 @@ function compileCode(code) {
         code = code + "\n}";
 
         //reset the indices because the string length has changed
-        imageIndices = getIndicesOf(".setImage(", code, false);
+        searchIndices = getReplaceIndices(code);
     }
+    alert(code);
     return code;
 }
 
