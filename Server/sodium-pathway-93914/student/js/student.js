@@ -85,8 +85,9 @@ function isNewStatementCharacter(character) {
 function getReplaceIndices(code) {
     var imageIndices = getIndicesOf(".setImage(", code, false);
     var moveIndices = getIndicesOf(".move(", code, false);
+    var moveToIndices = getIndicesOf(".moveTo(", code, false);
 
-    return imageIndices.concat(moveIndices);
+    return imageIndices.concat(moveIndices).concat(moveToIndices);
 }
 
 //compile code to avoid async results conflicting
@@ -105,8 +106,14 @@ function compileCode(code) {
         innerCounter += firstSplice.length + 2;
 
         //splice the destination
-        code = code.splice(innerCounter, 0, "function goToStatement" + i + "(){");
-        code = code + "\n}";
+        code = code.splice(innerCounter, 0, "\nfunction goToStatement" + i + "(){");
+        var tempLocation = searchIndices[i];
+        while (code.charAt(tempLocation) != "\n")
+            tempLocation--;
+        if (code.charAt(tempLocation + 1) == "\\" && code.charAt(tempLocation + 2))
+            code = code + "\n}";
+        else
+            code = code + "}";
 
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
