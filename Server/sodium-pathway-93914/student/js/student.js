@@ -222,9 +222,11 @@ class Sprite {
         this.xCoord = finalX;
     }
     moveTo(x, y, speed, destination) {
+            var currentX = this.xCoord;
+            var currentY = this.yCoord;
+            this.animate(currentX, currentY, x, y, speed, null, destination);
             this.yCoord = y;
             this.xCoord = x;
-            this.animate(x, y, currentX, currentY, speed, null, destination);
         }
         //appropriately size image for canvas
     setImageSize() {
@@ -274,18 +276,18 @@ class Sprite {
         var deltaX = destinationX - currentX;
         var deltaY = destinationY - currentY;
 
-        var xNegativeMultiplier = deltaX / Math.abs(deltaX);
-        var yNegativeMultiplier = deltaY / Math.abs(deltaY);
+        var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
+        var yNegativeMultiplier = deltaY / Math.abs(deltaY) || 1;
 
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            maxY = deltaY / deltaX;
+            maxY = (deltaY / deltaX) * yNegativeMultiplier;
             maxX = 1.0 * xNegativeMultiplier;
         } else if (deltaX == deltaY) {
             maxX = 1.0 * xNegativeMultiplier;
             maxY = 1.0 * yNegativeMultiplier;
         } else {
             maxY = 1.0 * yNegativeMultiplier;
-            maxX = deltaX / deltaY;
+            maxX = (deltaX / deltaY) * xNegativeMultiplier;
         }
 
         if (debug)
@@ -304,7 +306,7 @@ class Sprite {
                 destination.next();
                 paper.view.detach('frame', animateLinear);
             }
-            console.log(event.count);
+            // console.log(event.count);
         }
 
     }
