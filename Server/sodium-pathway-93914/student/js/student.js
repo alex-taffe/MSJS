@@ -118,7 +118,6 @@ function compileCode(code) {
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
     }
-    alert(code);
     return code;
 }
 
@@ -126,8 +125,9 @@ function compileCode(code) {
 /*
 var sprite = new Sprite();
 sprite.setImage("img/giphy.gif");
-sprite.setLocation(1,1);
-sprite.move("left",3,1);
+sprite.setLocation(1, 1);
+sprite.move("left", 3, 1);
+sprite.move("left", 3, 1);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -194,7 +194,7 @@ class Sprite {
         this.xCoord = x;
         this.yCoord = y;
     }
-    move(direction, numSpaces, speed) {
+    move(direction, numSpaces, speed, destination) {
         //sanitize the string to remove any obscure characters
         direction = direction.replace(/[^a-zA-Z0-9! ]+/g, "");
         //make it all lower case for consistency
@@ -209,19 +209,22 @@ class Sprite {
             finalX -= numSpaces;
         } else if (direction == "right") {
             finalX += numSpaces;
-        } else if (direction == "up") {
-            finalY += numSpaces;
         } else if (direction == "down") {
+            finalY += numSpaces;
+        } else if (direction == "up") {
             finalY -= numSpaces;
         } else {
             //they screwed up, the program can't continue so let's just throw an error and let them know
             throw "Direction invalid. Try the directions left, right, up, or down";
         }
-
-        this.animate(this.xCoord, this.yCoord, finalX, finalY, speed);
+        this.animate(this.xCoord, this.yCoord, finalX, finalY, speed, null, destination);
+        this.yCoord = finalY;
+        this.xCoord = finalX;
     }
-    moveTo(x, y, speed) {
-            this.animate(x, y, speed, currentX, currentY);
+    moveTo(x, y, speed, destination) {
+            this.yCoord = y;
+            this.xCoord = x;
+            this.animate(x, y, currentX, currentY, speed, null, destination);
         }
         //appropriately size image for canvas
     setImageSize() {
@@ -260,21 +263,48 @@ class Sprite {
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
-        console.log(`X original: ${currentX}\nY original: ${currentY}\nDestination X: ${destinationX}\nDestination Y: ${destinationY}`);
+        if (debug)
+            console.log(`X original: ${currentX}\nY original: ${currentY}\nDestination X: ${destinationX}\nDestination Y: ${destinationY}`);
 
         var fullDistance = Math.sqrt(Math.pow(destinationX - currentX, 2) + Math.pow(destinationY - currentY, 2));
-        console.log(fullDistance);
+
+        var maxX = 0;
+        var maxY = 0;
+
+        var deltaX = destinationX - currentX;
+        var deltaY = destinationY - currentY;
+
+        var xNegativeMultiplier = deltaX / Math.abs(deltaX);
+        var yNegativeMultiplier = deltaY / Math.abs(deltaY);
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            maxY = deltaY / deltaX;
+            maxX = 1.0 * xNegativeMultiplier;
+        } else if (deltaX == deltaY) {
+            maxX = 1.0 * xNegativeMultiplier;
+            maxY = 1.0 * yNegativeMultiplier;
+        } else {
+            maxY = 1.0 * yNegativeMultiplier;
+            maxX = deltaX / deltaY;
+        }
+
+        if (debug)
+            console.log(`maxX: ${maxX}\nmaxY: ${maxY}\ndeltaX: ${deltaX}\ndeltaY: ${deltaY}`);
+
         var sprite = this;
         paper.view.attach('frame', animateLinear);
 
         function animateLinear(event) {
             if (event.count < fullDistance * tileWidth) {
-                sprite.image.position.x += 1;
-                sprite.image.position.y += 1;
+                sprite.image.position.x += 1 * maxX;
+                sprite.image.position.y += 1 * maxY;
             } else {
                 console.log("exit");
+                event.count = 0;
+                destination.next();
                 paper.view.detach('frame', animateLinear);
             }
+            console.log(event.count);
         }
 
     }
