@@ -217,14 +217,18 @@ class Sprite {
             //they screwed up, the program can't continue so let's just throw an error and let them know
             throw "Direction invalid. Try the directions left, right, up, or down";
         }
+        //animate it!
         this.animate(this.xCoord, this.yCoord, finalX, finalY, speed, null, destination);
+        //update existing coordinate values
         this.yCoord = finalY;
         this.xCoord = finalX;
     }
     moveTo(x, y, speed, destination) {
             var currentX = this.xCoord;
             var currentY = this.yCoord;
+            //animate it!
             this.animate(currentX, currentY, x, y, speed, null, destination);
+            //update existing coordinate values
             this.yCoord = y;
             this.xCoord = x;
         }
@@ -263,22 +267,28 @@ class Sprite {
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
 
+        //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
+
+        //get how many tiles we need to move in each direction
+        var deltaX = destinationX - currentX;
+        var deltaY = destinationY - currentY;
         if (debug)
             console.log(`X original: ${currentX}\nY original: ${currentY}\nDestination X: ${destinationX}\nDestination Y: ${destinationY}`);
 
-        var fullDistance = Math.sqrt(Math.pow(destinationX - currentX, 2) + Math.pow(destinationY - currentY, 2));
+        //find out how far the total distance actually is
+        var fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
 
-        var maxX = 0;
-        var maxY = 0;
-
-        var deltaX = destinationX - currentX;
-        var deltaY = destinationY - currentY;
-
+        //figure out if we need to move in the positive or negative direction (value will always be 1 or -1. If we divide 0/0 and get NaN, assign value to positive 1
         var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
         var yNegativeMultiplier = deltaY / Math.abs(deltaY) || 1;
 
+        //get ready for multipliers
+        var maxX = 0;
+        var maxY = 0;
+
+        //determine the multiplier for the max speed of each direction, so the sprite can get to its destination as quickly as possible
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             maxY = (deltaY / deltaX) * yNegativeMultiplier;
             maxX = 1.0 * xNegativeMultiplier;
@@ -292,8 +302,9 @@ class Sprite {
 
         if (debug)
             console.log(`maxX: ${maxX}\nmaxY: ${maxY}\ndeltaX: ${deltaX}\ndeltaY: ${deltaY}`);
-
+        //assign this to sprite so we can use it in the animation functions
         var sprite = this;
+        //attach to the function
         paper.view.attach('frame', animateLinear);
 
         function animateLinear(event) {
