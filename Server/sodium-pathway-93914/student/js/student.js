@@ -125,9 +125,9 @@ function compileCode(code) {
 /*
 var sprite = new Sprite();
 sprite.setImage("img/giphy.gif");
-sprite.setLocation(1, 1);
-sprite.move("left", 3, 1);
-sprite.move("left", 3, 1);
+sprite.setLocation(1,1);
+sprite.move("left",1,1);
+sprite.move("up",1,1);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -274,8 +274,6 @@ class Sprite {
         //get how many tiles we need to move in each direction
         var deltaX = destinationX - currentX;
         var deltaY = destinationY - currentY;
-        if (debug)
-            console.log(`X original: ${currentX}\nY original: ${currentY}\nDestination X: ${destinationX}\nDestination Y: ${destinationY}`);
 
         //find out how far the total distance actually is
         var fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -299,23 +297,24 @@ class Sprite {
             maxY = 1.0 * yNegativeMultiplier;
             maxX = (deltaX / deltaY) * xNegativeMultiplier;
         }
-
-        if (debug)
-            console.log(`maxX: ${maxX}\nmaxY: ${maxY}\ndeltaX: ${deltaX}\ndeltaY: ${deltaY}`);
         //assign this to sprite so we can use it in the animation functions
         var sprite = this;
         //attach to the function
         paper.view.attach('frame', animateLinear);
+        paper.view.play();
 
         function animateLinear(event) {
+            //if (event.count <= 200) console.log(event.count);
             if (event.count < fullDistance * tileWidth) {
                 sprite.image.position.x += 1 * maxX;
                 sprite.image.position.y += 1 * maxY;
             } else {
-                console.log("exit");
+                //console.log("exit");
+                //event.count = 0;
                 event.count = 0;
+                paper.view.pause();
+                //paper.view.detach('frame', animateLinear);
                 destination.next();
-                paper.view.detach('frame', animateLinear);
             }
             // console.log(event.count);
         }
