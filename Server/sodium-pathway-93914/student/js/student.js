@@ -150,7 +150,42 @@ function runCode() {
     window.eval(code);
 }
 
-//STUDENT ACCESSIBLE METHODS
+class AnimationRequest {
+    constructor(sprite, callBack, destinationX, destinationY, rotations, speed) {
+        this.sprite = sprite;
+        this.callBack = callBack;
+        this.rotations = rotations;
+        this.speed = speed;
+        this.timesExecuted = 0;
+
+        //get how many tiles we need to move in each direction
+        var deltaX = destinationX - currentX;
+        var deltaY = destinationY - currentY;
+
+        //find out how far the total distance actually is
+        this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+
+        //figure out if we need to move in the positive or negative direction (value will always be 1 or -1. If we divide 0/0 and get NaN, assign value to positive 1
+        var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
+        var yNegativeMultiplier = deltaY / Math.abs(deltaY) || 1;
+
+        //get ready for multipliers
+        this.maxX = 0;
+        this.maxY = 0;
+
+        //determine the multiplier for the max speed of each direction, so the sprite can get to its destination as quickly as possible
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            this.maxY = (deltaY / deltaX) * yNegativeMultiplier;
+            this.maxX = 1.0 * xNegativeMultiplier;
+        } else if (deltaX == deltaY) {
+            this.maxX = 1.0 * xNegativeMultiplier;
+            this.maxY = 1.0 * yNegativeMultiplier;
+        } else {
+            this.maxY = 1.0 * yNegativeMultiplier;
+            this.maxX = (deltaX / deltaY) * xNegativeMultiplier;
+        }
+    }
+}
 
 //persitent data
 var currentSpriteID = 0;
@@ -161,6 +196,7 @@ class Sprite {
             this.xCoord = 0;
             this.yCoord = 0;
             this.image = new Raster();
+            this.hasAttachedAnimation = false;
 
             //increment sprite ID before more instance creation can occur
             currentSpriteID++;
@@ -262,7 +298,26 @@ class Sprite {
 
     }
     animate(currentX, currentY, destinationX, destinationY, speed, rotateTimes, destination) {
-        //get movement totals
+        //create a new animation request
+        var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
+        animationRequests.push(animation);
+
+    }
+
+}
+
+
+
+var animationRequests = [];
+
+function onFrame(event) {
+    if (animationRequests.length != 0) {
+        if (animationRequests[0].timesExecuted == animationRequests[0].fullDistance) {
+            animationRequests[0].destination.next();
+            animationRequests.splice(0, 1);
+            return;
+        }
+        //get canvas size
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
@@ -270,54 +325,20 @@ class Sprite {
         //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
-
-        //get how many tiles we need to move in each direction
-        var deltaX = destinationX - currentX;
-        var deltaY = destinationY - currentY;
-
-        //find out how far the total distance actually is
-        var fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-
-        //figure out if we need to move in the positive or negative direction (value will always be 1 or -1. If we divide 0/0 and get NaN, assign value to positive 1
-        var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
-        var yNegativeMultiplier = deltaY / Math.abs(deltaY) || 1;
-
-        //get ready for multipliers
-        var maxX = 0;
-        var maxY = 0;
-
-        //determine the multiplier for the max speed of each direction, so the sprite can get to its destination as quickly as possible
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            maxY = (deltaY / deltaX) * yNegativeMultiplier;
-            maxX = 1.0 * xNegativeMultiplier;
-        } else if (deltaX == deltaY) {
-            maxX = 1.0 * xNegativeMultiplier;
-            maxY = 1.0 * yNegativeMultiplier;
-        } else {
-            maxY = 1.0 * yNegativeMultiplier;
-            maxX = (deltaX / deltaY) * xNegativeMultiplier;
-        }
-        //assign this to sprite so we can use it in the animation functions
-        var sprite = this;
-        //attach to the function
-        paper.view.attach('frame', animateLinear);
-        paper.view.play();
-
-        function animateLinear(event) {
-            //if (event.count <= 200) console.log(event.count);
-            if (event.count < fullDistance * tileWidth) {
-                sprite.image.position.x += 1 * maxX;
-                sprite.image.position.y += 1 * maxY;
-            } else {
-                //console.log("exit");
-                //event.count = 0;
-                event.count = 0;
-                paper.view.pause();
-                //paper.view.detach('frame', animateLinear);
-                destination.next();
-            }
-            // console.log(event.count);
-        }
-
+        animationRequests[0].sprite.image.position.x += 1 * maxX;
+        animationRequests[0].sprite.image.position.y += 1 * maxY;
+        animationRequests[0].timesExecuted++;
     }
+    //if (event.count <= 200) console.log(event.count);
+    if (event.count < fullDistance * tileWidth) {
+
+    } else {
+        //console.log("exit");
+        //event.count = 0;
+        event.count = 0;
+        paper.view.pause();
+        //paper.view.detach('frame', animateLinear);
+        destination.next();
+    }
+    // console.log(event.count);
 }
