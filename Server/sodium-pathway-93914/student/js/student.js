@@ -15,7 +15,7 @@ $(document).ready(function () {
     drawCanvasGrid();
 
     //set animation
-
+    paper.view.attach('frame', onFrame);
 
 
 });
