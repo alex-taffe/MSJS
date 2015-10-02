@@ -311,7 +311,6 @@ class Sprite {
 var animationRequests = [];
 
 function onFrame(event) {
-    console.log("test");
     if (animationRequests.length != 0) {
 
         //get canvas size
@@ -329,8 +328,8 @@ function onFrame(event) {
             return;
         }
 
-        animationRequests[0].sprite.image.position.x += 1 * maxX;
-        animationRequests[0].sprite.image.position.y += 1 * maxY;
+        animationRequests[0].sprite.image.position.x += 1 * animationRequests[0].maxX;
+        animationRequests[0].sprite.image.position.y += 1 * animationRequests[0].maxY;
         animationRequests[0].timesExecuted++;
     }
 }
