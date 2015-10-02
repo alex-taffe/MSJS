@@ -159,8 +159,8 @@ class AnimationRequest {
         this.timesExecuted = 0;
 
         //get how many tiles we need to move in each direction
-        var deltaX = destinationX - currentX;
-        var deltaY = destinationY - currentY;
+        var deltaX = destinationX - this.sprite.currentX;
+        var deltaY = destinationY - this.sprite.currentY;
 
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -311,12 +311,9 @@ class Sprite {
 var animationRequests = [];
 
 function onFrame(event) {
+    console.log("test");
     if (animationRequests.length != 0) {
-        if (animationRequests[0].timesExecuted == animationRequests[0].fullDistance) {
-            animationRequests[0].destination.next();
-            animationRequests.splice(0, 1);
-            return;
-        }
+
         //get canvas size
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -325,20 +322,15 @@ function onFrame(event) {
         //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
+
+        if (animationRequests[0].timesExecuted == animationRequests[0].fullDistance * tileWidth) {
+            animationRequests[0].destination.next();
+            animationRequests.splice(0, 1);
+            return;
+        }
+
         animationRequests[0].sprite.image.position.x += 1 * maxX;
         animationRequests[0].sprite.image.position.y += 1 * maxY;
         animationRequests[0].timesExecuted++;
     }
-    //if (event.count <= 200) console.log(event.count);
-    if (event.count < fullDistance * tileWidth) {
-
-    } else {
-        //console.log("exit");
-        //event.count = 0;
-        event.count = 0;
-        paper.view.pause();
-        //paper.view.detach('frame', animateLinear);
-        destination.next();
-    }
-    // console.log(event.count);
 }
