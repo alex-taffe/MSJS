@@ -159,8 +159,8 @@ class AnimationRequest {
         this.timesExecuted = 0;
 
         //get how many tiles we need to move in each direction
-        var deltaX = destinationX - this.sprite.currentX;
-        var deltaY = destinationY - this.sprite.currentY;
+        var deltaX = destinationX - this.sprite.xCoord;
+        var deltaY = destinationY - this.sprite.yCoord;
 
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -299,6 +299,7 @@ class Sprite {
     }
     animate(currentX, currentY, destinationX, destinationY, speed, rotateTimes, destination) {
         //create a new animation request
+        console.log("Request new animation");
         var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
         animationRequests.push(animation);
 
@@ -318,12 +319,13 @@ function onFrame(event) {
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
 
+
         //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
 
         if (animationRequests[0].timesExecuted == animationRequests[0].fullDistance * tileWidth) {
-            animationRequests[0].destination.next();
+            animationRequests[0].callBack.next();
             animationRequests.splice(0, 1);
             return;
         }
