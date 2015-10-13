@@ -82,6 +82,7 @@ function isNewStatementCharacter(character) {
         return false;
 }
 
+//finds the incdices of the items that need to have callback statements for synchronous code running
 function getReplaceIndices(code) {
     var imageIndices = getIndicesOf(".setImage(", code, false);
     var moveIndices = getIndicesOf(".move(", code, false);
@@ -121,13 +122,14 @@ function compileCode(code) {
     return code;
 }
 
-
 /*
 var sprite = new Sprite();
 sprite.setImage("img/giphy.gif");
 sprite.setLocation(1,1);
 sprite.move("left",1,1);
 sprite.move("up",1,1);
+sprite.move("right",5,1);
+sprite.moveTo(4,3,1);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -158,9 +160,13 @@ class AnimationRequest {
         this.speed = speed;
         this.timesExecuted = 0;
 
+        console.log("destinationX: " + destinationX + "\ndestinationY: " + destinationY);
+
         //get how many tiles we need to move in each direction
         var deltaX = destinationX - this.sprite.xCoord;
         var deltaY = destinationY - this.sprite.yCoord;
+
+        console.log("deltaX: " + deltaX + "\ndeltaY: " + deltaY);
 
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -254,16 +260,14 @@ class Sprite {
             throw "Direction invalid. Try the directions left, right, up, or down";
         }
         //animate it!
-        this.animate(this.xCoord, this.yCoord, finalX, finalY, speed, null, destination);
+        this.animate(finalX, finalY, speed, null, destination);
         //update existing coordinate values
         this.yCoord = finalY;
         this.xCoord = finalX;
     }
     moveTo(x, y, speed, destination) {
-            var currentX = this.xCoord;
-            var currentY = this.yCoord;
             //animate it!
-            this.animate(currentX, currentY, x, y, speed, null, destination);
+            this.animate(x, y, speed, null, destination);
             //update existing coordinate values
             this.yCoord = y;
             this.xCoord = x;
@@ -297,7 +301,7 @@ class Sprite {
         }
 
     }
-    animate(currentX, currentY, destinationX, destinationY, speed, rotateTimes, destination) {
+    animate(destinationX, destinationY, speed, rotateTimes, destination) {
         //create a new animation request
         console.log("Request new animation");
         var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
