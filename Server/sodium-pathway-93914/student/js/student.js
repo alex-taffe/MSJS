@@ -15,6 +15,11 @@ String.prototype.splice = function (idx, rem, s) {
 
 //handle document load
 $(document).ready(function () {
+    try {
+        var classTest = class ES6Class {}
+    } catch (err) {
+        alert("fail!");
+    }
     paper.install(window);
 
     paper.setup('board');
