@@ -218,7 +218,7 @@ class Sprite {
             var tempThis = this;
             this.image.onLoad = function () {
                 tempThis.setImageSize();
-                //setLocation(xCoord, yCoord);
+                tempThis.setLocation(tempThis.xCoord, tempThis.yCoord);
                 destination.next();
             };
         }
