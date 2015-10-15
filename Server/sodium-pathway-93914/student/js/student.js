@@ -160,13 +160,9 @@ class AnimationRequest {
         this.speed = speed;
         this.timesExecuted = 0;
 
-        console.log("destinationX: " + destinationX + "\ndestinationY: " + destinationY);
-
         //get how many tiles we need to move in each direction
         var deltaX = destinationX - this.sprite.xCoord;
         var deltaY = destinationY - this.sprite.yCoord;
-
-        console.log("deltaX: " + deltaX + "\ndeltaY: " + deltaY);
 
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -181,14 +177,14 @@ class AnimationRequest {
 
         //determine the multiplier for the max speed of each direction, so the sprite can get to its destination as quickly as possible
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            this.maxY = (deltaY / deltaX) * yNegativeMultiplier;
+            this.maxY = Math.abs(deltaY / deltaX) * yNegativeMultiplier;
             this.maxX = 1.0 * xNegativeMultiplier;
         } else if (deltaX == deltaY) {
             this.maxX = 1.0 * xNegativeMultiplier;
             this.maxY = 1.0 * yNegativeMultiplier;
         } else {
             this.maxY = 1.0 * yNegativeMultiplier;
-            this.maxX = (deltaX / deltaY) * xNegativeMultiplier;
+            this.maxX = Math.abs(deltaX / deltaY) * xNegativeMultiplier;
         }
     }
 }
@@ -328,7 +324,7 @@ function onFrame(event) {
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
 
-        if (animationRequests[0].timesExecuted == animationRequests[0].fullDistance * tileWidth) {
+        if (animationRequests[0].timesExecuted >= animationRequests[0].fullDistance * tileWidth) {
             animationRequests[0].callBack.next();
             animationRequests.splice(0, 1);
             return;
