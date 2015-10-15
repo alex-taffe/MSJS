@@ -1,6 +1,13 @@
 "use strict";
 var debug = true;
 
+$(window).keypress(function (event) {
+    if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+    alert("Ctrl-S pressed");
+    event.preventDefault();
+    return false;
+});
+
 //create custom splice method. From user113716 @ http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
 String.prototype.splice = function (idx, rem, s) {
     return (this.slice(0, idx) + s + this.slice(idx + Math.abs(rem)));
@@ -295,6 +302,18 @@ class Sprite {
                 this.image.height = tileHeight - 5;
             }
         }
+
+    }
+    setUp(key) {
+
+    }
+    setDown(key) {
+
+    }
+    setLeft(key) {
+
+    }
+    setRight(key) {
 
     }
     animate(destinationX, destinationY, speed, rotateTimes, destination) {
