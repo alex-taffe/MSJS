@@ -21,9 +21,89 @@
     <canvas id="board" resize>
         UNSUPPORTED BROWSER
     </canvas>
+    <!--outdated browser modal dialogue-->
+    <div class="modal fade" id="outdatedBrowserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Outdated browser</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Due to some of the technology required for this site to work, it only works with the absolute newest browsers. You are using BROWSER HERE. Try upgrading to one of the browsers listed below.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="https://chrome.google.com" class="thumbnail down browserLogo">
+                                <img src="img/chrome_512x512.png" alt="Google Chrome Logo">
+                                <div class="caption">Google Chrome</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="http://www.apple.com/safari/" class="thumbnail down browserLogo">
+                                <img src="img/safari_512x512.png" alt="Apple Safari Logo">
+                                <div class="caption">Apple Safari</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="https://www.microsoft.com/en-us/windows/microsoft-edge" class="thumbnail down browserLogo">
+                                <img src="img/edge_512x512.png" alt="Microsoft Edge Logo">
+                                <div class="caption">Microsoft Edge</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/paper-full.min.js"></script>
+    <script>
+        (function () {
+            var p = [],
+                w = window,
+                d = document,
+                e = f = 0;
+            p.push('ua=' + encodeURIComponent(navigator.userAgent));
+            e |= w.ActiveXObject ? 1 : 0;
+            e |= w.opera ? 2 : 0;
+            e |= w.chrome ? 4 : 0;
+            e |= 'getBoxObjectFor' in d || 'mozInnerScreenX' in w ? 8 : 0;
+            e |= ('WebKitCSSMatrix' in w || 'WebKitPoint' in w || 'webkitStorageInfo' in w || 'webkitURL' in w) ? 16 : 0;
+            e |= (e & 16 && ({}.toString).toString().indexOf("\n") === -1) ? 32 : 0;
+            p.push('e=' + e);
+            f |= 'sandbox' in d.createElement('iframe') ? 1 : 0;
+            f |= 'WebSocket' in w ? 2 : 0;
+            f |= w.Worker ? 4 : 0;
+            f |= w.applicationCache ? 8 : 0;
+            f |= w.history && history.pushState ? 16 : 0;
+            f |= d.documentElement.webkitRequestFullScreen ? 32 : 0;
+            f |= 'FileReader' in w ? 64 : 0;
+            p.push('f=' + f);
+            p.push('r=' + Math.random().toString(36).substring(7));
+            p.push('w=' + screen.width);
+            p.push('h=' + screen.height);
+            var s = d.createElement('script');
+            s.src = 'whichbrowser/detect.js?' + p.join('&');
+            d.getElementsByTagName('head')[0].appendChild(s);
+        })();
+    </script>
+    <script>
+        //double check that we can use ES6 classes, otherwise alert the user that they need a new browser
+        Browsers = new WhichBrowser();
+        console.log(Browsers);
+        $('#outdatedBrowserModal').modal('show');
+        try {
+            window.eval("var testES6 = class ES6Class {};");
+        } catch (err) {
+            Browsers = new WhichBrowser();
+            console.log(Browsers)
+            $('#outdatedBrowserModal').modal('show');
+        }
+    </script>
     <script src="js/student.js"></script>
 
     <!--codemirror scripts-->
@@ -52,3 +132,4 @@
 
 <!--https://github.com/codemirror/codemirror-->
 <!--http://cssdeck.com/labs/fancy-3d-button-->
+<!--https://github.com/alrra/browser-logos-->
