@@ -93,14 +93,12 @@
     </script>
     <script>
         //double check that we can use ES6 classes, otherwise alert the user that they need a new browser
-        Browsers = new WhichBrowser();
-        console.log(Browsers);
+        //Browsers = new WhichBrowser();
+        //console.log(Browsers);
         $('#outdatedBrowserModal').modal('show');
         try {
             window.eval("var testES6 = class ES6Class {};");
         } catch (err) {
-            Browsers = new WhichBrowser();
-            console.log(Browsers)
             $('#outdatedBrowserModal').modal('show');
         }
     </script>
