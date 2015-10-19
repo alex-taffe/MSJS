@@ -76,7 +76,10 @@
             if (platform == "Win32")
                 platform = "Microsoft Windows";
             else if (platform == "MacIntel")
-                platform = "Mac OS X"
+                platform = "Mac OS X";
+
+            if (browserName == "Netscape")
+                browserName = "Internet Explorer";
 
             // In Opera 15+, the true version is after "OPR/" 
             if ((verOffset = nAgt.indexOf("OPR/")) != -1) {
