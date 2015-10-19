@@ -29,7 +29,7 @@
                     <h4 class="modal-title">Outdated browser</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Due to some of the technology required for this site to work, it only works with the absolute newest browsers. You are using BROWSER HERE. Try upgrading to one of the browsers listed below.</p>
+                    <p>Due to some of the technology required for this site to work, it only works with the absolute newest browsers. You are using <span id="browserString"></span>. Try upgrading to one of the browsers listed below.</p>
                     <div class="row">
                         <div class="col-md-4">
                             <a href="https://chrome.google.com" class="thumbnail down browserLogo">
@@ -62,40 +62,78 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/paper-full.min.js"></script>
     <script>
-        (function () {
-            var p = [],
-                w = window,
-                d = document,
-                e = f = 0;
-            p.push('ua=' + encodeURIComponent(navigator.userAgent));
-            e |= w.ActiveXObject ? 1 : 0;
-            e |= w.opera ? 2 : 0;
-            e |= w.chrome ? 4 : 0;
-            e |= 'getBoxObjectFor' in d || 'mozInnerScreenX' in w ? 8 : 0;
-            e |= ('WebKitCSSMatrix' in w || 'WebKitPoint' in w || 'webkitStorageInfo' in w || 'webkitURL' in w) ? 16 : 0;
-            e |= (e & 16 && ({}.toString).toString().indexOf("\n") === -1) ? 32 : 0;
-            p.push('e=' + e);
-            f |= 'sandbox' in d.createElement('iframe') ? 1 : 0;
-            f |= 'WebSocket' in w ? 2 : 0;
-            f |= w.Worker ? 4 : 0;
-            f |= w.applicationCache ? 8 : 0;
-            f |= w.history && history.pushState ? 16 : 0;
-            f |= d.documentElement.webkitRequestFullScreen ? 32 : 0;
-            f |= 'FileReader' in w ? 64 : 0;
-            p.push('f=' + f);
-            p.push('r=' + Math.random().toString(36).substring(7));
-            p.push('w=' + screen.width);
-            p.push('h=' + screen.height);
-            var s = d.createElement('script');
-            s.src = 'whichbrowser/detect.js?' + p.join('&');
-            d.getElementsByTagName('head')[0].appendChild(s);
-        })();
-    </script>
-    <script>
         //double check that we can use ES6 classes, otherwise alert the user that they need a new browser
         //Browsers = new WhichBrowser();
         //console.log(Browsers);
         $('#outdatedBrowserModal').modal('show');
+        var nVer = navigator.appVersion;
+        var nAgt = navigator.userAgent;
+        var browserName = navigator.appName;
+        var fullVersion = '' + parseFloat(navigator.appVersion);
+        var majorVersion = parseInt(navigator.appVersion, 10);
+        var nameOffset, verOffset, ix;
+        var platform = navigator.platform;
+
+        if (platform == "Win32")
+            platform = "Microsoft Windows";
+        else if (platform == "MacIntel")
+            platform = "Max OS X"
+
+        // In Opera 15+, the true version is after "OPR/" 
+        if ((verOffset = nAgt.indexOf("OPR/")) != -1) {
+            browserName = "Opera";
+            fullVersion = nAgt.substring(verOffset + 4);
+        }
+        // In older Opera, the true version is after "Opera" or after "Version"
+        else if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+            browserName = "Opera";
+            fullVersion = nAgt.substring(verOffset + 6);
+            if ((verOffset = nAgt.indexOf("Version")) != -1)
+                fullVersion = nAgt.substring(verOffset + 8);
+        }
+        // In MSIE, the true version is after "MSIE" in userAgent
+        else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+            browserName = "Microsoft Internet Explorer";
+            fullVersion = nAgt.substring(verOffset + 5);
+        }
+        // In Chrome, the true version is after "Chrome" 
+        else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+            browserName = "Chrome";
+            fullVersion = nAgt.substring(verOffset + 7);
+        }
+        // In Safari, the true version is after "Safari" or after "Version" 
+        else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+            browserName = "Safari";
+            fullVersion = nAgt.substring(verOffset + 7);
+            if ((verOffset = nAgt.indexOf("Version")) != -1)
+                fullVersion = nAgt.substring(verOffset + 8);
+        }
+        // In Firefox, the true version is after "Firefox" 
+        else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+            browserName = "Firefox";
+            fullVersion = nAgt.substring(verOffset + 8);
+        }
+        // In most other browsers, "name/version" is at the end of userAgent 
+        else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
+            (verOffset = nAgt.lastIndexOf('/'))) {
+            browserName = nAgt.substring(nameOffset, verOffset);
+            fullVersion = nAgt.substring(verOffset + 1);
+            if (browserName.toLowerCase() == browserName.toUpperCase()) {
+                browserName = navigator.appName;
+            }
+        }
+        // trim the fullVersion string at semicolon/space if present
+        if ((ix = fullVersion.indexOf(";")) != -1)
+            fullVersion = fullVersion.substring(0, ix);
+        if ((ix = fullVersion.indexOf(" ")) != -1)
+            fullVersion = fullVersion.substring(0, ix);
+
+        majorVersion = parseInt('' + fullVersion, 10);
+        if (isNaN(majorVersion)) {
+            fullVersion = '' + parseFloat(navigator.appVersion);
+            majorVersion = parseInt(navigator.appVersion, 10);
+        }
+        $("#browserString").text(browserName + " " + fullVersion + " on " + platform);
         try {
             window.eval("var testES6 = class ES6Class {};");
         } catch (err) {
@@ -107,12 +145,15 @@
     <!--codemirror scripts-->
     <link rel="stylesheet" href="code-mirror/lib/codemirror.css">
     <link rel=stylesheet href="code-mirror/doc/docs.css">
+    <link rel="stylesheet" href="code-mirror/addon/fold/foldgutter.css">
     <script src="code-mirror/lib/codemirror.js"></script>
     <script src="code-mirror/mode/javascript/javascript.js"></script>
     <script src="code-mirror/mode/css/css.js"></script>
     <script src="code-mirror/mode/htmlmixed/htmlmixed.js"></script>
     <script src="code-mirror/addon/edit/matchbrackets.js"></script>
     <script src="code-mirror/addon/fold/foldcode.js"></script>
+    <script src="code-mirror/addon/edit/closebrackets.js"></script>
+    <script src="code-mirror/addon/fold/foldgutter.js"></script>
     <script>
         var myCodeMirror = CodeMirror(function (elt) {
             document.getElementById("codeArea").parentNode.replaceChild(elt, document.getElementById("codeArea"))
@@ -120,7 +161,8 @@
             value: document.getElementById("codeArea").value,
             mode: "javascript",
             lineNumbers: true,
-            autofocus: true
+            autofocus: true,
+            lineWrapping: true
         });
     </script>
 
@@ -131,3 +173,4 @@
 <!--https://github.com/codemirror/codemirror-->
 <!--http://cssdeck.com/labs/fancy-3d-button-->
 <!--https://github.com/alrra/browser-logos-->
+<!--http://www.javascripter.net/faq/browsern.htm-->
