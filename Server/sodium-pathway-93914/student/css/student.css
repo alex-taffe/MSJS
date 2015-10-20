@@ -14,26 +14,26 @@ body {
 /* line 17, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .code {
   float: left;
-  width: 30vw;
-  height: 30vw;
   text-align: center; }
 
-/* line 24, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 22, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .CodeMirror {
-  text-align: left; }
+  text-align: left;
+  width: 40vw !important;
+  height: 70vh !important; }
 
-/* line 28, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 30, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 h1 {
   text-align: center;
   font-family: 'Raleway', sans-serif;
   color: white;
-  font-size: 4vw;
-  margin-bottom: 0px;
+  font-size: 3vw !important;
+  margin-bottom: 0px !important;
   color: #FF5409;
   text-shadow: 2px 2px 5px #B23903;
-  margin-top: -5px; }
+  margin-top: 5px; }
 
-/* line 39, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 41, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .runButton {
   color: white !important;
   text-decoration: none;
@@ -58,20 +58,20 @@ h1 {
   transition: all 0.1s ease;
   border: none; }
 
-/* line 64, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 66, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .runButton:active {
   -webkit-box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9);
   box-shadow: 0px 3px 0px #db1f05, 0px 3px 6px rgba(0, 0, 0, 0.9); }
 
-/* line 70, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 72, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .browserLogo img {
   width: 75%;
   margin-left: auto;
   margin-right: auto;
   display: block; }
 
-/* line 77, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+/* line 79, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
 .browserLogo .caption {
   text-align: center; }
 

@@ -16,24 +16,26 @@ body {
 
 .code {
     float: left;
-    width: 30vw;
-    height: 30vw;
     text-align: center;
 }
 
 .CodeMirror {
     text-align: left;
+    width: 40vw !important;
+    height: 70vh !important;
 }
+
+.codeMirror textarea {}
 
 h1 {
     text-align: center;
     font-family: 'Raleway', sans-serif;
     color: white;
-    font-size: 4vw;
-    margin-bottom: 0px;
+    font-size: 3vw !important;
+    margin-bottom: 0px !important;
     color: $titleColor;
     text-shadow: 2px 2px 5px #B23903;
-    margin-top: -5px;
+    margin-top: 5px;
 }
 
 .runButton {
