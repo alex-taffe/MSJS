@@ -176,6 +176,19 @@ function runCode() {
     window.eval(code);
 }
 
+function loadSavedCode() {
+    //get code from storage and decode from base64
+    var code = atob(localStorage.getItem("studentCode"));
+    myCodeMirror.setValue(code);
+}
+
+function saveCode() {
+    //get code and encode in base64
+    var code = btoa(myCodeMirror.getValue());
+    //store code
+    localStorage.setItem("studentCode", code);
+}
+
 class AnimationRequest {
     constructor(sprite, callBack, destinationX, destinationY, rotations, speed) {
         this.sprite = sprite;

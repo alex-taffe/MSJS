@@ -14,6 +14,8 @@
     <div class="code">
         <textarea id="codeArea"></textarea>
         <button class="runButton" onclick="runCode()">Run!</button>
+        <button class="runButton" onclick="loadSavedCode()">Load</button>
+        <button class="runButton" onclick="saveCode()">Save</button>
     </div>
     <br>
 
@@ -64,6 +66,29 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/paper-full.min.js"></script>
+    <!--codemirror scripts-->
+    <link rel="stylesheet" href="code-mirror/lib/codemirror.css">
+    <link rel=stylesheet href="code-mirror/doc/docs.css">
+    <link rel="stylesheet" href="code-mirror/addon/fold/foldgutter.css">
+    <script src="code-mirror/lib/codemirror.js"></script>
+    <script src="code-mirror/mode/javascript/javascript.js"></script>
+    <script src="code-mirror/mode/css/css.js"></script>
+    <script src="code-mirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="code-mirror/addon/edit/matchbrackets.js"></script>
+    <script src="code-mirror/addon/fold/foldcode.js"></script>
+    <script src="code-mirror/addon/edit/closebrackets.js"></script>
+    <script src="code-mirror/addon/fold/foldgutter.js"></script>
+    <script>
+        var myCodeMirror = CodeMirror(function (elt) {
+            document.getElementById("codeArea").parentNode.replaceChild(elt, document.getElementById("codeArea"))
+        }, {
+            value: document.getElementById("codeArea").value,
+            mode: "javascript",
+            lineNumbers: true,
+            autofocus: true,
+            lineWrapping: true
+        });
+    </script>
     <script>
         //double check that we can use ES6 classes, otherwise alert the user that they need a new browser
         try {
@@ -139,29 +164,7 @@
     </script>
     <script src="js/student.js"></script>
 
-    <!--codemirror scripts-->
-    <link rel="stylesheet" href="code-mirror/lib/codemirror.css">
-    <link rel=stylesheet href="code-mirror/doc/docs.css">
-    <link rel="stylesheet" href="code-mirror/addon/fold/foldgutter.css">
-    <script src="code-mirror/lib/codemirror.js"></script>
-    <script src="code-mirror/mode/javascript/javascript.js"></script>
-    <script src="code-mirror/mode/css/css.js"></script>
-    <script src="code-mirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="code-mirror/addon/edit/matchbrackets.js"></script>
-    <script src="code-mirror/addon/fold/foldcode.js"></script>
-    <script src="code-mirror/addon/edit/closebrackets.js"></script>
-    <script src="code-mirror/addon/fold/foldgutter.js"></script>
-    <script>
-        var myCodeMirror = CodeMirror(function (elt) {
-            document.getElementById("codeArea").parentNode.replaceChild(elt, document.getElementById("codeArea"))
-        }, {
-            value: document.getElementById("codeArea").value,
-            mode: "javascript",
-            lineNumbers: true,
-            autofocus: true,
-            lineWrapping: true
-        });
-    </script>
+
 
 </body>
 
