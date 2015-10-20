@@ -1,5 +1,14 @@
 "use strict";
-var debug = true;
+var debug = false;
+
+class Terminal {
+    static log(message) {
+        $("#console").append(message + "\n");
+    }
+    static clear() {
+        $("#console").text("");
+    }
+}
 
 $(window).keypress(function (event) {
     if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
@@ -100,6 +109,9 @@ function getReplaceIndices(code) {
 
 //compile code to avoid async results conflicting
 function compileCode(code) {
+    //add terminal message to indicate code has finished running
+    code += " Terminal.log('Finished running');";
+
     var searchIndices = getReplaceIndices(code);
     //iterate through all necessary changes
     for (var i = 0; i < searchIndices.length; i++) {
@@ -116,6 +128,7 @@ function compileCode(code) {
         //splice the destination
         code = code.splice(innerCounter, 0, "\nfunction goToStatement" + i + "(){");
         var tempLocation = searchIndices[i];
+
         while (code.charAt(tempLocation) != "\n")
             tempLocation--;
         if (code.charAt(tempLocation + 1) == "\\" && code.charAt(tempLocation + 2))
@@ -126,6 +139,7 @@ function compileCode(code) {
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
     }
+
     return code;
 }
 
@@ -149,13 +163,16 @@ sprite2.move();
 function runCode() {
     project.clear();
     drawCanvasGrid();
+    Terminal.clear();
+    Terminal.log("Compiling...");
     var code = "";
     if (debug) {
         code = compileCode(myCodeMirror.getValue());
         //code = myCodeMirror.getValue();
     } else {
-        code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {alert(err.message)}";
+        code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {Terminal.log(err.message)}";
     }
+    Terminal.log("Running...");
     window.eval(code);
 }
 
