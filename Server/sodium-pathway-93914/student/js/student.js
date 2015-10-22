@@ -146,11 +146,11 @@ function compileCode(code) {
 /*
 var sprite = new Sprite();
 sprite.setImage("img/giphy.gif");
-sprite.setLocation(1,1);
-sprite.move("left",1,1);
-sprite.move("up",1,1);
-sprite.move("right",5,1);
-sprite.moveTo(4,3,1);
+sprite.setLocation(1, 1);
+sprite.move("left", 1, 1);
+sprite.move("up", 1, 1);
+sprite.move("right", 5, 1);
+sprite.moveTo(4, 3, 1);
 
 var sprite2 = Sprite.create();
 sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
@@ -174,19 +174,6 @@ function runCode() {
     }
     Terminal.log("Running...");
     window.eval(code);
-}
-
-function loadSavedCode() {
-    //get code from storage and decode from base64
-    var code = atob(localStorage.getItem("studentCode"));
-    myCodeMirror.setValue(code);
-}
-
-function saveCode() {
-    //get code and encode in base64
-    var code = btoa(myCodeMirror.getValue());
-    //store code
-    localStorage.setItem("studentCode", code);
 }
 
 class AnimationRequest {
