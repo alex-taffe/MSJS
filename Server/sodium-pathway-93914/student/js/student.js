@@ -191,6 +191,8 @@ class AnimationRequest {
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
 
+        console.log("full distance: " + this.fullDistance);
+
         //figure out if we need to move in the positive or negative direction (value will always be 1 or -1. If we divide 0/0 and get NaN, assign value to positive 1
         var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
         var yNegativeMultiplier = deltaY / Math.abs(deltaY) || 1;
@@ -203,13 +205,16 @@ class AnimationRequest {
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             this.maxY = Math.abs(deltaY / deltaX) * yNegativeMultiplier;
             this.maxX = 1.0 * xNegativeMultiplier;
+            this.timesExecuted += 1 * this.speed + 1;
         } else if (deltaX == deltaY) {
             this.maxX = 1.0 * xNegativeMultiplier;
             this.maxY = 1.0 * yNegativeMultiplier;
         } else {
             this.maxY = 1.0 * yNegativeMultiplier;
             this.maxX = Math.abs(deltaX / deltaY) * xNegativeMultiplier;
+            this.timesExecuted += 1 * this.speed + 1;
         }
+        console.log(`maxX: ${this.maxX}\nmaxY: ${this.maxY}`);
     }
 }
 
@@ -366,8 +371,8 @@ function onFrame(event) {
             return;
         }
 
-        animationRequests[0].sprite.image.position.x += 1 * animationRequests[0].maxX;
-        animationRequests[0].sprite.image.position.y += 1 * animationRequests[0].maxY;
-        animationRequests[0].timesExecuted++;
+        animationRequests[0].sprite.image.position.x += 1 * animationRequests[0].speed * animationRequests[0].maxX;
+        animationRequests[0].sprite.image.position.y += 1 * animationRequests[0].speed * animationRequests[0].maxY;
+        animationRequests[0].timesExecuted += 1 * animationRequests[0].speed;
     }
 }
