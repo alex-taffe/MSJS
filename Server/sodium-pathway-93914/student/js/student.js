@@ -2,9 +2,11 @@
 var debug = false;
 
 class Terminal {
+    //logs to console
     static log(message) {
-        $("#console").append(message + "\n");
-    }
+            $("#console").append(message + "\n");
+        }
+        //clears console
     static clear() {
         $("#console").text("");
     }
@@ -32,8 +34,6 @@ $(document).ready(function () {
 
     //set animation
     paper.view.attach('frame', onFrame);
-
-
 });
 
 //get the grid setup
@@ -58,7 +58,6 @@ function drawCanvasGrid() {
         path2.lineTo(canvasWidth, canvas.height * (i / 10));
         view.draw()
     }
-
 }
 
 //refresh the canvas grid when the browser resizes
@@ -104,6 +103,7 @@ function getReplaceIndices(code) {
     var moveIndices = getIndicesOf(".move(", code, false);
     var moveToIndices = getIndicesOf(".moveTo(", code, false);
 
+    //return all the indices combined
     return imageIndices.concat(moveIndices).concat(moveToIndices);
 }
 
@@ -139,7 +139,6 @@ function compileCode(code) {
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
     }
-
     return code;
 }
 
@@ -161,28 +160,39 @@ sprite2.move();
 
 //run student code
 function runCode() {
+    //clear the canvas to start everything fresh
     project.clear();
+
+    //redraw our grid
     drawCanvasGrid();
+
+    //clear the console
     Terminal.clear();
+
+    //let them know we're compiling
     Terminal.log("Compiling...");
+
+    //prepare to get code
     var code = "";
     if (debug) {
+        //get code from text field and compile it
         code = compileCode(myCodeMirror.getValue());
-        //code = myCodeMirror.getValue();
     } else {
+        //get code from text field, compile it, and wrap it in error catching mechanism
         code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {Terminal.log(err.message)}";
     }
+    //run the code!
     Terminal.log("Running...");
     window.eval(code);
 }
 
 class AnimationRequest {
     constructor(sprite, callBack, destinationX, destinationY, rotations, speed) {
+        //variable initialization
         this.sprite = sprite;
         this.callBack = callBack;
         this.rotations = rotations;
         this.speed = speed;
-        this.timesExecuted = 0;
 
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -197,8 +207,6 @@ class AnimationRequest {
 
         //find out how far the total distance actually is
         this.fullDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-
-        console.log("full distance: " + this.fullDistance);
 
         //figure out if we need to move in the positive or negative direction (value will always be 1 or -1. If we divide 0/0 and get NaN, assign value to positive 1
         var xNegativeMultiplier = deltaX / Math.abs(deltaX) || 1;
@@ -227,7 +235,6 @@ class AnimationRequest {
             this.maxY = 1.0 * yNegativeMultiplier;
             this.maxX = Math.abs(deltaX / deltaY) * xNegativeMultiplier;
         }
-        console.log(`maxX: ${this.maxX}\nmaxY: ${this.maxY}`);
     }
 }
 
@@ -259,6 +266,7 @@ class Sprite {
         }
         //sets the position of the sprite based on an X/Y coordinate (instant)
     setLocation(x, y) {
+        //the point of the image that we can manipulate is the center, so let's start there
         var imageXCenter = this.image.width / 2;
         var imageYCenter = this.image.height / 2;
 
@@ -318,6 +326,7 @@ class Sprite {
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
+
         //get image width and height
         var imageWidth = this.image.width;
         var imageHeight = this.image.height;
@@ -337,7 +346,6 @@ class Sprite {
                 this.image.height = tileHeight - 5;
             }
         }
-
     }
     setUp(key) {
 
@@ -355,47 +363,44 @@ class Sprite {
         //create a new animation request
         console.log("Request new animation");
         var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
+        //add it to the queue
         animationRequests.push(animation);
-
     }
-
 }
-
-
 
 var animationRequests = [];
 
 function onFrame(event) {
     if (animationRequests.length != 0) {
-
         //get canvas size
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
 
-
         //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
 
-        //debugger;
-
+        //have we moved far enough?
         if (Math.abs(animationRequests[0].yPixelsMoved) >= animationRequests[0].yPixels && Math.abs(animationRequests[0].xPixelsMoved) >= animationRequests[0].xPixels) {
+            //yep, let's continue on to our next item
             animationRequests[0].callBack.next();
+            //delete this animation request
             animationRequests.splice(0, 1);
+            //exit this function so we don't extraneously move too far
             return;
         }
 
+        //calculate how far we need to move
         var yPixelsToMove = 1 * animationRequests[0].speed * animationRequests[0].maxY;
         var xPixelsToMove = 1 * animationRequests[0].speed * animationRequests[0].maxX;
 
+        //move!
         animationRequests[0].sprite.image.position.x += xPixelsToMove;
         animationRequests[0].sprite.image.position.y += 1 * yPixelsToMove;
 
+        //log the move so we know what we've done
         animationRequests[0].xPixelsMoved += xPixelsToMove;
         animationRequests[0].yPixelsMoved += yPixelsToMove;
-
-
-        animationRequests[0].timesExecuted += 1 * animationRequests[0].speed;
     }
 }
