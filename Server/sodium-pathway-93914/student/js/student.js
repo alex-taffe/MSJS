@@ -184,6 +184,13 @@ class AnimationRequest {
         this.speed = speed;
         this.timesExecuted = 0;
 
+        var canvas = document.getElementById("board");
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
+
+        var tileWidth = canvasWidth / 10;
+        var tileHeight = canvasHeight / 10;
+
         //get how many tiles we need to move in each direction
         var deltaX = destinationX - this.sprite.xCoord;
         var deltaY = destinationY - this.sprite.yCoord;
@@ -201,18 +208,24 @@ class AnimationRequest {
         this.maxX = 0;
         this.maxY = 0;
 
+        //this is how many pixels we need to move
+        this.xPixels = Math.abs(deltaX * tileWidth);
+        this.yPixels = Math.abs(deltaY * tileHeight);
+
+        //this is how many pixels we have moved
+        this.xPixelsMoved = 0;
+        this.yPixelsMoved = 0;
+
         //determine the multiplier for the max speed of each direction, so the sprite can get to its destination as quickly as possible
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             this.maxY = Math.abs(deltaY / deltaX) * yNegativeMultiplier;
             this.maxX = 1.0 * xNegativeMultiplier;
-            this.timesExecuted += 1 * this.speed + 1;
         } else if (deltaX == deltaY) {
             this.maxX = 1.0 * xNegativeMultiplier;
             this.maxY = 1.0 * yNegativeMultiplier;
         } else {
             this.maxY = 1.0 * yNegativeMultiplier;
             this.maxX = Math.abs(deltaX / deltaY) * xNegativeMultiplier;
-            this.timesExecuted += 1 * this.speed + 1;
         }
         console.log(`maxX: ${this.maxX}\nmaxY: ${this.maxY}`);
     }
@@ -365,14 +378,24 @@ function onFrame(event) {
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
 
-        if (animationRequests[0].timesExecuted >= animationRequests[0].fullDistance * tileWidth) {
+        //debugger;
+
+        if (Math.abs(animationRequests[0].yPixelsMoved) >= animationRequests[0].yPixels && Math.abs(animationRequests[0].xPixelsMoved) >= animationRequests[0].xPixels) {
             animationRequests[0].callBack.next();
             animationRequests.splice(0, 1);
             return;
         }
 
-        animationRequests[0].sprite.image.position.x += 1 * animationRequests[0].speed * animationRequests[0].maxX;
-        animationRequests[0].sprite.image.position.y += 1 * animationRequests[0].speed * animationRequests[0].maxY;
+        var yPixelsToMove = 1 * animationRequests[0].speed * animationRequests[0].maxY;
+        var xPixelsToMove = 1 * animationRequests[0].speed * animationRequests[0].maxX;
+
+        animationRequests[0].sprite.image.position.x += xPixelsToMove;
+        animationRequests[0].sprite.image.position.y += 1 * yPixelsToMove;
+
+        animationRequests[0].xPixelsMoved += xPixelsToMove;
+        animationRequests[0].yPixelsMoved += yPixelsToMove;
+
+
         animationRequests[0].timesExecuted += 1 * animationRequests[0].speed;
     }
 }
