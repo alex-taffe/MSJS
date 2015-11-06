@@ -12,17 +12,12 @@ class Terminal {
     }
 }
 
-$(window).keypress(function (event) {
-    if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
-    alert("Ctrl-S pressed");
-    event.preventDefault();
-    return false;
-});
-
 //create custom splice method. From user113716 @ http://stackoverflow.com/questions/4313841/javascript-how-can-i-insert-a-string-at-a-specific-index
 String.prototype.splice = function (idx, rem, s) {
     return (this.slice(0, idx) + s + this.slice(idx + Math.abs(rem)));
 };
+
+var lastDown;
 
 //handle document load
 $(document).ready(function () {
@@ -34,6 +29,18 @@ $(document).ready(function () {
 
     //set animation
     paper.view.attach('frame', onFrame);
+
+    //add key press listener to canvas
+    var canvas = document.getElementById("board");
+
+    document.addEventListener("mousedown", function (event) {
+        lastDown = event.target;
+    }, false);
+    document.addEventListener("keydown", function (event) {
+        if (lastDown == canvas) {
+            canvasKeyPressed(event);
+        }
+    }, true);
 });
 
 //get the grid setup
@@ -109,7 +116,7 @@ function getReplaceIndices(code) {
 
 //compile code to avoid async results conflicting
 function compileCode(code) {
-    //add terminal message to indicate code has finished running
+    //add terminal message to indicate code has finished runninh
     code += " Terminal.log('Finished running');";
 
     var searchIndices = getReplaceIndices(code);
@@ -181,6 +188,12 @@ function runCode() {
         //get code from text field, compile it, and wrap it in error catching mechanism
         code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {Terminal.log(err.message)}";
     }
+    //unfocus the input box to avoid issues with keybinding
+    $(myCodeMirror).blur();
+
+    //focus the canvas so keybinding works
+    lastDown = document.getElementById("board");
+
     //run the code!
     Terminal.log("Running...");
     window.eval(code);
@@ -193,6 +206,7 @@ class AnimationRequest {
         this.callBack = callBack;
         this.rotations = rotations;
         this.speed = speed;
+        this.keyToRemove = -1;
 
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
@@ -240,6 +254,7 @@ class AnimationRequest {
 
 //persitent data
 var currentSpriteID = 0;
+var spriteForKey = new Object();
 class Sprite {
     //constructor
     constructor() {
@@ -248,6 +263,11 @@ class Sprite {
             this.yCoord = 0;
             this.image = new Raster();
             this.hasAttachedAnimation = false;
+
+            this.upKey = -1;
+            this.downKey = -1;
+            this.leftKey = -1;
+            this.rightKey = -1;
 
             //increment sprite ID before more instance creation can occur
             currentSpriteID++;
@@ -348,23 +368,58 @@ class Sprite {
         }
     }
     setUp(key) {
-
+        spriteForKey[key] = this;
+        this.upKey = key;
     }
     setDown(key) {
-
+        spriteForKey[key] = this;
+        this.downKey = key;
     }
     setLeft(key) {
-
+        spriteForKey[key] = this;
+        this.leftKey = key;
     }
     setRight(key) {
-
+        spriteForKey[key] = this;
+        this.rightKey = key;
     }
     animate(destinationX, destinationY, speed, rotateTimes, destination) {
         //create a new animation request
-        console.log("Request new animation");
         var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
         //add it to the queue
         animationRequests.push(animation);
+    }
+}
+
+
+var keysDown = [];
+
+function canvasKeyPressed(event) {
+    var keyCode = event.keyCode;
+
+
+    if (!(keysDown.includes(keyCode))) {
+        keysDown.push(keyCode);
+        if (spriteForKey[keyCode]) {
+            var destinationX = spriteForKey[keyCode].xCoord;
+            var destinationY = spriteForKey[keyCode].yCoord;
+
+            if (keyCode == spriteForKey[keyCode].upKey)
+                destinationY--;
+            else if (keyCode == spriteForKey[keyCode].downKey)
+                destinationY++;
+            else if (keyCode == spriteForKey[keyCode].leftKey)
+                destinationX++;
+            else if (keyCode == spriteForKey[keyCode].rightKey)
+                destinationX--;
+
+            var animation = new AnimationRequest(spriteForKey[keyCode], null, destinationX, destinationY, null, 1);
+            animation.keyToRemove = keyCode;
+            animationRequests.push(animation);
+        }
+    }
+    if (event.keyCode == 38) {
+        console.log(keysDown);
     }
 }
 
@@ -383,8 +438,13 @@ function onFrame(event) {
 
         //have we moved far enough?
         if (Math.abs(animationRequests[0].yPixelsMoved) >= animationRequests[0].yPixels && Math.abs(animationRequests[0].xPixelsMoved) >= animationRequests[0].xPixels) {
-            //yep, let's continue on to our next item
-            animationRequests[0].callBack.next();
+            //remove key binding if needed
+            if (animationRequests[0].keyToRemove != -1) {
+                keysDown.splice(keysDown.indexOf(animationRequests[0]), 1);
+            }
+            //yep, let's continue on to our next item if it exists
+            if (animationRequests[0].callBack != null)
+                animationRequests[0].callBack.next();
             //delete this animation request
             animationRequests.splice(0, 1);
             //exit this function so we don't extraneously move too far
@@ -403,4 +463,74 @@ function onFrame(event) {
         animationRequests[0].xPixelsMoved += xPixelsToMove;
         animationRequests[0].yPixelsMoved += yPixelsToMove;
     }
+}
+
+function getKeyCodeFromCharacter(key) {
+    key = key.toLowerCase();
+
+    if (key == "left" || key == "left arrow")
+        return 37;
+    else if (key == "up" || key == "up arrow")
+        return 38;
+    else if (key == "right" || key == "right arrow")
+        return 39;
+    else if (key == "down" || key == "down arrow")
+        return 40;
+    else if (key == "delete")
+        return 46;
+    else if (key == "insert" || key == "ins")
+        return 45
+    else if (key == "backspace")
+        return 8;
+    else if (key == "tab")
+        return 9;
+    else if (key == "enter")
+        return 13;
+    else if (key == "shift")
+        return 16;
+    else if (key == "control" || key == "cntrl")
+        return 17;
+    else if (key == "alt")
+        return 18;
+    else if (key == "caps" || key == "caps lock")
+        return 20;
+    else if (key == "esc" || key == "escape")
+        return 27;
+    else if (key == "page up" || key == "pg up")
+        return 33;
+    else if (key == "page down" || key == "pg down")
+        return 34;
+    else if (key == "end")
+        return 35;
+    else if (key == "home")
+        return 36;
+    else if (!isNaN(key)) {
+        if (key >= 10)
+            throw "Not a key";
+        return key + 48;
+    } else if (key == "f1")
+        return 112;
+    else if (key == "f2")
+        return 113;
+    else if (key == "f3")
+        return 114;
+    else if (key == "f4")
+        return 115;
+    else if (key == "f5")
+        return 116;
+    else if (key == "f6")
+        return 117;
+    else if (key == "f7")
+        return 118;
+    else if (key == "f8")
+        return 119;
+    else if (key == "f9")
+        return 120;
+    else if (key == "f10")
+        return 121;
+    else if (key == "f11")
+        return 122;
+    else if (key == "f12")
+        return 123;
+
 }
