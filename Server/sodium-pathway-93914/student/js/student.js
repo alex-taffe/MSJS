@@ -194,6 +194,9 @@ function runCode() {
     //focus the canvas so keybinding works
     lastDown = document.getElementById("board");
 
+    //reset depressed key list
+    keysDown = [];
+
     //run the code!
     Terminal.log("Running...");
     window.eval(code);
@@ -368,20 +371,24 @@ class Sprite {
         }
     }
     setUp(key) {
-        spriteForKey[key] = this;
-        this.upKey = key;
+        var keyCode = getKeyCodeFromCharacter(key);
+        spriteForKey[keyCode] = this;
+        this.upKey = keyCode;
     }
     setDown(key) {
-        spriteForKey[key] = this;
-        this.downKey = key;
+        var keyCode = getKeyCodeFromCharacter(key);
+        spriteForKey[keyCode] = this;
+        this.downKey = keyCode;
     }
     setLeft(key) {
-        spriteForKey[key] = this;
-        this.leftKey = key;
+        var keyCode = getKeyCodeFromCharacter(key);
+        spriteForKey[keyCode] = this;
+        this.leftKey = keyCode;
     }
     setRight(key) {
-        spriteForKey[key] = this;
-        this.rightKey = key;
+        var keyCode = getKeyCodeFromCharacter(key);
+        spriteForKey[keyCode] = this;
+        this.rightKey = keyCode;
     }
     animate(destinationX, destinationY, speed, rotateTimes, destination) {
         //create a new animation request
@@ -396,6 +403,15 @@ var keysDown = [];
 
 function canvasKeyPressed(event) {
     var keyCode = event.keyCode;
+    //fix 0 on number pad
+    if (keyCode == 96)
+        keyCode = 48;
+    //fix 1-9 on number pad
+    else if (keyCode >= 97 && keyCode <= 105)
+        keyCode -= 48;
+    //fix . on number pad
+    else if (keyCode == 110)
+        keyCode == 46;
 
 
     if (!(keysDown.includes(keyCode))) {
@@ -409,9 +425,9 @@ function canvasKeyPressed(event) {
             else if (keyCode == spriteForKey[keyCode].downKey)
                 destinationY++;
             else if (keyCode == spriteForKey[keyCode].leftKey)
-                destinationX++;
-            else if (keyCode == spriteForKey[keyCode].rightKey)
                 destinationX--;
+            else if (keyCode == spriteForKey[keyCode].rightKey)
+                destinationX++;
 
             var animation = new AnimationRequest(spriteForKey[keyCode], null, destinationX, destinationY, null, 1);
             animation.keyToRemove = keyCode;
@@ -479,9 +495,11 @@ function getKeyCodeFromCharacter(key) {
     else if (key == "delete")
         return 46;
     else if (key == "insert" || key == "ins")
-        return 45
+        return 45;
     else if (key == "backspace")
         return 8;
+    else if (key == " " || key == "space")
+        return 32;
     else if (key == "tab")
         return 9;
     else if (key == "enter")
@@ -490,6 +508,8 @@ function getKeyCodeFromCharacter(key) {
         return 16;
     else if (key == "control" || key == "cntrl")
         return 17;
+    else if (key == "command" || key == "cmnd")
+        return 91;
     else if (key == "alt")
         return 18;
     else if (key == "caps" || key == "caps lock")
@@ -504,11 +524,31 @@ function getKeyCodeFromCharacter(key) {
         return 35;
     else if (key == "home")
         return 36;
-    else if (!isNaN(key)) {
-        if (key >= 10)
-            throw "Not a key";
-        return key + 48;
-    } else if (key == "f1")
+    else if (key == "=" || key == "equals")
+        return 187;
+    else if (key == "-" || key == "minus" || key == "dash")
+        return 189;
+    else if (key == "`")
+        return 192;
+    else if (key == "\\")
+        return 220;
+    else if (key == ",")
+        return 188;
+    else if (key == ".")
+        return 190;
+    else if (key == "/")
+        return 191;
+    else if (key == ";")
+        return 186;
+    else if (key == "'")
+        return 222;
+    else if (key == "[")
+        return 219;
+    else if (key == "]")
+        return 221;
+    else if (key == "clear" || key == "clr")
+        return 12;
+    else if (key == "f1")
         return 112;
     else if (key == "f2")
         return 113;
@@ -532,5 +572,27 @@ function getKeyCodeFromCharacter(key) {
         return 122;
     else if (key == "f12")
         return 123;
-
+    else if (key == "f13")
+        return 124;
+    else if (key == "f14")
+        return 125;
+    else if (key == "f15")
+        return 126;
+    else if (key == "f16")
+        return 127;
+    else if (key == "f17")
+        return 128;
+    else if (key == "f18")
+        return 129;
+    else if (key == "f19")
+        return 130;
+    //probably one of the number keys
+    else if (!isNaN(key)) {
+        if (Number.parseInt(key) >= 10)
+            throw "Not a key";
+        return Number.parseInt(key) + 48;
+    }
+    //probably a number
+    else if (key.length == 1 && key.match(/[a-z]/i))
+        return key.charCodeAt(0) - 32;
 }
