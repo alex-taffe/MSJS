@@ -17,13 +17,16 @@ String.prototype.splice = function (idx, rem, s) {
     return (this.slice(0, idx) + s + this.slice(idx + Math.abs(rem)));
 };
 
+//last pressed key
 var lastDown;
 
 //handle document load
 $(document).ready(function () {
+    //setup paper for anumations
     paper.install(window);
-
     paper.setup('board');
+
+    //setup our canvas
     setCanvasSize();
     drawCanvasGrid();
 
@@ -33,6 +36,7 @@ $(document).ready(function () {
     //add key press listener to canvas
     var canvas = document.getElementById("board");
 
+    //add the ability to focus on the canvas, even though that's not a thing
     document.addEventListener("mousedown", function (event) {
         lastDown = event.target;
     }, false);
@@ -202,15 +206,19 @@ function runCode() {
     window.eval(code);
 }
 
+//animation request class
 class AnimationRequest {
     constructor(sprite, callBack, destinationX, destinationY, rotations, speed) {
         //variable initialization
         this.sprite = sprite;
+        //this is where we need to go after the animation request is done
         this.callBack = callBack;
         this.rotations = rotations;
         this.speed = speed;
+        //key associated with this object, so we can remove it (-1 indicates no key needs to be removed)
         this.keyToRemove = -1;
 
+        //get canvas and tile dimensions
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
@@ -255,8 +263,9 @@ class AnimationRequest {
     }
 }
 
-//persitent data
+//store last sprite ID
 var currentSpriteID = 0;
+//sprites associated with a specific keyboard key
 var spriteForKey = new Object();
 class Sprite {
     //constructor
@@ -267,10 +276,17 @@ class Sprite {
             this.image = new Raster();
             this.hasAttachedAnimation = false;
 
+            //keys assigned to certain actions
             this.upKey = -1;
             this.downKey = -1;
             this.leftKey = -1;
             this.rightKey = -1;
+
+            //speed of directional keys
+            this.upSpeed = 1;
+            this.downSpeed = 1;
+            this.leftSpeed = 1;
+            this.rightSpeed = 1;
 
             //increment sprite ID before more instance creation can occur
             currentSpriteID++;
@@ -293,6 +309,7 @@ class Sprite {
         var imageXCenter = this.image.width / 2;
         var imageYCenter = this.image.height / 2;
 
+        //get the canvas and tile widths
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
@@ -334,6 +351,7 @@ class Sprite {
         this.yCoord = finalY;
         this.xCoord = finalX;
     }
+
     moveTo(x, y, speed, destination) {
             //animate it!
             this.animate(x, y, speed, null, destination);
@@ -342,7 +360,9 @@ class Sprite {
             this.xCoord = x;
         }
         //appropriately size image for canvas
+
     setImageSize() {
+        //get the canvas and tile widths
         var canvas = document.getElementById("board");
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
@@ -370,26 +390,56 @@ class Sprite {
             }
         }
     }
+
+    //set up directional key (string)
     setUp(key) {
         var keyCode = getKeyCodeFromCharacter(key);
         spriteForKey[keyCode] = this;
         this.upKey = keyCode;
     }
+
+    //set down directional key (string)
     setDown(key) {
         var keyCode = getKeyCodeFromCharacter(key);
         spriteForKey[keyCode] = this;
         this.downKey = keyCode;
     }
+
+    //set left directional key (string)
     setLeft(key) {
         var keyCode = getKeyCodeFromCharacter(key);
         spriteForKey[keyCode] = this;
         this.leftKey = keyCode;
     }
+
+    //set right directional key (string)
     setRight(key) {
         var keyCode = getKeyCodeFromCharacter(key);
         spriteForKey[keyCode] = this;
         this.rightKey = keyCode;
     }
+
+    //set up directional key speed
+    setUpSpeed(speed) {
+        this.upSpeed = speed;
+    }
+
+    //set down directional key speed
+    setDownSpeed(speed) {
+        this.downSpeed = speed;
+    }
+
+    //set left directional key speed
+    setLeftSpeed(speed) {
+        this.leftSpeed = speed;
+    }
+
+    //set right directional key speed
+    setRightSpeed(speed) {
+        this.rightSpeed = speed;
+    }
+
+    //animate this sprite when need be
     animate(destinationX, destinationY, speed, rotateTimes, destination) {
         //create a new animation request
         var animation = new AnimationRequest(this, destination, destinationX, destinationY, null, speed);
@@ -398,9 +448,10 @@ class Sprite {
     }
 }
 
-
+//current keys that are depressed on the keyboard
 var keysDown = [];
 
+//called every time key is pressed when the canvas is in focus
 function canvasKeyPressed(event) {
     var keyCode = event.keyCode;
     //fix 0 on number pad
@@ -413,13 +464,17 @@ function canvasKeyPressed(event) {
     else if (keyCode == 110)
         keyCode == 46;
 
-
+    //make sure we aren't duplicating animations because some fool is holding down a key on the keyboard
     if (!(keysDown.includes(keyCode))) {
+        //key not there, so now let's add it
         keysDown.push(keyCode);
+        //make sure this key is actually associated with a key
         if (spriteForKey[keyCode]) {
+            //yep
             var destinationX = spriteForKey[keyCode].xCoord;
             var destinationY = spriteForKey[keyCode].yCoord;
 
+            //let's figure out where we need to go
             if (keyCode == spriteForKey[keyCode].upKey)
                 destinationY--;
             else if (keyCode == spriteForKey[keyCode].downKey)
@@ -429,19 +484,19 @@ function canvasKeyPressed(event) {
             else if (keyCode == spriteForKey[keyCode].rightKey)
                 destinationX++;
 
+            //everything figured out, create the animation and remove the key from the queue
             var animation = new AnimationRequest(spriteForKey[keyCode], null, destinationX, destinationY, null, 1);
             animation.keyToRemove = keyCode;
             animationRequests.push(animation);
         }
     }
-    if (event.keyCode == 38) {
-        console.log(keysDown);
-    }
 }
-
+//all animation requests
 var animationRequests = [];
 
+//occurs 60 times per second to handle animations
 function onFrame(event) {
+    //if we have an animation, let's get it and do it
     if (animationRequests.length != 0) {
         //get canvas size
         var canvas = document.getElementById("board");
@@ -481,6 +536,7 @@ function onFrame(event) {
     }
 }
 
+//returns numeric key code from user input
 function getKeyCodeFromCharacter(key) {
     key = key.toLowerCase();
 
@@ -592,7 +648,7 @@ function getKeyCodeFromCharacter(key) {
             throw "Not a key";
         return Number.parseInt(key) + 48;
     }
-    //probably a number
+    //probably a letter
     else if (key.length == 1 && key.match(/[a-z]/i))
         return key.charCodeAt(0) - 32;
 }

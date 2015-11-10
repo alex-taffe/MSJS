@@ -1,0 +1,71 @@
+{
+    "classes": [
+        "Student": {
+            "properties": [
+
+            ],
+            "methods": [
+                {
+                    "methodName": "setImage(URL)",
+                    "returnValue": "void",
+                    "description": "Sets the image of the calling sprite object based on a URL",
+                    "note": null
+                },
+                {
+                    "methodName": "setImage(name)",
+                    "returnValue": "void",
+                    "description": "Sets the image of the calling sprite object to a default image based on the name provided",
+                    "note": "Accepetable default images are: "
+                },
+                {
+                    "methodName": "setLocation(x,y)",
+                    "returnValue": "void",
+                    "description": "Immediately moves the calling sprite to the location specified on the grid",
+                    "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
+                },
+                {
+                    "methodName": "move(direction, numSpaces, speed)",
+                    "returnValue": "void",
+                    "description": "Moves the calling sprite in the direction specified by the number of spaces specified at the speed specified",
+                    "note": "Acceptable directions are left, right, up, down"
+                },
+                {
+                    "methodName": "moveTo(x, y, speed)",
+                    "returnValue": "void",
+                    "description": "Moves the calling sprite to the x and y coordinates specified at the speed specified",
+                    "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
+                },
+                {
+                    "methodName": "setUp(key)",
+                    "returnValue": "void",
+                    "description": "Sets the key that will move the calling sprite upwards",
+                    "note": "Any key on the keyboard is allowed"
+                },
+                {
+                    "methodName": "setDown(key)",
+                    "returnValue": "void",
+                    "description": "Sets the key that will move the calling sprite downwards",
+                    "note": "Any key on the keyboard is allowed"
+                },
+                {
+                    "methodName": "setLeft(key)",
+                    "returnValue": "void",
+                    "description": "Sets the key that will move the calling sprite left",
+                    "note": "Any key on the keyboard is allowed"
+                },
+                {
+                    "methodName": "setRight(key)",
+                    "returnValue": "void",
+                    "description": "Sets the key that will move the calling sprite right",
+                    "note": "Any key on the keyboard is allowed"
+                }
+            ],
+            "constructors": [
+                {
+                    "methodName": "",
+                    "description": ""
+                }
+            ]
+        }
+    ]
+}
