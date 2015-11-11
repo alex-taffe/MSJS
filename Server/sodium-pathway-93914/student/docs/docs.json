@@ -1,118 +1,122 @@
 {
     "classes": [
-        "Student": {
-            "properties": null,
-            "methods": [
-                {
-                    "methodName": "setImage(URL)",
-                    "returnValue": "void",
-                    "description": "Sets the image of the calling sprite object based on a URL",
-                    "type": "instance",
-                    "note": null
+        {
+            "Student": {
+                "properties": null,
+                "methods": [
+                    {
+                        "methodName": "setImage(URL)",
+                        "returnValue": "void",
+                        "description": "Sets the image of the calling sprite object based on a URL",
+                        "type": "instance",
+                        "note": null
                 },
-                {
-                    "methodName": "setImage(name)",
-                    "returnValue": "void",
-                    "description": "Sets the image of the calling sprite object to a default image based on the name provided",
-                    "type": "instance",
-                    "note": "Accepetable default images are: "
+                    {
+                        "methodName": "setImage(name)",
+                        "returnValue": "void",
+                        "description": "Sets the image of the calling sprite object to a default image based on the name provided",
+                        "type": "instance",
+                        "note": "Accepetable default images are: "
                 },
-                {
-                    "methodName": "setLocation(x,y)",
-                    "returnValue": "void",
-                    "description": "Immediately moves the calling sprite to the location specified on the grid",
-                    "type": "instance",
-                    "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
+                    {
+                        "methodName": "setLocation(x,y)",
+                        "returnValue": "void",
+                        "description": "Immediately moves the calling sprite to the location specified on the grid",
+                        "type": "instance",
+                        "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
                 },
-                {
-                    "methodName": "move(direction, numSpaces, speed)",
-                    "returnValue": "void",
-                    "description": "Moves the calling sprite in the direction specified by the number of spaces specified at the speed specified",
-                    "type": "instance",
-                    "note": "Acceptable directions are left, right, up, down"
+                    {
+                        "methodName": "move(direction, numSpaces, speed)",
+                        "returnValue": "void",
+                        "description": "Moves the calling sprite in the direction specified by the number of spaces specified at the speed specified",
+                        "type": "instance",
+                        "note": "Acceptable directions are left, right, up, down"
                 },
-                {
-                    "methodName": "moveTo(x, y, speed)",
-                    "returnValue": "void",
-                    "description": "Moves the calling sprite to the x and y coordinates specified at the speed specified",
-                    "type": "instance",
-                    "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
+                    {
+                        "methodName": "moveTo(x, y, speed)",
+                        "returnValue": "void",
+                        "description": "Moves the calling sprite to the x and y coordinates specified at the speed specified",
+                        "type": "instance",
+                        "note": "Specifying a destination outside the acceptable range of 0-9 will result in program termination"
                 },
-                {
-                    "methodName": "setUp(key)",
-                    "returnValue": "void",
-                    "description": "Sets the key that will move the calling sprite upwards",
-                    "type": "instance",
-                    "note": "Any key on the keyboard is allowed"
+                    {
+                        "methodName": "setUp(key)",
+                        "returnValue": "void",
+                        "description": "Sets the key that will move the calling sprite upwards",
+                        "type": "instance",
+                        "note": "Any key on the keyboard is allowed"
                 },
-                {
-                    "methodName": "setDown(key)",
-                    "returnValue": "void",
-                    "description": "Sets the key that will move the calling sprite downwards",
-                    "type": "instance",
-                    "note": "Any key on the keyboard is allowed"
+                    {
+                        "methodName": "setDown(key)",
+                        "returnValue": "void",
+                        "description": "Sets the key that will move the calling sprite downwards",
+                        "type": "instance",
+                        "note": "Any key on the keyboard is allowed"
                 },
-                {
-                    "methodName": "setLeft(key)",
-                    "returnValue": "void",
-                    "description": "Sets the key that will move the calling sprite left",
-                    "type": "instance",
-                    "note": "Any key on the keyboard is allowed"
+                    {
+                        "methodName": "setLeft(key)",
+                        "returnValue": "void",
+                        "description": "Sets the key that will move the calling sprite left",
+                        "type": "instance",
+                        "note": "Any key on the keyboard is allowed"
                 },
-                {
-                    "methodName": "setRight(key)",
-                    "returnValue": "void",
-                    "description": "Sets the key that will move the calling sprite right",
-                    "type": "instance",
-                    "note": "Any key on the keyboard is allowed"
+                    {
+                        "methodName": "setRight(key)",
+                        "returnValue": "void",
+                        "description": "Sets the key that will move the calling sprite right",
+                        "type": "instance",
+                        "note": "Any key on the keyboard is allowed"
                 },
-                {
-                    "methodName": "setUpSpeed(speed)",
-                    "returnValue": "void",
-                    "description": "Sets the speed that the calling sprite will move when the assigned up key is pressed",
-                    "type": "instance",
-                    "note": null
+                    {
+                        "methodName": "setUpSpeed(speed)",
+                        "returnValue": "void",
+                        "description": "Sets the speed that the calling sprite will move when the assigned up key is pressed",
+                        "type": "instance",
+                        "note": null
                 },
-                {
-                    "methodName": "setDownSpeed(speed)",
-                    "returnValue": "void",
-                    "description": "Sets the speed that the calling sprite will move when the assigned down key is pressed",
-                    "type": "instance",
-                    "note": null
+                    {
+                        "methodName": "setDownSpeed(speed)",
+                        "returnValue": "void",
+                        "description": "Sets the speed that the calling sprite will move when the assigned down key is pressed",
+                        "type": "instance",
+                        "note": null
                 },
-                {
-                    "methodName": "setLeftSpeed(speed)",
-                    "returnValue": "void",
-                    "description": "Sets the speed that the calling sprite will move when the assigned left key is pressed",
-                    "type": "instance",
-                    "note": null
+                    {
+                        "methodName": "setLeftSpeed(speed)",
+                        "returnValue": "void",
+                        "description": "Sets the speed that the calling sprite will move when the assigned left key is pressed",
+                        "type": "instance",
+                        "note": null
                 },
-                {
-                    "methodName": "setRightSpeed(speed)",
-                    "returnValue": "void",
-                    "description": "Sets the speed that the calling sprite will move when the assigned right key is pressed",
-                    "type": "instance",
-                    "note": null
+                    {
+                        "methodName": "setRightSpeed(speed)",
+                        "returnValue": "void",
+                        "description": "Sets the speed that the calling sprite will move when the assigned right key is pressed",
+                        "type": "instance",
+                        "note": null
                 }
             ],
-            "constructors": [
-                {
-                    "methodName": "Sprite()",
-                    "description": "Instantiates a new, empty sprite"
+                "constructors": [
+                    {
+                        "methodName": "Sprite()",
+                        "description": "Instantiates a new, empty sprite"
                 }
             ]
+            }
         },
-        "Terminal": {
-            "properties": null,
-            "methods": [
-                {
-                    "methodName": "log(message)",
-                    "returnValue": "void",
-                    "description": "Logs a message to the on screen console",
-                    "type": "static",
-                    "note": null
+        {
+            "Terminal": {
+                "properties": null,
+                "methods": [
+                    {
+                        "methodName": "log(message)",
+                        "returnValue": "void",
+                        "description": "Logs a message to the on screen console",
+                        "type": "static",
+                        "note": null
                 }
             ]
+            }
         }
     ]
 }
