@@ -51,22 +51,23 @@ $(document).ready(function () {
 function drawCanvasGrid() {
     //get canvas width and height
     var canvas = document.getElementById("board");
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
+    var canvasWidth = canvas.width / window.devicePixelRatio;
+    var canvasHeight = canvas.height / window.devicePixelRatio;
+
 
     for (var i = 0; i < 10; i++) {
         //vertical lines
         var path = new Path();
         path.strokeColor = 'black';
-        path.moveTo(canvas.width * (i / 10), 0);
-        path.lineTo(canvas.width * (i / 10), canvasHeight);
+        path.moveTo(canvasWidth * (i / 10), 0);
+        path.lineTo(canvasWidth * (i / 10), canvasHeight);
         view.draw();
 
         //horizontal lines
         var path2 = new Path();
         path2.strokeColor = 'black';
-        path2.moveTo(0, canvas.height * (i / 10));
-        path2.lineTo(canvasWidth, canvas.height * (i / 10));
+        path2.moveTo(0, canvasHeight * (i / 10));
+        path2.lineTo(canvasWidth, canvasHeight * (i / 10));
         view.draw()
     }
 }
@@ -220,8 +221,8 @@ class AnimationRequest {
 
         //get canvas and tile dimensions
         var canvas = document.getElementById("board");
-        var canvasWidth = canvas.width;
-        var canvasHeight = canvas.height;
+        var canvasWidth = canvas.width / window.devicePixelRatio;
+        var canvasHeight = canvas.height / window.devicePixelRatio;
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
@@ -311,8 +312,8 @@ class Sprite {
 
         //get the canvas and tile widths
         var canvas = document.getElementById("board");
-        var canvasWidth = canvas.width;
-        var canvasHeight = canvas.height;
+        var canvasWidth = canvas.width / window.devicePixelRatio;
+        var canvasHeight = canvas.height / window.devicePixelRatio;
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
@@ -364,8 +365,8 @@ class Sprite {
     setImageSize() {
         //get the canvas and tile widths
         var canvas = document.getElementById("board");
-        var canvasWidth = canvas.width;
-        var canvasHeight = canvas.height;
+        var canvasWidth = canvas.width / window.devicePixelRatio;
+        var canvasHeight = canvas.height / window.devicePixelRatio;
 
         var tileWidth = canvasWidth / 10;
         var tileHeight = canvasHeight / 10;
@@ -500,8 +501,8 @@ function onFrame(event) {
     if (animationRequests.length != 0) {
         //get canvas size
         var canvas = document.getElementById("board");
-        var canvasWidth = canvas.width;
-        var canvasHeight = canvas.height;
+        var canvasWidth = canvas.width / window.devicePixelRatio;
+        var canvasHeight = canvas.height / window.devicePixelRatio;
 
         //get tile width for accurate calculations
         var tileWidth = canvasWidth / 10;
