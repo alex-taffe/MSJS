@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/student.css">
+    <link rel="stylesheet" href="docs/docs.css">
     <title></title>
 </head>
 
@@ -24,6 +25,8 @@
 
     <br>
     <textarea id="console"></textarea>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#codeDocModal">Open Documentation</button>
     <!--outdated browser modal dialogue-->
     <div class="modal fade" id="outdatedBrowserModal">
         <div class="modal-dialog">
@@ -52,6 +55,26 @@
                                 <div class="caption">Microsoft Edge</div>
                             </a>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!--code documentation browser modal dialogue-->
+    <div class="modal fade" id="codeDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Documentation</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="codeDoc">
+
                     </div>
                 </div>
             </div>
@@ -161,6 +184,7 @@
         }
     </script>
     <script src="js/student.js"></script>
+    <script src="docs/docs.js"></script>
 
 
 

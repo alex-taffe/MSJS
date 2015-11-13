@@ -1,2 +1,27 @@
+/* line 1, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.methodType {
+  display: inline-block; }
+
+/* line 5, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.classTitle {
+  font-weight: bold;
+  font-size: 2em; }
+
+/* line 10, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.sectionHeader {
+  font-weight: bold;
+  margin-bottom: 10px; }
+
+/* line 15, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.surroundCard {
+  border-color: #FF5409; }
+
+/* line 19, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.card-block {
+  padding: 10px; }
+
+/* line 22, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/docs/docs.scss */
+.methodName {
+  text-align: center; }
 
 /*# sourceMappingURL=docs.css.map */

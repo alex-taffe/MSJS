@@ -45,6 +45,9 @@ $(document).ready(function () {
             canvasKeyPressed(event);
         }
     }, true);
+
+    //load in code documentation
+    $("#codeDoc").load("docs/docs.html");
 });
 
 //get the grid setup
