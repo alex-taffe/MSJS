@@ -35,10 +35,20 @@
         return $result;
     }
     //connect to the MySQL database
-    $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users',
+    $db = null;
+    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+    //connect to the MySQL database on app engine
+        $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users',
                   'root',  // username
                   'xGQEsWRd39G3UrGU' // password
                   );
+    }
+    else{
+        $db = new pdo('mysql:host=127.0.0.1:3307;dbname=users',
+                  'root',  // username
+                  'xGQEsWRd39G3UrGU' // password
+                  );
+    }
     //prevent emulated prepared statements to prevent against SQL injection
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     
