@@ -195,11 +195,14 @@
                 $("#registerAlert").html('');
                 $("#registerForm").css("visibility", "hidden");
                 $("#registerLoader").css("visibility", "visible");
+                var recaptcha = null;
+                if (typeof grecaptcha !== 'undefined')
+                    recaptcha = grecaptcha.getResponse();
                 $.post("register", {
                         email: $("#email").val(),
                         password: $("#password").val(),
                         password2: $("#password2").val(),
-                        "g-recaptcha-response": grecaptcha.getResponse()
+                        "g-recaptcha-response": recaptcha
                     })
                     .done(function (data) {
                         var registerInfo = jQuery.parseJSON(data);
