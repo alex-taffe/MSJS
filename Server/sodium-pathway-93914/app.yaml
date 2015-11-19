@@ -51,5 +51,8 @@ handlers:
 - url: /get-lesson
   script: get-lesson.php
   
+- url: /getJSON
+  script: get-lesson.php
+  
 - url: /example
   script: example.json

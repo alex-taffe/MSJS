@@ -48,7 +48,27 @@ $(document).ready(function () {
 
     //load in code documentation
     $("#codeDoc").load("docs/docs.html");
+
+    //show teacher code box
+    if (!debug)
+        $("#teacherCodeModal").modal({
+            keyboard: false,
+            backdrop: "static"
+        });
 });
+
+//check the student's code and if it's correct, load in the appropriate information
+function checkCode() {
+    var code = $("#teacherCodeBox").val();
+    $("#teacherCodeBox").css("visibility", "hidden");
+    $("#teacherCodeSubmit").css("visibility", "hidden");
+    $("#codeDirections").css("visibility", "hidden");
+    $("#codeLoader").css("visibility", "visible");
+    /*$.post("getJSON", {
+            code: code
+        })
+        .done(function (data) {});*/
+}
 
 //get the grid setup
 function drawCanvasGrid() {

@@ -75,4 +75,18 @@ h1 {
 .browserLogo .caption {
   text-align: center; }
 
+/* line 83, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+#teacherCodeModal .modal-body {
+  text-align: center; }
+
+/* line 87, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+.loader {
+  position: absolute;
+  top: 40%;
+  left: 50%; }
+
+/* line 93, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+.loader-inner div {
+  border-color: #FF5409 !important; }
+
 /*# sourceMappingURL=student.css.map */

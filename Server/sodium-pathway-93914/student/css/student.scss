@@ -79,3 +79,17 @@ h1 {
 .browserLogo .caption {
     text-align: center;
 }
+
+#teacherCodeModal .modal-body {
+    text-align: center;
+}
+
+.loader {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+}
+
+.loader-inner div {
+    border-color: #FF5409 !important;
+}

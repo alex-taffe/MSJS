@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/student.css">
     <link rel="stylesheet" href="docs/docs.css">
+    <link rel="stylesheet" href="../css/loaders.min.css">
     <title></title>
 </head>
 
@@ -83,6 +84,33 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <!--teacher code modal dialogue-->
+    <div class="modal fade" id="teacherCodeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enter Code</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="codeDirections">Enter the code given to you by your teacher</span>
+                    <br>
+                    <input type="text" placeholder="Code" id="teacherCodeBox">
+                    <button onclick="checkCode()" id="teacherCodeSubmit">Submit</button>
+                    <div id="codeLoader" class="loader" style="visibility:hidden">
+                        <div class="loader-inner ball-scale-ripple-multiple">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.js"></script>

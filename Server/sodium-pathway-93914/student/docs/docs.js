@@ -2,7 +2,6 @@ $(document).ready(function () {
     var finalHTML = "";
     $.getJSON("docs/docs.json", function (data) {
         var classes = data["classes"];
-        console.log(classes);
         //console.log(classes);
         for (var i = 0; i < classes.length; i++) {
             var className = classes[i].name;
