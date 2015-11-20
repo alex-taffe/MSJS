@@ -93,3 +93,35 @@ h1 {
 .loader-inner div {
     border-color: #FF5409 !important;
 }
+
+#teacherCodeBox {
+    border: none;
+    border-bottom: 1px solid $titleColor;
+    outline: none;
+}
+
+#teacherCodeSubmit {
+    border-radius: 5px;
+    border: none;
+    background-color: $titleColor;
+    color: white;
+    outline: none;
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
+}

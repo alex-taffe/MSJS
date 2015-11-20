@@ -59,7 +59,9 @@ $(document).ready(function () {
 
 //check the student's code and if it's correct, load in the appropriate information
 function checkCode() {
+    //get the code from the text box
     var code = $("#teacherCodeBox").val();
+    //hide all the content in the modal and show the spinner
     $("#teacherCodeBox").css("visibility", "hidden");
     $("#teacherCodeSubmit").css("visibility", "hidden");
     $("#codeDirections").css("visibility", "hidden");

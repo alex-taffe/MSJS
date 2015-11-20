@@ -89,4 +89,36 @@ h1 {
 .loader-inner div {
   border-color: #FF5409 !important; }
 
+/* line 97, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+#teacherCodeBox {
+  border: none;
+  border-bottom: 1px solid #FF5409;
+  outline: none; }
+
+/* line 103, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+#teacherCodeSubmit {
+  border-radius: 5px;
+  border: none;
+  background-color: #FF5409;
+  color: white;
+  outline: none; }
+
+/* line 111, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+::-webkit-input-placeholder {
+  text-align: center; }
+
+/* line 115, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center; }
+
+/* line 120, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center; }
+
+/* line 125, /Users/naapp/Documents/MSJS/Server/sodium-pathway-93914/student/css/student.scss */
+:-ms-input-placeholder {
+  text-align: center; }
+
 /*# sourceMappingURL=student.css.map */
