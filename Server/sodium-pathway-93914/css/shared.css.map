@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "shared.css",
+  "sources": [
+    "shared.scss"
+  ],
+  "sourcesContent": [],
+  "mappings": "",
+  "names": []
+}
