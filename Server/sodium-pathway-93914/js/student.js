@@ -1,5 +1,5 @@
 "use strict";
-var debug = true;
+var debug = false;
 
 class Terminal {
     //logs to console
@@ -66,10 +66,20 @@ function checkCode() {
     $("#teacherCodeSubmit").css("visibility", "hidden");
     $("#codeDirections").css("visibility", "hidden");
     $("#codeLoader").css("visibility", "visible");
-    /*$.post("getJSON", {
-            code: code
-        })
-        .done(function (data) {});*/
+    $("#codeAlert").css("visibility", "hidden");
+    $.getJSON("get-lesson?code=" + code, function (data) {
+        console.log(data);
+        if (data["status"] == "success")
+            $("#teacherCodeModal").modal("hide");
+        else {
+            $("#codeAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + data["message"] + '</div>');
+            $("#teacherCodeBox").css("visibility", "visible");
+            $("#teacherCodeSubmit").css("visibility", "visible");
+            $("#codeDirections").css("visibility", "visible");
+            $("#codeLoader").css("visibility", "hidden");
+            $("#codeAlert").css("visibility", "visible");
+        }
+    });
 }
 
 //get the grid setup

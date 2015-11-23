@@ -1,6 +1,9 @@
 <?php
     
     $code = $_GET["code"];
+        
+    //make code uppercase cause the user probably screwed up
+    $code = strtoupper($code);
     
     //connect to the MySQL database
     $$db = null;
@@ -27,5 +30,8 @@
         $queryResult = $stmt->fetch();
         echo $queryResult["JSON"];
     }
+else{
+    echo '{"status":"fail","message":"Code not found"}';
+}
     
 ?>

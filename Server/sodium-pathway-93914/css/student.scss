@@ -98,6 +98,7 @@ h1 {
     border: none;
     border-bottom: 1px solid $titleColor;
     outline: none;
+    text-transform: uppercase;
 }
 
 #teacherCodeSubmit {
@@ -110,18 +111,22 @@ h1 {
 
 ::-webkit-input-placeholder {
     text-align: center;
+    text-transform: none;
 }
 
 :-moz-placeholder {
     /* Firefox 18- */
     text-align: center;
+    text-transform: none;
 }
 
 ::-moz-placeholder {
     /* Firefox 19+ */
     text-align: center;
+    text-transform: none;
 }
 
 :-ms-input-placeholder {
     text-align: center;
+    text-transform: none;
 }

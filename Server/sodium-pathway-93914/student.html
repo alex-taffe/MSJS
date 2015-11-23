@@ -92,9 +92,10 @@
                     <h4 class="modal-title">Enter Code</h4>
                 </div>
                 <div class="modal-body">
+                    <div id="codeAlert"></div>
                     <span id="codeDirections">Enter the code given to you by your teacher</span>
                     <br>
-                    <input type="text" placeholder="Code" id="teacherCodeBox">
+                    <input type="text" placeholder="Code" id="teacherCodeBox" autofocus>
                     <button onclick="checkCode()" id="teacherCodeSubmit">Submit</button>
                     <div id="codeLoader" class="loader" style="visibility:hidden">
                         <div class="loader-inner ball-scale-ripple-multiple">
@@ -134,7 +135,6 @@
             value: document.getElementById("codeArea").value,
             mode: "javascript",
             lineNumbers: true,
-            autofocus: true,
             lineWrapping: true
         });
     </script>
