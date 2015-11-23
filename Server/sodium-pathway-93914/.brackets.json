@@ -1,0 +1,6 @@
+{
+    "sass.enabled": true,
+    "sass.options": {
+        "outputStyle": "compressed"
+    }
+}
