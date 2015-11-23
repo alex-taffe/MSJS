@@ -1,5 +1,5 @@
 "use strict";
-var debug = false;
+var debug = true;
 
 class Terminal {
     //logs to console

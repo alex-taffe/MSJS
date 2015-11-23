@@ -18,8 +18,11 @@ handlers:
 - url: /fonts
   static_dir: fonts
   
-- url: /student
-  static_dir: student
+- url: /docs
+  static_dir: docs
+  
+- url: /code-mirror
+  static_dir: code-mirror
 
 - url: /
   script: index.html
@@ -53,6 +56,9 @@ handlers:
   
 - url: /getJSON
   script: get-lesson.php
+  
+- url: /student
+  script: student.html
   
 - url: /example
   script: example.json
