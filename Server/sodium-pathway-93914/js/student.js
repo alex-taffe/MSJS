@@ -88,10 +88,10 @@ function checkCode() {
 }
 
 function prepareDefaultCode(data) {
-    var codeString = "//" + data["lessonMessage"];
+    var codeString = "//" + data["lessonTitle"];
     codeString += "\n";
     codeString += "//\n";
-    codeString += "//" + data["lessonTitle"];
+    codeString += "//" + data["lessonMessage"];
     codeString += "\n//\n";
     var sprites = data["sprites"];
     for (var i = 0; i < sprites.length; i++) {
