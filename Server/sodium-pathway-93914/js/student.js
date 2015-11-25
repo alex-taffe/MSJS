@@ -70,8 +70,11 @@ function checkCode() {
     //query the API for the JSON related to the user entered code
     $.getJSON("get-lesson?code=" + code, function (data) {
         //they succeeded
-        if (data["status"] == "success")
+        if (data["status"] == "success") {
             $("#teacherCodeModal").modal("hide");
+            myCodeMirror.getDoc().setValue("test");
+            console.log(data);
+        }
         //they failed
         else {
             $("#codeAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + data["message"] + '</div>');
