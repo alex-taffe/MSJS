@@ -72,7 +72,7 @@ function checkCode() {
         //they succeeded
         if (data["status"] == "success") {
             $("#teacherCodeModal").modal("hide");
-            myCodeMirror.getDoc().setValue("test");
+            myCodeMirror.getDoc().setValue(prepareDefaultCode(data));
             console.log(data);
         }
         //they failed
@@ -85,6 +85,23 @@ function checkCode() {
             $("#codeAlert").css("visibility", "visible");
         }
     });
+}
+
+function prepareDefaultCode(data) {
+    var codeString = "//" + data["lessonMessage"];
+    codeString += "\n";
+    codeString += "//\n";
+    codeString += "//" + data["lessonTitle"];
+    codeString += "\n//\n";
+    var sprites = data["sprites"];
+    for (var i = 0; i < sprites.length; i++) {
+        codeString += "var " + sprites[i]["type"] + String(i) + " = new Sprite();\n";
+        codeString += sprites[i]["type"] + String(i) + ".setImage(\"" + sprites[i]["image"] + "\");\n";
+        codeString += sprites[i]["type"] + String(i) + ".setLocation(" + sprites[i]["x"] + "," + sprites[i]["y"] + ");";
+        if (i != sprites.length - 1)
+            codeString += "\n\n";
+    }
+    return codeString;
 }
 
 //get the grid setup
