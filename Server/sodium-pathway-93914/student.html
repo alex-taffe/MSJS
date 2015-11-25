@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/student.css">
     <link rel="stylesheet" href="docs/docs.css">
-    <link rel="stylesheet" href="../css/loaders.min.css">
+    <link rel="stylesheet" href="css/loaders.min.css">
     <title></title>
 </head>
 
@@ -95,7 +95,7 @@
                     <div id="codeAlert"></div>
                     <span id="codeDirections">Enter the code given to you by your teacher</span>
                     <br>
-                    <input type="text" placeholder="Code" id="teacherCodeBox" autofocus>
+                    <input type="text" placeholder="Code" id="teacherCodeBox" autofocus maxlength="7" required>
                     <button onclick="checkCode()" id="teacherCodeSubmit">Submit</button>
                     <div id="codeLoader" class="loader" style="visibility:hidden">
                         <div class="loader-inner ball-scale-ripple-multiple">

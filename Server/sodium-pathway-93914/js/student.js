@@ -67,10 +67,12 @@ function checkCode() {
     $("#codeDirections").css("visibility", "hidden");
     $("#codeLoader").css("visibility", "visible");
     $("#codeAlert").css("visibility", "hidden");
+    //query the API for the JSON related to the user entered code
     $.getJSON("get-lesson?code=" + code, function (data) {
-        console.log(data);
+        //they succeeded
         if (data["status"] == "success")
             $("#teacherCodeModal").modal("hide");
+        //they failed
         else {
             $("#codeAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + data["message"] + '</div>');
             $("#teacherCodeBox").css("visibility", "visible");
@@ -176,6 +178,7 @@ function compileCode(code) {
         code = code.splice(innerCounter, 0, "\nfunction goToStatement" + i + "(){");
         var tempLocation = searchIndices[i];
 
+        //make sure we aren't ruining code comments
         while (code.charAt(tempLocation) != "\n")
             tempLocation--;
         if (code.charAt(tempLocation + 1) == "\\" && code.charAt(tempLocation + 2))
@@ -369,15 +372,15 @@ class Sprite {
         var finalY = this.yCoord;
 
         //decide where we need to go
-        if (direction == "left") {
+        if (direction == "left")
             finalX -= numSpaces;
-        } else if (direction == "right") {
+        else if (direction == "right")
             finalX += numSpaces;
-        } else if (direction == "down") {
+        else if (direction == "down")
             finalY += numSpaces;
-        } else if (direction == "up") {
+        else if (direction == "up")
             finalY -= numSpaces;
-        } else {
+        else {
             //they screwed up, the program can't continue so let's just throw an error and let them know
             throw "Direction invalid. Try the directions left, right, up, or down";
         }
