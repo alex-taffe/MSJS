@@ -135,4 +135,7 @@ $(document).ready(function () {
     $("#loginModal").on("shown.bs.modal", function () {
         $("#email").focus();
     });
+    $("#registerModal").on("shown.bs.modal", function () {
+        $("#password2").focus();
+    });
 });
