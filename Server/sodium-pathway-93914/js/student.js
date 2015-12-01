@@ -57,8 +57,10 @@ $(document).ready(function () {
         });
 });
 
+//listen for the press of the enter key on the student check code box
 function checkCodePress(e) {
     if (e.keyCode == 13) {
+        //they pressed enter, let's check the code
         checkCode();
     }
 }
@@ -79,7 +81,6 @@ function checkCode() {
         if (data["status"] == "success") {
             $("#teacherCodeModal").modal("hide");
             myCodeMirror.getDoc().setValue(prepareDefaultCode(data));
-            console.log(data);
         }
         //they failed
         else {
@@ -93,6 +94,7 @@ function checkCode() {
     });
 }
 
+//add in the necessary callbacks into the code so everything runs when it needs to (synchronously vs asynchronously)
 function prepareDefaultCode(data) {
     var codeString = "//" + data["lessonTitle"];
     codeString += "\n";
