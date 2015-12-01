@@ -132,4 +132,7 @@ $(document).ready(function () {
         $(".container").load("panel.html", null);
         $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
     }
+    $("#loginModal").on("shown.bs.modal", function () {
+        $("#email").focus();
+    });
 });
