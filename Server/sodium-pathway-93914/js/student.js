@@ -55,6 +55,10 @@ $(document).ready(function () {
             keyboard: false,
             backdrop: "static"
         });
+
+    window.onerror = function (error, url, line) {
+        Terminal.log("Err: " + err + " URL: " + url + " line: " + line);
+    }
 });
 
 //listen for the press of the enter key on the student check code box
@@ -235,6 +239,8 @@ sprite2.move();
 */
 
 //compileCode('var sprite = Sprite.create();sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");sprite.move();');
+
+
 
 //run student code
 function runCode() {
