@@ -57,6 +57,12 @@ $(document).ready(function () {
         });
 });
 
+function checkCodePress(e) {
+    if (e.keyCode == 13) {
+        checkCode();
+    }
+}
+
 //check the student's code and if it's correct, load in the appropriate information
 function checkCode() {
     //get the code from the text box
