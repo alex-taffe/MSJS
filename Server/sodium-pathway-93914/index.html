@@ -54,8 +54,8 @@
                                 </div>
                             </div>
                             <form id="loginForm">
-                                <input name="email" id="email" type="email" placeholder="Email" class="loginEmail">
-                                <input name="password" id="password" type="password" placeholder="Password" class="loginPassword">
+                                <input name="email" id="email" type="email" placeholder="Email" class="loginEmail" onkeypress="checkNext(event)">
+                                <input name="password" id="password" type="password" placeholder="Password" class="loginPassword" onkeypress="checkLogin(event)">
                                 <br>
                                 <div class="loginButtonContainer">
                                     <button type="button" class="loginLogin">Login</button>
