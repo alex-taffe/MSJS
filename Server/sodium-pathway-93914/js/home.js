@@ -100,7 +100,7 @@ function getLessons() {
             for (var i = 0; i < data.length; i++) {
                 if (tempCounter == 1)
                     lessonData += '<div class="row lessonRow">';
-                lessonData += '<div class="col-md-3 col-xs-6 lessonCol">';
+                lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '" onclick="confirmDeleteLesson(this)">';
 
                 var lessonJSON = $.parseJSON(data[i]["JSON"]);
                 lessonData += '<h4 class="lessonTitle">'
@@ -122,6 +122,23 @@ function getLessons() {
             }
             $("#classes").html(lessonData);
             $("#noLessonWarning").html('');
+        }
+    });
+}
+
+var previousDeleteCode = "";
+
+function confirmDeleteLesson(gridElement) {
+    previousDeleteCode = gridElement.getAttribute("data-code");
+    $("#deleteModal").modal();
+}
+
+function deleteLesson() {
+    $.ajax({
+        url: "lessons",
+        type: "DELETE",
+        success: function (result) {
+            //do something with the result
         }
     });
 }

@@ -104,6 +104,7 @@
 
         </div>
     </div>
+    <!-- Add lesson modal-->
     <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -127,6 +128,25 @@
                             <button type="button" class="loginRegister" id="addLesson">Add</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Confirm Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="deleteModalLabel">Delete?</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="passwordConfirm">Are you sure you want to delete this lesson?</h4>
+                    <div class="deleteButtonContainer">
+                        <button type="button" class="deleteCancel" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="deleteConfirm" id="registerFinal" onclick="deleteLesson()">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>

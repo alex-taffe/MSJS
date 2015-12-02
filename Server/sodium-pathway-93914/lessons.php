@@ -21,16 +21,27 @@
     //prevent emulated prepared statements to prevent against SQL injection
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    
-    //attempt to query the database for the user
-    $stmt = $db->prepare('SELECT JSON, AddDate, Code FROM lessons WHERE TeacherID=:id');
-    $stmt->execute(array(':id' => $teacherID));
-    $lessons = array();
-    if ($stmt->rowCount() > 0 ) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $lessons[] = array("JSON" => $row["JSON"], "Code" => $row["Code"]);
+    //user wants to retrieve lessons
+    if($_SERVER["REQUEST_METHOD"] == "GET"){
+        //attempt to query the database for the user
+        $stmt = $db->prepare('SELECT JSON, AddDate, Code FROM lessons WHERE TeacherID=:id');
+        $stmt->execute(array(':id' => $teacherID));
+        $lessons = array();
+        if ($stmt->rowCount() > 0 ) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lessons[] = array("JSON" => $row["JSON"], "Code" => $row["Code"]);
+            }
         }
+        echo json_encode($lessons);
     }
-    echo json_encode($lessons);
+    //user wants to delete a lesson
+    else if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+        $stmt = $db->prepare('DELETE FROM lessons WHERE TeacherID=:id AND Code=:code');
+        $stmt->execute(array(':id' => $teacherID, ':code' => $_REQUEST["code"]));
+        if($stmt->rowCount() > 0)
+            echo '{"status":"Success"}';
+        else
+            echo '{"status":"Lesson or user not found"}';
+    }
     
 ?>
