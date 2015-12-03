@@ -31,19 +31,6 @@ function login() {
                     $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
                     $(".container").load("panel.html", function () {
                         getLessons();
-                        $("#addLesson").click(function () {
-                            $.post("lessons", {
-                                    request: "add",
-                                    JSON: $("#enterJSON").val()
-                                })
-                                .done(function (data) {
-                                    $('#addLessonModal').modal('hide');
-                                    $('#addLessonModal').on('hidden.bs.modal', function (e) {
-                                        $("#enterJSON").val("");
-                                    });
-                                    getLessons();
-                                });
-                        });
                     });
                     $("#panelNav").load("panel-nav.html", function () {});
                 });
@@ -55,6 +42,8 @@ function login() {
             }
         });
 };
+
+
 
 function register() {
     $("#registerAlert").html('');
@@ -146,6 +135,21 @@ function deleteLesson() {
             $("#deleteModal").modal("hide");
         }
     });
+}
+
+function addLesson() {
+
+    $.post("lessons", {
+            request: "add",
+            JSON: $("#enterJSON").val()
+        })
+        .done(function (data) {
+            $('#addLessonModal').modal('hide');
+            $('#addLessonModal').on('hidden.bs.modal', function (e) {
+                $("#enterJSON").val("");
+            });
+            getLessons();
+        });
 }
 
 $(document).ready(function () {
