@@ -1,7 +1,8 @@
 <?php
     session_start();
-
-function generateCode() {
+    
+    //generate the code to be used for the lesson
+    function generateCode() {
         
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
@@ -23,6 +24,7 @@ function generateCode() {
                   );
     }
     else{
+        //connect to the app engine
         $db = new pdo('mysql:host=127.0.0.1:3307;dbname=lessons',
                   'root',  // username
                   'xGQEsWRd39G3UrGU' // password
@@ -38,10 +40,12 @@ function generateCode() {
         $stmt->execute(array(':id' => $teacherID));
         $lessons = array();
         if ($stmt->rowCount() > 0 ) {
+            //well we have some lessons, iterate through them and start dumping them into an array
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $lessons[] = array("JSON" => $row["JSON"], "Code" => $row["Code"]);
             }
         }
+        //return to the client
         echo json_encode($lessons);
     }
     //user wants to modify the database
