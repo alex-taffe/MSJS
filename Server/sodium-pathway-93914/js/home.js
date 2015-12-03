@@ -134,11 +134,15 @@ function confirmDeleteLesson(gridElement) {
 }
 
 function deleteLesson() {
-    $.ajax({
-        url: "lessons",
-        type: "DELETE",
-        success: function (result) {
-            //do something with the result
+
+    $.post("lessons", {
+        code: previousDeleteCode,
+        request: "delete"
+    }).done(function (data) {
+        var data = $.parseJSON(data);
+        if (data["status"] == "Success") {
+            getLessons();
+            $("#deleteModal").modal("hide");
         }
     });
 }

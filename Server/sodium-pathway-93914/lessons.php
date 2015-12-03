@@ -34,14 +34,16 @@
         }
         echo json_encode($lessons);
     }
-    //user wants to delete a lesson
-    else if($_SERVER["REQUEST_METHOD"] == "DELETE"){
-        $stmt = $db->prepare('DELETE FROM lessons WHERE TeacherID=:id AND Code=:code');
-        $stmt->execute(array(':id' => $teacherID, ':code' => $_REQUEST["code"]));
-        if($stmt->rowCount() > 0)
-            echo '{"status":"Success"}';
-        else
-            echo '{"status":"Lesson or user not found"}';
+    //user wants to modify the database
+    else if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_POST["request"] == "delete"){
+            $stmt = $db->prepare('DELETE FROM lessons WHERE TeacherID=:id AND Code=:code');
+            $stmt->execute(array(':id' => $teacherID, ':code' => $_POST["code"]));
+            if($stmt->rowCount() > 0)
+                echo '{"status":"Success"}';
+            else
+                echo '{"status":"Lesson or user not found"}';
+        }
     }
     
 ?>
