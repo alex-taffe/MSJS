@@ -1,5 +1,15 @@
 <?php
     session_start();
+
+function generateCode() {
+        
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+        for ($i = 0; $i < 7; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randomString;
+    }
     
     $teacherID = $_SESSION["ID"];
     
@@ -36,6 +46,7 @@
     }
     //user wants to modify the database
     else if($_SERVER["REQUEST_METHOD"] == "POST"){
+        //user wants to delete a lesson
         if($_POST["request"] == "delete"){
             $stmt = $db->prepare('DELETE FROM lessons WHERE TeacherID=:id AND Code=:code');
             $stmt->execute(array(':id' => $teacherID, ':code' => $_POST["code"]));
@@ -43,6 +54,14 @@
                 echo '{"status":"Success"}';
             else
                 echo '{"status":"Lesson or user not found"}';
+        }
+        //user wants to add a lesson
+        elseif($_POST["request"] == "add"){
+            $code = generateCode();
+            $JSON = $_POST["JSON"];
+            $stmt = $db->prepare('INSERT INTO Lessons (TeacherID, JSON, Code) VALUES (:id, :json, :code)');
+            $stmt->execute(array(':id' => $teacherID, ':json' => $JSON, ':code' => $code));
+            echo $code;
         }
     }
     

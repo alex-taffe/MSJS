@@ -32,7 +32,8 @@ function login() {
                     $(".container").load("panel.html", function () {
                         getLessons();
                         $("#addLesson").click(function () {
-                            $.post("add-lesson", {
+                            $.post("lessons", {
+                                    request: "add",
                                     JSON: $("#enterJSON").val()
                                 })
                                 .done(function (data) {
