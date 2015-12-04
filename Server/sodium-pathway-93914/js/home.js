@@ -101,15 +101,19 @@ $("#registerFinal").click(function () {
     register();
 });
 
-//gets the lessons from the server
+//gets the lessons from the server and adds them to the UI
 function getLessons() {
     $.getJSON("lessons", function (data) {
+        //we have the server data
         if (data.length != 0) {
+            //there's at least one lesson, so let's initialize the data we need
             var lessonData = "";
             var tempCounter = 1;
             for (var i = 0; i < data.length; i++) {
+                //if this is the beginning of a new row, we need to add a new row
                 if (tempCounter == 1)
                     lessonData += '<div class="row lessonRow">';
+                //card
                 lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '" onclick="confirmDeleteLesson(this)">';
 
                 var lessonJSON = $.parseJSON(data[i]["JSON"]);
@@ -122,48 +126,55 @@ function getLessons() {
                 lessonData += '</h3>';
 
                 lessonData += '</div>';
+                //end card
                 tempCounter++;
 
-
+                //if this is the end of the row, add a new div and reset the counter
                 if (tempCounter == 5 || i == data.length - 1) {
                     lessonData += '</div>';
                     tempCounter = 1;
                 }
             }
+            //add the lessons to the view and remove the warning that there are no lessons
             $("#classes").html(lessonData);
             $("#noLessonWarning").html('');
         }
     });
 }
-
+//used so we know what lesson needs to be deleted when the user clicks confirm
 var previousDeleteCode = "";
 
+//make sure the user actually wants to delete the lesson and get the code of the lesson they want to delete
 function confirmDeleteLesson(gridElement) {
     previousDeleteCode = gridElement.getAttribute("data-code");
     $("#deleteModal").modal();
 }
 
+//actually delete the lesson
 function deleteLesson() {
-
+    //notify the server of what lesson we want to delete
     $.post("lessons", {
         code: previousDeleteCode,
         request: "delete"
     }).done(function (data) {
         var data = $.parseJSON(data);
         if (data["status"] == "Success") {
+            //the lesson got deleted, so refresh the lesson list and hide the deletion modal
             getLessons();
             $("#deleteModal").modal("hide");
         }
     });
 }
 
+//add a new lesson
 function addLesson() {
-
+    //notify the server that we want to add a new lesson
     $.post("lessons", {
             request: "add",
             JSON: $("#enterJSON").val()
         })
         .done(function (data) {
+            //the lesson got added, hide the modal, reset the JSON text entry field, refresh the lessons
             $('#addLessonModal').modal('hide');
             $('#addLessonModal').on('hidden.bs.modal', function (e) {
                 $("#enterJSON").val("");
@@ -172,15 +183,19 @@ function addLesson() {
         });
 }
 
+//document load
 $(document).ready(function () {
+    //if debug is triggered, show the panel without logging in
     if (debug) {
         $("#panelNav").load("panel-nav.html", function () {});
         $(".container").load("panel.html", null);
         $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
     }
+    //focus the email field on login modal show
     $("#loginModal").on("shown.bs.modal", function () {
         $("#email").focus();
     });
+    //focus the password field on register modal show
     $("#registerModal").on("shown.bs.modal", function () {
         $("#password2").focus();
     });
