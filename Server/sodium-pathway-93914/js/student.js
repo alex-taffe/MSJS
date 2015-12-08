@@ -56,9 +56,7 @@ $(document).ready(function () {
             backdrop: "static"
         });
 
-    window.onerror = function (error, url, line) {
-        Terminal.log("Err: " + err + " URL: " + url + " line: " + line);
-    }
+
 });
 
 //listen for the press of the enter key on the student check code box
@@ -190,7 +188,7 @@ function getReplaceIndices(code) {
 
 //compile code to avoid async results conflicting
 function compileCode(code) {
-    //add terminal message to indicate code has finished runninh
+    //add terminal message to indicate code has finished running
     code += " Terminal.log('Finished running');";
 
     var searchIndices = getReplaceIndices(code);
@@ -276,7 +274,11 @@ function runCode() {
 
     //run the code!
     Terminal.log("Running...");
-    window.eval(code);
+    try {
+        window.eval(code);
+    } catch (e) {
+        Terminal.log(e.message);
+    }
 }
 
 //animation request class
@@ -375,6 +377,9 @@ class Sprite {
                 tempThis.setLocation(tempThis.xCoord, tempThis.yCoord);
                 destination.next();
             };
+            this.image.onerror = function () {
+                Terminal.log("Image " + this.image.src + " could not be found");
+            }
         }
         //sets the position of the sprite based on an X/Y coordinate (instant)
     setLocation(x, y) {
