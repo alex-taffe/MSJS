@@ -734,4 +734,6 @@ function getKeyCodeFromCharacter(key) {
     //probably a letter
     else if (key.length == 1 && key.match(/[a-z]/i))
         return key.charCodeAt(0) - 32;
+    else
+        throw "Not a key";
 }
