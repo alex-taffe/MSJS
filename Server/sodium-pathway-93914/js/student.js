@@ -345,43 +345,45 @@ var spriteForKey = new Object();
 class Sprite {
     //constructor
     constructor() {
-            this.id = currentSpriteID;
-            this.xCoord = 0;
-            this.yCoord = 0;
-            this.image = new Raster();
-            this.hasAttachedAnimation = false;
+        this.id = currentSpriteID;
+        this.xCoord = 0;
+        this.yCoord = 0;
+        this.image = new Raster();
+        this.hasAttachedAnimation = false;
 
-            //keys assigned to certain actions
-            this.upKey = -1;
-            this.downKey = -1;
-            this.leftKey = -1;
-            this.rightKey = -1;
+        //keys assigned to certain actions
+        this.upKey = -1;
+        this.downKey = -1;
+        this.leftKey = -1;
+        this.rightKey = -1;
 
-            //speed of directional keys
-            this.upSpeed = 1;
-            this.downSpeed = 1;
-            this.leftSpeed = 1;
-            this.rightSpeed = 1;
+        //speed of directional keys
+        this.upSpeed = 1;
+        this.downSpeed = 1;
+        this.leftSpeed = 1;
+        this.rightSpeed = 1;
 
-            //increment sprite ID before more instance creation can occur
-            currentSpriteID++;
-        }
-        //sets the image based on the passed URL and then once the image is completed loading, continues the program flow based on the value of destination.next();
+        //increment sprite ID before more instance creation can occur
+        currentSpriteID++;
+    }
+
+    //sets the image based on the passed URL and then once the image is completed loading, continues the program flow based on the value of destination.next();
     setImage(URL, destination) {
-            this.image = null;
-            this.image = new Raster(URL);
-            //alert(image.width);
-            var tempThis = this;
-            this.image.onLoad = function () {
-                tempThis.setImageSize();
-                tempThis.setLocation(tempThis.xCoord, tempThis.yCoord);
-                destination.next();
-            };
-            this.image.onerror = function () {
-                Terminal.log("Image " + this.image.src + " could not be found");
-            }
+        this.image = null;
+        this.image = new Raster(URL);
+        //alert(image.width);
+        var tempThis = this;
+        this.image.onLoad = function () {
+            tempThis.setImageSize();
+            tempThis.setLocation(tempThis.xCoord, tempThis.yCoord);
+            destination.next();
+        };
+        this.image.onError = function () {
+            console.log("error");
         }
-        //sets the position of the sprite based on an X/Y coordinate (instant)
+    }
+
+    //sets the position of the sprite based on an X/Y coordinate (instant)
     setLocation(x, y) {
         //the point of the image that we can manipulate is the center, so let's start there
         var imageXCenter = this.image.width / 2;
@@ -400,6 +402,8 @@ class Sprite {
         this.xCoord = x;
         this.yCoord = y;
     }
+
+    //animates a sprite moving in a direction
     move(direction, numSpaces, speed, destination) {
         //sanitize the string to remove any obscure characters
         direction = direction.replace(/[^a-zA-Z0-9! ]+/g, "");
@@ -430,15 +434,16 @@ class Sprite {
         this.xCoord = finalX;
     }
 
+    //animates a sprite moving to a position
     moveTo(x, y, speed, destination) {
-            //animate it!
-            this.animate(x, y, speed, null, destination);
-            //update existing coordinate values
-            this.yCoord = y;
-            this.xCoord = x;
-        }
-        //appropriately size image for canvas
+        //animate it!
+        this.animate(x, y, speed, null, destination);
+        //update existing coordinate values
+        this.yCoord = y;
+        this.xCoord = x;
+    }
 
+    //appropriately size image for canvas
     setImageSize() {
         //get the canvas and tile widths
         var canvas = document.getElementById("board");
