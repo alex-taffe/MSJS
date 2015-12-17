@@ -1,7 +1,68 @@
 <style>
-
+    #passwordForm,
+    #emailForm {
+        text-align: center;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        widthL: 600px;
+        display: block;
+    }
+    
+    input {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        height: 30px;
+        width: 250px;
+        margin-bottom: 10x;
+        border: none;
+        border-bottom: 1px solid #FF3100;
+        font-size: 20px;
+        -webkit-transition: width 5s;
+        /* Safari */
+        -moz-transition: width 5s;
+        -o-transition: width 5s;
+        transition: width 5s;
+        font-family: 'Raleway', sans-serif;
+        background-color: transparent;
+        outline: none;
+    }
+    
+    ::-webkit-input-placeholder {
+        text-align: center;
+    }
+    
+    :-moz-placeholder {
+        /* Firefox 18- */
+        text-align: center;
+    }
+    
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center;
+    }
+    
+    :-ms-input-placeholder {
+        text-align: center;
+    }
 </style>
 <h1 class="link link--surinami"><span data-letters-l="MY CL" data-letters-r="ASSES">MY ACCOUNT</span></h1>
 <br>
 <div class="statsContainer">
+    <form id="passwordForm">
+        <input type="password" placeholder="New Password">
+        <br>
+        <input type="password" placeholder="Confirm Password">
+        <br>
+        <button>Change password</button>
+    </form>
+    <hr>
+    <form id="emailForm">
+        <input type="email" placeholder="New Email">
+        <br>
+        <button>Update email</button>
+    </form>
+    <hr>
+    <button>Delete Account</button>
 </div>
