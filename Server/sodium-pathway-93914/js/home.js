@@ -35,7 +35,7 @@ function login() {
                     var filterVal = 'blur(5px)';
                     $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
                     //load in the panel and get the lessons
-                    $(".container").load("panel.html", function () {
+                    $(".container").load("panel-lessons.html", function () {
                         getLessons();
                     });
                     $("#panelNav").load("panel-nav.html", function () {});
@@ -51,7 +51,6 @@ function login() {
             }
         });
 };
-
 
 
 function register() {
@@ -101,6 +100,44 @@ $("#registerFinal").click(function () {
     register();
 });
 
+//called when the user clicks an item in the navigational menu
+function changeNav(destinationItem) {
+    var destination = destinationItem.getAttribute("data-title");
+    var elementsToRemoveActive = ["classLink", "accountLink", "statLink"];
+    for (var i = 0; i < elementsToRemoveActive.length; i++) {
+        document.getElementById(elementsToRemoveActive[i]).className = document.getElementById(elementsToRemoveActive[i]).className.replace(/(?:^|\s)active(?!\S)/g, '');
+    }
+    if (destination == "classes") {
+        document.getElementById("classLink").className += "active";
+        $(".container").load("panel-lessons.html", function () {
+            getLessons();
+        });
+    } else if (destination == "stats") {
+        document.getElementById("statLink").className += "active";
+        $(".container").load("panel-stats.html", function () {
+
+        });
+    } else if (destination == "account") {
+        document.getElementById("accountLink").className += "active";
+        $(".container").load("panel-account.html", function () {
+
+        });
+    }
+}
+
+function goFullScreen(gridItem) {
+    if (gridItem.requestFullScreen)
+        gridItem.requestFullScreen();
+    else if (gridItem.msRequestFullscreen)
+        gridItem.msRequestFullscreen();
+    else if (gridItem.mozRequestFullScreen)
+        gridItem.mozRequestFullScreen();
+    else if (gridItem.webkitRequestFullScreen)
+        gridItem.webkitRequestFullScreen();
+    var canvas = document.getElementById("demo-canvas");
+    $(gridItem).css("background", "element(#demo-canvas)");
+}
+
 //gets the lessons from the server and adds them to the UI
 function getLessons() {
     $.getJSON("lessons", function (data) {
@@ -114,7 +151,8 @@ function getLessons() {
                 if (tempCounter == 1)
                     lessonData += '<div class="row lessonRow">';
                 //card
-                lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '" onclick="confirmDeleteLesson(this)">';
+                lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '" onclick="goFullScreen(this)">';
+                lessonData += '<button type="button" class="close" aria-label="Close" onclick="confirmDeleteLesson(this.parentNode)"><span aria-hidden="true">×</span></button>';
 
                 var lessonJSON = $.parseJSON(data[i]["JSON"]);
                 lessonData += '<h4 class="lessonTitle">'

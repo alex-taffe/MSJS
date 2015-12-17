@@ -4,9 +4,10 @@ var debug = false;
 class Terminal {
     //logs to console
     static log(message) {
-            $("#console").append(message + "\n");
-        }
-        //clears console
+        $("#console").append(message + "\n");
+    }
+
+    //clears console
     static clear() {
         $("#console").text("");
     }

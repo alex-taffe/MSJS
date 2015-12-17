@@ -39,8 +39,14 @@ handlers:
 - url: /test-register
   script: test-register.php
 
-- url: /panel\.html
-  script: panel.html
+- url: /panel-lessons\.html
+  script: panel-lessons.html
+  
+- url: /panel-stats\.html
+  script: panel-stats.html
+  
+- url: /panel-account\.html
+  script: panel-account.html
   
 - url: /panel-nav\.html
   script: panel-nav.html
