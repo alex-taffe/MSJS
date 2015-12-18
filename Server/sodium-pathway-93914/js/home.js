@@ -204,6 +204,23 @@ function deleteLesson() {
     });
 }
 
+//confirm with the user that they really want to delete their account
+function confirmAccountDelete() {
+    $("#accountDeleteModal").modal();
+}
+
+//delete the account
+function deleteAccount() {
+    $.post("account", {
+            request: "delete"
+        })
+        .done(function (data) {
+            $.get("logout").done(function () {
+                location.reload();
+            });
+        });
+}
+
 //add a new lesson
 function addLesson() {
     //notify the server that we want to add a new lesson

@@ -33,6 +33,12 @@ handlers:
 - url: /login
   script: login.php
   
+- url: /logout
+  script: logout.php
+  
+- url: /account
+  script: account.php
+  
 - url: /test-login
   script: test-login.php
   

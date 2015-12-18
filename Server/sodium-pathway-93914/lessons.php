@@ -11,6 +11,9 @@
         }
         return $randomString;
     }
+
+    if(!isset($_SESSION["ID"]))
+        die();
     
     $teacherID = $_SESSION["ID"];
     

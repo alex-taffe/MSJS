@@ -20,7 +20,6 @@
         border-bottom: 1px solid #FF3100;
         font-size: 20px;
         -webkit-transition: width 5s;
-        /* Safari */
         -moz-transition: width 5s;
         -o-transition: width 5s;
         transition: width 5s;
@@ -46,23 +45,65 @@
     :-ms-input-placeholder {
         text-align: center;
     }
+    
+    #deleteAccount {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    #updateEmailButton,
+    #updatePasswordButton {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.95);
+        outline: 0;
+        border: 0;
+        width: 200px;
+        height: 45px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid #FF3100;
+        margin-bottom: 10px;
+        font-family: 'Raleway', sans-serif;
+        font-size: 140%;
+        margin-left: 10px;
+        margin-right: 10px;
+        -webkit-transition: width 5s;
+        /* Safari */
+        -moz-transition: width 5s;
+        -o-transition: width 5s;
+        transition: width 5s;
+    }
+    
+    #updateEmailButton:hover,
+    #updatePasswordButton:hover {
+        color: #FF3100;
+    }
 </style>
 <h1 class="link link--surinami"><span data-letters-l="MY CL" data-letters-r="ASSES">MY ACCOUNT</span></h1>
 <br>
 <div class="statsContainer">
-    <form id="passwordForm">
-        <input type="password" placeholder="New Password">
-        <br>
-        <input type="password" placeholder="Confirm Password">
-        <br>
-        <button>Change password</button>
-    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <form id="passwordForm">
+                <input type="password" placeholder="New Password">
+                <br>
+                <input type="password" placeholder="Confirm Password">
+                <br>
+                <button id="updatePasswordButton">Change password</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form id="emailForm">
+                <input type="email" placeholder="New Email">
+                <br>
+                <input type="email" placeholder="Confirm Email">
+                <br>
+                <button id="updateEmailButton">Update email</button>
+            </form>
+        </div>
+    </div>
     <hr>
-    <form id="emailForm">
-        <input type="email" placeholder="New Email">
-        <br>
-        <button>Update email</button>
-    </form>
-    <hr>
-    <button>Delete Account</button>
+    <button id="deleteAccount" class="btn btn-danger" onclick="confirmAccountDelete()">Delete Account</button>
 </div>

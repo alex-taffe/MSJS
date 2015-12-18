@@ -148,6 +148,25 @@
             </div>
         </div>
     </div>
+    <!--Account Delete Modal-->
+    <div class="modal fade" id="accountDeleteModal" tabindex="-1" role="dialog" aria-labelledby="accountDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="deleteModalLabel">Are you sure?</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="passwordConfirm">Are you sure you want to delete your account? This process is permanent and cannot be reversed.</h4>
+                    <div class="deleteButtonContainer">
+                        <button type="button" class="deleteCancel" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="deleteConfirm" id="registerFinal" onclick="deleteAccount()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--/sse-->
     <footer class="footer">
         <div class="innerFooter">
