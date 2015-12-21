@@ -209,6 +209,19 @@ function confirmAccountDelete() {
     $("#accountDeleteModal").modal();
 }
 
+//change password
+function changePassword() {
+    var password = $("#password").val();
+    var confirmPassword = $("#confirmPassword").val();
+    $.post("account", {
+        request: "passwordUpdate",
+        password1: password,
+        password2: confirmPassword
+    }).done(function (data) {
+        alert(data);
+    });
+}
+
 //delete the account
 function deleteAccount() {
     $.post("account", {
