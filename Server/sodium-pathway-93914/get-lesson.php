@@ -1,5 +1,5 @@
 <?php
-    
+    include "checklogged.php";
     $code = $_GET["code"];
         
     //make code uppercase cause the user probably screwed up

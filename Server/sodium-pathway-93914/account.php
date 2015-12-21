@@ -1,8 +1,6 @@
 <?php
 
-session_start();
-if(!isset($_SESSION["ID"]))
-        die();
+include "checklogged.php";
 
 $teacherID = $_SESSION["ID"];
 

@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    include "checklogged.php";
     
     //generate the code to be used for the lesson
     function generateCode() {
