@@ -113,14 +113,14 @@
     }
     
     //recaptcha check (only if on the online app engine)
-if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
-    $url = 'https://www.google.com/recaptcha/api/siteverify';
-    $data = array('secret' => '6LfjXAcTAAAAAHUJGMFaC4SNJFvSTgbb_J5emtpV ', 'response' => $_POST["g-recaptcha-response"], 'remoteip' => $_SERVER["HTTP_CF_CONNECTING_IP"]);
-    $recaptchaResponse = performPost($url,$data);
-    $recaptchaJSON = json_decode($recaptchaResponse,true);
-    if(!($recaptchaJSON["success"]))
-        outputResponse(408,"Are you a robot? Try the reCAPTCHA again");
-}
+    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = array('secret' => '6LfjXAcTAAAAAHUJGMFaC4SNJFvSTgbb_J5emtpV ', 'response' => $_POST["g-recaptcha-response"], 'remoteip' => $_SERVER["HTTP_CF_CONNECTING_IP"]);
+        $recaptchaResponse = performPost($url,$data);
+        $recaptchaJSON = json_decode($recaptchaResponse,true);
+        if(!($recaptchaJSON["success"]))
+            outputResponse(408,"Are you a robot? Try the reCAPTCHA again");
+    }
 
     
     //The user has hopefully done everything corect, let's add them and notify the client
