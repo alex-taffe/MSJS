@@ -213,12 +213,65 @@ function confirmAccountDelete() {
 function changePassword() {
     var password = $("#password").val();
     var confirmPassword = $("#confirmPassword").val();
+
+    $("#changePasswordAlert").html("");
+
+    if (password != confirmPassword) {
+        $("#changePasswordAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Passwords must match</div>');
+        return;
+    }
+    $("#changePasswordLoader").css("visibility", "visible");
+    $("#password").css("visibility", "hidden");
+    $("#confirmPassword").css("visibility", "hidden");
+    $("#updatePasswordButton").css("visibility", "hidden");
     $.post("account", {
         request: "passwordUpdate",
         password1: password,
         password2: confirmPassword
     }).done(function (data) {
+        $("#changePasswordAlert").html('<div class="alert in alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Password successfully changed</div>');
+        $("#changePasswordLoader").css("visibility", "hidden");
+        $("#password").val('');
+        $("#confirmPassword").val('');
+        $("#password").css("visibility", "visible");
+        $("#confirmPassword").css("visibility", "visible");
+        $("#updatePasswordButton").css("visibility", "visible");
+    });
+}
+
+//change email
+function changeEmail() {
+    var email = $("#changeEmailField").val();
+    if (email != $("#changeEmailConfirmField").val()) {
+        $("#changeEmailAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Emails must match</div>');
+        return;
+    }
+    $("#changeEmailLoader").css("visibility", "visible");
+    $("#changeEmailField").css("visibility", "hidden");
+    $("#changeEmailConfirmField").css("visibility", "hidden");
+    $("#updateEmailButton").css("visibility", "hidden");
+    $.post("account", {
+        request: "emailUpdate",
+        email1: email,
+        email2: $("#changeEmailConfirmField").val()
+    }).done(function (data) {
         alert(data);
+        var result = $.parseJSON(data);
+        if (result["status"] == "success") {
+            $("#changeEmailAlert").html('<div class="alert in alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Email successfully changed. Please use your new email to login next time</div>');
+            $("#changeEmailLoader").css("visibility", "hidden");
+            $("#changeEmailField").val('');
+            $("#changeEmailConfirmField").val('');
+            $("#changeEmailField").css("visibility", "visible");
+            $("#changeEmailConfirmField").css("visibility", "visible");
+            $("#updateEmailButton").css("visibility", "visible");
+        } else {
+            $("#changeEmailAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + result["message"] + '</div>');
+            $("#changeEmailLoader").css("visibility", "hidden");
+            $("#changeEmailField").css("visibility", "visible");
+            $("#changeEmailConfirmField").css("visibility", "visible");
+            $("#updateEmailButton").css("visibility", "visible");
+        }
     });
 }
 

@@ -86,7 +86,15 @@
 <div class="statsContainer">
     <div class="row">
         <div class="col-md-6">
+            <div id="changePasswordLoader" class="loader" style="visibility:hidden">
+                <div class="loader-inner ball-scale-ripple-multiple">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <form id="passwordForm">
+                <div id="changePasswordAlert"></div>
                 <input type="password" placeholder="New Password" id="password">
                 <br>
                 <input type="password" placeholder="Confirm Password" id="confirmPassword">
@@ -95,12 +103,20 @@
             </form>
         </div>
         <div class="col-md-6">
+            <div id="changeEmailLoader" class="loader" style="visibility:hidden">
+                <div class="loader-inner ball-scale-ripple-multiple">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <form id="emailForm">
-                <input type="email" placeholder="New Email">
+                <div id="changeEmailAlert"></div>
+                <input type="email" id="changeEmailField" placeholder="New Email">
                 <br>
-                <input type="email" placeholder="Confirm Email">
+                <input type="email" id="changeEmailConfirmField" placeholder="Confirm Email">
                 <br>
-                <button id="updateEmailButton">Update email</button>
+                <button id="updateEmailButton" onclick="changeEmail()">Update email</button>
             </form>
         </div>
     </div>

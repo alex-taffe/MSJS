@@ -91,8 +91,8 @@
     $saltedPassword = hash("sha256", $salt . $password);
     $password = null;
     
-    //Email is less than 6 chars, save on CPU cycles and don't even try to validate
-    if(strlen($email) < 6){
+    //Email is less than 5 chars, save on CPU cycles and don't even try to validate
+    if(strlen($email) < 5){
         outputResponse(403,"This is not a valid email address. Please try again");
     }
     
