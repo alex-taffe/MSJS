@@ -216,19 +216,23 @@ function changePassword() {
 
     $("#changePasswordAlert").html("");
 
+    //make sure they match before even submitting to reduce network requests
     if (password != confirmPassword) {
         $("#changePasswordAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Passwords must match</div>');
         return;
     }
+    //hide the form and show the loader
     $("#changePasswordLoader").css("visibility", "visible");
     $("#password").css("visibility", "hidden");
     $("#confirmPassword").css("visibility", "hidden");
     $("#updatePasswordButton").css("visibility", "hidden");
+    //ask the server to update the passwords
     $.post("account", {
         request: "passwordUpdate",
         password1: password,
         password2: confirmPassword
     }).done(function (data) {
+        //make the form visibile, remove the loader, reset the password fields, alert user of success
         $("#changePasswordAlert").html('<div class="alert in alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Password successfully changed</div>');
         $("#changePasswordLoader").css("visibility", "hidden");
         $("#password").val('');
@@ -242,22 +246,26 @@ function changePassword() {
 //change email
 function changeEmail() {
     var email = $("#changeEmailField").val();
+    //make sure the emails match before even submitting to reduce network requests
     if (email != $("#changeEmailConfirmField").val()) {
         $("#changeEmailAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Emails must match</div>');
         return;
     }
+    //hide the form and show the loader
     $("#changeEmailLoader").css("visibility", "visible");
     $("#changeEmailField").css("visibility", "hidden");
     $("#changeEmailConfirmField").css("visibility", "hidden");
     $("#updateEmailButton").css("visibility", "hidden");
+    //ask the server to update the emails
     $.post("account", {
         request: "emailUpdate",
         email1: email,
         email2: $("#changeEmailConfirmField").val()
     }).done(function (data) {
-        alert(data);
+        //parse the server response as JSON because nearly all validation is being done server side
         var result = $.parseJSON(data);
         if (result["status"] == "success") {
+            //user actually managed to not screw their email up, so let's alert them, bring the form back, hide the loader, and reset the fields
             $("#changeEmailAlert").html('<div class="alert in alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Email successfully changed. Please use your new email to login next time</div>');
             $("#changeEmailLoader").css("visibility", "hidden");
             $("#changeEmailField").val('');
@@ -266,6 +274,7 @@ function changeEmail() {
             $("#changeEmailConfirmField").css("visibility", "visible");
             $("#updateEmailButton").css("visibility", "visible");
         } else {
+            //the user screwed their email up, so tell them they're idiots, bring the fields visible again, and hide the loader
             $("#changeEmailAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + result["message"] + '</div>');
             $("#changeEmailLoader").css("visibility", "hidden");
             $("#changeEmailField").css("visibility", "visible");
@@ -281,6 +290,7 @@ function deleteAccount() {
             request: "delete"
         })
         .done(function (data) {
+            //log them out so they can't do anything
             $.get("logout").done(function () {
                 location.reload();
             });
