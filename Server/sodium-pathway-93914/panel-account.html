@@ -95,9 +95,9 @@
             </div>
             <form id="passwordForm">
                 <div id="changePasswordAlert"></div>
-                <input type="password" placeholder="New Password" id="password">
+                <input type="password" placeholder="New Password" id="password" onkeypress="passwordChangePress(event)">
                 <br>
-                <input type="password" placeholder="Confirm Password" id="confirmPassword">
+                <input type="password" placeholder="Confirm Password" id="confirmPassword" onkeypress="passwordChangeConfirmPress(event)">
                 <br>
                 <button id="updatePasswordButton" onclick="changePassword()" type="button">Change password</button>
             </form>
@@ -112,9 +112,9 @@
             </div>
             <form id="emailForm">
                 <div id="changeEmailAlert"></div>
-                <input type="email" id="changeEmailField" placeholder="New Email">
+                <input type="email" id="changeEmailField" placeholder="New Email" onkeypress="emailChangePress(event)">
                 <br>
-                <input type="email" id="changeEmailConfirmField" placeholder="Confirm Email">
+                <input type="email" id="changeEmailConfirmField" placeholder="Confirm Email" onkeypress="emailChangeConfirmPress(event)">
                 <br>
                 <button id="updateEmailButton" onclick="changeEmail()" type="button">Update email</button>
             </form>

@@ -314,6 +314,34 @@ function addLesson() {
         });
 }
 
+//listen for key press on initial password change field
+function passwordChangePress(event) {
+    //if enter gets pressed, move to the confirm field, because it probably hasn't been filled out
+    if (event.keyCode == 13)
+        $("#confirmPassword").focus();
+}
+
+//listen for key press on confirm password change field
+function passwordChangeConfirmPress(event) {
+    //if enter gets pressed, change the password
+    if (event.keyCode == 13)
+        changePassword();
+}
+
+//listen for key press on initial email change field
+function emailChangePress(event) {
+    //if enter gets pressed, move to the confirm field, because it probably hasn't been filled out
+    if (event.keyCode == 13)
+        $("#changeEmailConfirmField").focus();
+}
+
+//listen for key press on confirm email change field
+function emailChangeConfirmPress(event) {
+    //if enter gets pressed, change the email
+    if (event.keyCode == 13)
+        changeEmail();
+}
+
 //document load
 $(document).ready(function () {
     //if debug is triggered, show the panel without logging in
@@ -330,5 +358,4 @@ $(document).ready(function () {
     $("#registerModal").on("shown.bs.modal", function () {
         $("#password2").focus();
     });
-
 });
