@@ -330,4 +330,5 @@ $(document).ready(function () {
     $("#registerModal").on("shown.bs.modal", function () {
         $("#password2").focus();
     });
+
 });
