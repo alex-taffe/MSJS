@@ -1,13 +1,13 @@
 <?php
-    include "checklogged.php";
-    $code = $_GET["code"];
+    include 'checklogged.php';
+    $code = $_GET['code'];
         
     //make code uppercase cause the user probably screwed up
     $code = strtoupper($code);
     
     //connect to the MySQL database
     $$db = null;
-    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
     //connect to the MySQL database on app engine
         $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=lessons',
                   'root',  // username
@@ -28,7 +28,7 @@
     $stmt->execute(array($code));
     if ($stmt->rowCount() > 0 ) {
         $queryResult = $stmt->fetch();
-        echo $queryResult["JSON"];
+        echo $queryResult['JSON'];
     }
 else{
     echo '{"status":"fail","message":"Code not found"}';

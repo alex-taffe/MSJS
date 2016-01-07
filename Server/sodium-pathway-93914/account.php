@@ -1,8 +1,8 @@
 <?php
 
-include "checklogged.php";
+include 'checklogged.php';
 
-$teacherID = $_SESSION["ID"];
+$teacherID = $_SESSION['ID'];
 
 function generateSalt() {  
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -16,7 +16,7 @@ function generateSalt() {
 //connect to the MySQL databases
 $userDB = null;
 $lessonsDB = null;
-if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
     //connect to the MySQL database on app engine
     $lessonsDB = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=lessons',
                   'root',  // username
@@ -44,7 +44,7 @@ $userDB->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $lessonsDB->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 //user wants account deleted
-if($_POST["request"] == "delete"){
+if($_POST['request'] == 'delete'){
     //remove all of their lessons so they aren't taking up tons of space
     $stmt = $lessonsDB->prepare('DELETE FROM lessons WHERE TeacherID=:id');
     $stmt->execute(array(':id' => $teacherID));
@@ -53,28 +53,28 @@ if($_POST["request"] == "delete"){
     $stmt = $userDB->prepare('DELETE FROM Users WHERE id=:id');
     $stmt->execute(array(':id' => $teacherID));
 }
-else if($_POST["request"] == "passwordUpdate"){
+else if($_POST['request'] == 'passwordUpdate'){
     //make sure passwords match
-    if($_POST["password1"] != $_POST["password2"]){
-        echo "passwords must match";
+    if($_POST['password1'] != $_POST['password2']){
+        echo 'passwords must match';
         die();
     }
     //not much else to verify, if they screwed up, that's their problem
     else{
         $newSalt = generateSalt();
-        $saltedPassword = hash("sha256", $newSalt . $_POST["password1"]);
+        $saltedPassword = hash('sha256', $newSalt . $_POST['password1']);
         $stmt = $userDB->prepare('UPDATE users SET Salt = :salt , Password = :password WHERE id = :id');
         $stmt->execute(array(':salt' => $newSalt, ':password' => $saltedPassword, ':id' => $teacherID));
     }
 }
-else if($_POST["request"] == "emailUpdate"){
+else if($_POST['request'] == 'emailUpdate'){
     //make sure emails match
-    if($_POST["email1"] != $_POST["email2"]){
+    if($_POST['email1'] != $_POST['email2']){
         echo json_encode(array('status' => 'fail', 'message' => 'Emails must match'));
         exit;
     }
     
-    $email = $_POST["email1"];
+    $email = $_POST['email1'];
     //Email is less than 5 chars, save on CPU cycles and don't even try to validate
     if(strlen($email) < 5){
         echo json_encode(array('status' => 'fail', 'message' => 'This is not a valid email address'));

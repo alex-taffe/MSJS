@@ -5,11 +5,11 @@ $currentCookieParams = session_get_cookie_params();
 $rootDomain = 'msjsapp.com'; 
 
 session_set_cookie_params( 
-    $currentCookieParams["lifetime"], 
-    $currentCookieParams["path"], 
+    $currentCookieParams['lifetime'], 
+    $currentCookieParams['path'], 
     $rootDomain, 
-    $currentCookieParams["secure"], 
-    $currentCookieParams["httponly"] 
+    $currentCookieParams['secure'], 
+    $currentCookieParams['httponly'] 
 ); 
 //returns random string 15 characters in length (alphanumeric)
     function generateToken() {
@@ -35,7 +35,7 @@ session_set_cookie_params(
 
     //connect to the MySQL database
     $db = null;
-    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
     //connect to the MySQL database on app engine
         $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users',
                   'root',  // username
@@ -52,12 +52,12 @@ session_set_cookie_params(
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     
     //get all the values that the user submitted
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     //make sure no SQL injection or other trickery is going on
     if(strpos($email,'\'') || strpos($password,'\'')){
-        outputResponse(407,"' is an invalid character.");
+        outputResponse(407,'\' is an invalid character.');
     }
 
     //attempt to query the database for the user
@@ -65,20 +65,20 @@ session_set_cookie_params(
     $stmt->execute(array($email));
     if ($stmt->rowCount() > 0 ) {
         $userResult = $stmt->fetch();
-        if($userResult["Password"] == hash("sha256", $userResult["Salt"] . $password)){
+        if($userResult['Password'] == hash('sha256', $userResult['Salt'] . $password)){
             $token = generateToken();
-            setcookie("Token", $token);
-            $_SESSION["Token"] = $token;
-            $_SESSION["Email"] = $email;
-            $_SESSION["ID"] = $userResult["ID"];
-            outputResponse(200,"");
+            setcookie('Token', $token);
+            $_SESSION['Token'] = $token;
+            $_SESSION['Email'] = $email;
+            $_SESSION['ID'] = $userResult['ID'];
+            outputResponse(200,'');
         }
         else{
-            outputResponse(501,"Incorrect password, please try again");
+            outputResponse(501,'Incorrect password, please try again');
         }
     }
     else{
-        outputResponse(500,"Sorry this email does not exist. Please try again");
+        outputResponse(500,'Sorry this email does not exist. Please try again');
     }
     /*
      STATUS CODES

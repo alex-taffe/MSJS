@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 var debug = false;
 
 class Terminal {
     //logs to console
     static log(message) {
-        $("#console").append(message + "\n");
+        $('#console').append(message + '\n');
     }
 
     //clears console
     static clear() {
-        $("#console").text("");
+        $('#console').text('');
     }
 }
 
@@ -35,26 +35,26 @@ $(document).ready(function () {
     paper.view.attach('frame', onFrame);
 
     //add key press listener to canvas
-    var canvas = document.getElementById("board");
+    var canvas = document.getElementById('board');
 
     //add the ability to focus on the canvas, even though that's not a thing
-    document.addEventListener("mousedown", function (event) {
+    document.addEventListener('mousedown', function (event) {
         lastDown = event.target;
     }, false);
-    document.addEventListener("keydown", function (event) {
+    document.addEventListener('keydown', function (event) {
         if (lastDown == canvas) {
             canvasKeyPressed(event);
         }
     }, true);
 
     //load in code documentation
-    $("#codeDoc").load("docs/docs.html");
+    $('#codeDoc').load('docs/docs.html');
 
     //show teacher code box
     if (!debug)
-        $("#teacherCodeModal").modal({
+        $('#teacherCodeModal').modal({
             keyboard: false,
-            backdrop: "static"
+            backdrop: 'static'
         });
 
 
@@ -71,46 +71,46 @@ function checkCodePress(e) {
 //check the student's code and if it's correct, load in the appropriate information
 function checkCode() {
     //get the code from the text box
-    var code = $("#teacherCodeBox").val();
+    var code = $('#teacherCodeBox').val();
     //hide all the content in the modal and show the spinner
-    $("#teacherCodeBox").css("visibility", "hidden");
-    $("#teacherCodeSubmit").css("visibility", "hidden");
-    $("#codeDirections").css("visibility", "hidden");
-    $("#codeLoader").css("visibility", "visible");
-    $("#codeAlert").css("visibility", "hidden");
+    $('#teacherCodeBox').css('visibility', 'hidden');
+    $('#teacherCodeSubmit').css('visibility', 'hidden');
+    $('#codeDirections').css('visibility', 'hidden');
+    $('#codeLoader').css('visibility', 'visible');
+    $('#codeAlert').css('visibility', 'hidden');
     //query the API for the JSON related to the user entered code
-    $.getJSON("get-lesson?code=" + code, function (data) {
+    $.getJSON('get-lesson?code=' + code, function (data) {
         //they succeeded
-        if (data["status"] == "success") {
-            $("#teacherCodeModal").modal("hide");
+        if (data['status'] == 'success') {
+            $('#teacherCodeModal').modal('hide');
             myCodeMirror.getDoc().setValue(prepareDefaultCode(data));
         }
         //they failed
         else {
-            $("#codeAlert").html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + data["message"] + '</div>');
-            $("#teacherCodeBox").css("visibility", "visible");
-            $("#teacherCodeSubmit").css("visibility", "visible");
-            $("#codeDirections").css("visibility", "visible");
-            $("#codeLoader").css("visibility", "hidden");
-            $("#codeAlert").css("visibility", "visible");
+            $('#codeAlert').html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + data['message'] + '</div>');
+            $('#teacherCodeBox').css('visibility', 'visible');
+            $('#teacherCodeSubmit').css('visibility', 'visible');
+            $('#codeDirections').css('visibility', 'visible');
+            $('#codeLoader').css('visibility', 'hidden');
+            $('#codeAlert').css('visibility', 'visible');
         }
     });
 }
 
 //add in the necessary callbacks into the code so everything runs when it needs to (synchronously vs asynchronously)
 function prepareDefaultCode(data) {
-    var codeString = "//" + data["lessonTitle"];
-    codeString += "\n";
-    codeString += "//\n";
-    codeString += "//" + data["lessonMessage"];
-    codeString += "\n//\n";
-    var sprites = data["sprites"];
+    var codeString = '//' + data['lessonTitle'];
+    codeString += '\n';
+    codeString += '//\n';
+    codeString += '//' + data['lessonMessage'];
+    codeString += '\n//\n';
+    var sprites = data['sprites'];
     for (var i = 0; i < sprites.length; i++) {
-        codeString += "var " + sprites[i]["type"] + String(i) + " = new Sprite();\n";
-        codeString += sprites[i]["type"] + String(i) + ".setImage(\"" + sprites[i]["image"] + "\");\n";
-        codeString += sprites[i]["type"] + String(i) + ".setLocation(" + sprites[i]["x"] + "," + sprites[i]["y"] + ");";
+        codeString += 'var ' + sprites[i]['type'] + String(i) + ' = new Sprite();\n';
+        codeString += sprites[i]['type'] + String(i) + '.setImage(\'' + sprites[i]['image'] + '\');\n';
+        codeString += sprites[i]['type'] + String(i) + '.setLocation(' + sprites[i]['x'] + ',' + sprites[i]['y'] + ');';
         if (i != sprites.length - 1)
-            codeString += "\n\n";
+            codeString += '\n\n';
     }
     return codeString;
 }
@@ -118,7 +118,7 @@ function prepareDefaultCode(data) {
 //get the grid setup
 function drawCanvasGrid() {
     //get canvas width and height
-    var canvas = document.getElementById("board");
+    var canvas = document.getElementById('board');
     var canvasWidth = canvas.width / window.devicePixelRatio;
     var canvasHeight = canvas.height / window.devicePixelRatio;
 
@@ -179,9 +179,9 @@ function isNewStatementCharacter(character) {
 
 //finds the incdices of the items that need to have callback statements for synchronous code running
 function getReplaceIndices(code) {
-    var imageIndices = getIndicesOf(".setImage(", code, false);
-    var moveIndices = getIndicesOf(".move(", code, false);
-    var moveToIndices = getIndicesOf(".moveTo(", code, false);
+    var imageIndices = getIndicesOf('.setImage(', code, false);
+    var moveIndices = getIndicesOf('.move(', code, false);
+    var moveToIndices = getIndicesOf('.moveTo(', code, false);
 
     //return all the indices combined
     return imageIndices.concat(moveIndices).concat(moveToIndices);
@@ -198,24 +198,24 @@ function compileCode(code) {
         var innerCounter = searchIndices[i];
 
         //get index of where we should insert this time
-        innerCounter = code.indexOf(")", innerCounter);
+        innerCounter = code.indexOf(')', innerCounter);
 
         //splice the calling function in
-        var firstSplice = ",{next : function(){goToStatement" + i + "();}}";
+        var firstSplice = ',{next : function(){goToStatement' + i + '();}}';
         code = code.splice(innerCounter, 0, firstSplice);
         innerCounter += firstSplice.length + 2;
 
         //splice the destination
-        code = code.splice(innerCounter, 0, "\nfunction goToStatement" + i + "(){");
+        code = code.splice(innerCounter, 0, '\nfunction goToStatement' + i + '(){');
         var tempLocation = searchIndices[i];
 
         //make sure we aren't ruining code comments
-        while (code.charAt(tempLocation) != "\n")
+        while (code.charAt(tempLocation) != '\n')
             tempLocation--;
-        if (code.charAt(tempLocation + 1) == "\\" && code.charAt(tempLocation + 2))
-            code = code + "\n}";
+        if (code.charAt(tempLocation + 1) == '\\' && code.charAt(tempLocation + 2))
+            code = code + '\n}';
         else
-            code = code + "}";
+            code = code + '}';
 
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
@@ -225,19 +225,19 @@ function compileCode(code) {
 
 /*
 var sprite = new Sprite();
-sprite.setImage("sprite.gif");
+sprite.setImage('sprite.gif');
 sprite.moveTo(4,3,5);
-sprite.move("up",2,4);
-sprite.move("right",4,2);
-sprite.move("down",7,3);
+sprite.move('up',2,4);
+sprite.move('right',4,2);
+sprite.move('down',7,3);
 sprite.moveTo(0,0,1);
 
 var sprite2 = Sprite.create();
-sprite2.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");
+sprite2.setImage('http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif');
 sprite2.move();
 */
 
-//compileCode('var sprite = Sprite.create();sprite.setImage("http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif");sprite.move();');
+//compileCode('var sprite = Sprite.create();sprite.setImage('http://media.giphy.com/media/cqqY4tX61jof6/giphy.gif');sprite.move();');
 
 
 
@@ -253,28 +253,28 @@ function runCode() {
     Terminal.clear();
 
     //let them know we're compiling
-    Terminal.log("Compiling...");
+    Terminal.log('Compiling...');
 
     //prepare to get code
-    var code = "";
+    var code = '';
     if (debug) {
         //get code from text field and compile it
         code = compileCode(myCodeMirror.getValue());
     } else {
         //get code from text field, compile it, and wrap it in error catching mechanism
-        code = "try{" + compileCode(myCodeMirror.getValue()) + "}catch(err) {Terminal.log(err.message)}";
+        code = 'try{' + compileCode(myCodeMirror.getValue()) + '}catch(err) {Terminal.log(err.message)}';
     }
     //unfocus the input box to avoid issues with keybinding
     $(myCodeMirror).blur();
 
     //focus the canvas so keybinding works
-    lastDown = document.getElementById("board");
+    lastDown = document.getElementById('board');
 
     //reset depressed key list
     keysDown = [];
 
     //run the code!
-    Terminal.log("Running...");
+    Terminal.log('Running...');
     try {
         window.eval(code);
     } catch (e) {
@@ -295,7 +295,7 @@ class AnimationRequest {
         this.keyToRemove = -1;
 
         //get canvas and tile dimensions
-        var canvas = document.getElementById("board");
+        var canvas = document.getElementById('board');
         var canvasWidth = canvas.width / window.devicePixelRatio;
         var canvasHeight = canvas.height / window.devicePixelRatio;
 
@@ -380,7 +380,7 @@ class Sprite {
             destination.next();
         };
         this.image.onError = function () {
-            console.log("error");
+            console.log('error');
         }
     }
 
@@ -391,7 +391,7 @@ class Sprite {
         var imageYCenter = this.image.height / 2;
 
         //get the canvas and tile widths
-        var canvas = document.getElementById("board");
+        var canvas = document.getElementById('board');
         var canvasWidth = canvas.width / window.devicePixelRatio;
         var canvasHeight = canvas.height / window.devicePixelRatio;
 
@@ -407,7 +407,7 @@ class Sprite {
     //animates a sprite moving in a direction
     move(direction, numSpaces, speed, destination) {
         //sanitize the string to remove any obscure characters
-        direction = direction.replace(/[^a-zA-Z0-9! ]+/g, "");
+        direction = direction.replace(/[^a-zA-Z0-9! ]+/g, '');
         //make it all lower case for consistency
         direction = direction.toLowerCase();
 
@@ -416,17 +416,17 @@ class Sprite {
         var finalY = this.yCoord;
 
         //decide where we need to go
-        if (direction == "left")
+        if (direction == 'left')
             finalX -= numSpaces;
-        else if (direction == "right")
+        else if (direction == 'right')
             finalX += numSpaces;
-        else if (direction == "down")
+        else if (direction == 'down')
             finalY += numSpaces;
-        else if (direction == "up")
+        else if (direction == 'up')
             finalY -= numSpaces;
         else {
             //they screwed up, the program can't continue so let's just throw an error and let them know
-            throw "Direction invalid. Try the directions left, right, up, or down";
+            throw 'Direction invalid. Try the directions left, right, up, or down';
         }
         //animate it!
         this.animate(finalX, finalY, speed, null, destination);
@@ -447,7 +447,7 @@ class Sprite {
     //appropriately size image for canvas
     setImageSize() {
         //get the canvas and tile widths
-        var canvas = document.getElementById("board");
+        var canvas = document.getElementById('board');
         var canvasWidth = canvas.width / window.devicePixelRatio;
         var canvasHeight = canvas.height / window.devicePixelRatio;
 
@@ -583,7 +583,7 @@ function onFrame(event) {
     //if we have an animation, let's get it and do it
     if (animationRequests.length != 0) {
         //get canvas size
-        var canvas = document.getElementById("board");
+        var canvas = document.getElementById('board');
         var canvasWidth = canvas.width / window.devicePixelRatio;
         var canvasHeight = canvas.height / window.devicePixelRatio;
 
@@ -624,117 +624,118 @@ function onFrame(event) {
 function getKeyCodeFromCharacter(key) {
     key = key.toLowerCase();
 
-    if (key == "left" || key == "left arrow")
+    if (key == 'left' || key == 'left arrow')
         return 37;
-    else if (key == "up" || key == "up arrow")
+    else if (key == 'up' || key == 'up arrow')
         return 38;
-    else if (key == "right" || key == "right arrow")
+    else if (key == 'right' || key == 'right arrow')
         return 39;
-    else if (key == "down" || key == "down arrow")
+    else if (key == 'down' || key == 'down arrow')
         return 40;
-    else if (key == "delete")
+    else if (key == 'delete')
         return 46;
-    else if (key == "insert" || key == "ins")
+    else if (key == 'insert' || key == 'ins')
         return 45;
-    else if (key == "backspace")
+    else if (key == 'backspace')
         return 8;
-    else if (key == " " || key == "space")
+    else if (key == ' ' || key == 'space')
         return 32;
-    else if (key == "tab")
+    else if (key == 'tab')
         return 9;
-    else if (key == "enter")
+    else if (key == 'enter')
         return 13;
-    else if (key == "shift")
+    else if (key == 'shift')
         return 16;
-    else if (key == "control" || key == "cntrl")
+    else if (key == 'control' || key == 'cntrl')
         return 17;
-    else if (key == "command" || key == "cmnd")
+    else if (key == 'command' || key == 'cmnd')
         return 91;
-    else if (key == "alt")
+    else if (key == 'alt')
         return 18;
-    else if (key == "caps" || key == "caps lock")
+    else if (key == 'caps' || key == 'caps lock')
         return 20;
-    else if (key == "esc" || key == "escape")
+    else if (key == 'esc' || key == 'escape')
         return 27;
-    else if (key == "page up" || key == "pg up")
+    else if (key == 'page up' || key == 'pg up')
         return 33;
-    else if (key == "page down" || key == "pg down")
+    else if (key == 'page down' || key == 'pg down')
         return 34;
-    else if (key == "end")
+    else if (key == 'end')
         return 35;
-    else if (key == "home")
+    else if (key == 'home')
         return 36;
-    else if (key == "=" || key == "equals")
+    else if (key == '=' || key == 'equals')
         return 187;
-    else if (key == "-" || key == "minus" || key == "dash")
+    else if (key == '-' || key == 'minus' || key == 'dash')
         return 189;
-    else if (key == "`")
+    else if (key == '`')
         return 192;
-    else if (key == "\\")
+    else if (key == '\\')
         return 220;
-    else if (key == ",")
+    else if (key == ',')
         return 188;
-    else if (key == ".")
+    else if (key == '.')
         return 190;
-    else if (key == "/")
+    else if (key == '/')
         return 191;
-    else if (key == ";")
+    else if (key == ';')
         return 186;
-    else if (key == "'")
+    else if (key == ''
+        ')
         return 222;
-    else if (key == "[")
-        return 219;
-    else if (key == "]")
-        return 221;
-    else if (key == "clear" || key == "clr")
-        return 12;
-    else if (key == "f1")
-        return 112;
-    else if (key == "f2")
-        return 113;
-    else if (key == "f3")
-        return 114;
-    else if (key == "f4")
-        return 115;
-    else if (key == "f5")
-        return 116;
-    else if (key == "f6")
-        return 117;
-    else if (key == "f7")
-        return 118;
-    else if (key == "f8")
-        return 119;
-    else if (key == "f9")
-        return 120;
-    else if (key == "f10")
-        return 121;
-    else if (key == "f11")
-        return 122;
-    else if (key == "f12")
-        return 123;
-    else if (key == "f13")
-        return 124;
-    else if (key == "f14")
-        return 125;
-    else if (key == "f15")
-        return 126;
-    else if (key == "f16")
-        return 127;
-    else if (key == "f17")
-        return 128;
-    else if (key == "f18")
-        return 129;
-    else if (key == "f19")
-        return 130;
-    //probably one of the number keys
-    else if (!isNaN(key)) {
-        if (Number.parseInt(key) >= 10)
-            throw "Not a key";
-        return Number.parseInt(key) + 48;
+        else if (key == '[')
+            return 219;
+        else if (key == ']')
+            return 221;
+        else if (key == 'clear' || key == 'clr')
+            return 12;
+        else if (key == 'f1')
+            return 112;
+        else if (key == 'f2')
+            return 113;
+        else if (key == 'f3')
+            return 114;
+        else if (key == 'f4')
+            return 115;
+        else if (key == 'f5')
+            return 116;
+        else if (key == 'f6')
+            return 117;
+        else if (key == 'f7')
+            return 118;
+        else if (key == 'f8')
+            return 119;
+        else if (key == 'f9')
+            return 120;
+        else if (key == 'f10')
+            return 121;
+        else if (key == 'f11')
+            return 122;
+        else if (key == 'f12')
+            return 123;
+        else if (key == 'f13')
+            return 124;
+        else if (key == 'f14')
+            return 125;
+        else if (key == 'f15')
+            return 126;
+        else if (key == 'f16')
+            return 127;
+        else if (key == 'f17')
+            return 128;
+        else if (key == 'f18')
+            return 129;
+        else if (key == 'f19')
+            return 130;
+        //probably one of the number keys
+        else if (!isNaN(key)) {
+            if (Number.parseInt(key) >= 10)
+                throw 'Not a key';
+            return Number.parseInt(key) + 48;
+        }
+        //probably a letter
+        else if (key.length == 1 && key.match(/[a-z]/i))
+            return key.charCodeAt(0) - 32;
+        else
+            throw 'Not a key';
     }
-    //probably a letter
-    else if (key.length == 1 && key.match(/[a-z]/i))
-        return key.charCodeAt(0) - 32;
-    else
-        throw "Not a key";
-}
