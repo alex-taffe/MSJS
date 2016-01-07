@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 
 //check the email field to see if the enter key has been pressed and if so, move to the password field
 function checkNext(e) {
@@ -342,13 +342,32 @@ function emailChangeConfirmPress(event) {
         changeEmail();
 }
 
+//changes between the default lesson adder view and the custom one
+function changeLessonView(id) {
+    console.log(id);
+    if (id == "defaultLessonButton") {
+        $("#customLessonView").css("visibility", "hidden");
+        $("#defaultLessonView").css("visibility", "visible");
+        $("#defaultLessonButton").addClass("btn-primary");
+        $("#defaultLessonButton").removeClass("btn-secondary");
+        $("#createLessonButton").addClass("btn-secondary");
+        $("#createLessonButton").removeClass("btn-primary");
+    } else {
+        $("#customLessonView").css("visibility", "visible");
+        $("#defaultLessonView").css("visibility", "hidden");
+        $("#createLessonButton").addClass("btn-primary");
+        $("#createLessonButton").removeClass("btn-secondary");
+        $("#defaultLessonButton").addClass("btn-secondary");
+        $("#defaultLessonButton").removeClass("btn-primary");
+    }
+}
+
 //document load
 $(document).ready(function () {
     //if debug is triggered, show the panel without logging in
     if (debug) {
         $("#panelNav").load("panel-nav.html", function () {});
         $(".container").load("panel.html", null);
-        $("#demo-canvas").css('filter', filterVal).css('-webkit-filter', filterVal).css('-moz-filter', filterVal).css('-o-filter', filterVal).css('-ms-filter', filterVal);
     }
     //focus the email field on login modal show
     $("#loginModal").on("shown.bs.modal", function () {
@@ -358,4 +377,6 @@ $(document).ready(function () {
     $("#registerModal").on("shown.bs.modal", function () {
         $("#password2").focus();
     });
+    //hide the custom lesson view
+    $("#customLessonView").css("visibility", "hidden");
 });
