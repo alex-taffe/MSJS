@@ -1,5 +1,6 @@
 <?php
     include 'checklogged.php';
+    include 'globals.php';
     
     //generate the code to be used for the lesson
     function generateCode() {
@@ -65,7 +66,21 @@
         //user wants to add a lesson
         elseif($_POST['request'] == 'add'){
             $code = generateCode();
-            $JSON = $_POST['JSON'];
+            $lessonTitle = $_POST['lessonTitle'];
+            $lessonMessage = $_POST['lessonMessage'];
+            $lessonSprites = json_decode($_POST['sprites'], true);
+            
+            $raw = array(
+                'status':'success',
+                'message':null,
+                'isDefault':false,
+                'lessonTitle': $lessonTitle,
+                'lessonMessage': $lessonMessage,
+                'version': $VERSION,
+                'sprites':$lessonSprites
+            );
+            $JSON = json_encode($raw);
+            
             $stmt = $db->prepare('INSERT INTO Lessons (TeacherID, JSON, Code) VALUES (:id, :json, :code)');
             $stmt->execute(array(':id' => $teacherID, ':json' => $JSON, ':code' => $code));
             echo $code;
