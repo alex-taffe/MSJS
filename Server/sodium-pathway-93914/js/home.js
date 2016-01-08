@@ -44,8 +44,7 @@ function login() {
             //fools screwed up their passwords
             else {
                 //let them know what they've done wrong, reset the password field, bring back the form, hide the loader
-                $('#loginAlert').html('<div class='
-                    alert in alert - danger '><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + loginInfo.message + '</div>');
+                $('#loginAlert').html('<div class="alert in alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + loginInfo.message + '</div>');
                 $('#password').val('');
                 $('#loginForm').css('visibility', 'visible');
                 $('#loginLoader').css('visibility', 'hidden');
