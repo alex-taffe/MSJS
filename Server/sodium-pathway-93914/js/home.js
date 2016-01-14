@@ -1,3 +1,4 @@
+'use strict';
 var debug = false;
 
 //check the email field to see if the enter key has been pressed and if so, move to the password field
@@ -295,6 +296,84 @@ function deleteAccount() {
                 location.reload();
             });
         });
+}
+
+var currentSpriteID = 0;
+
+function createSelectOptions(options) {
+    var optionsString = '';
+    for (var i = 0; i < options.length; i++)
+        optionsString += '<option>' + options[i] + '</option>';
+    return optionsString;
+}
+
+class serverSprite {
+    constructor(listenerID) {
+        //setup instance variables
+        this.x = 0;
+        this.y = 0;
+        this.isFriendly = true;
+        this.rotation = 0;
+        this.image = "";
+    }
+
+    getJSON() {
+        var friendlyResult = '';
+        if (isFriendly)
+            friendlyResult = 'true';
+        else
+            friendlyResult = 'false';
+        return `{x:"${this.x}",y:"${this.y}",isFriendly:${friendlyResult},image:"${this.image}",rotation:${rotation}}`;
+    }
+}
+
+var spritesToPost = [];
+
+//adds a new sprite to the lesson view controller
+function addSpriteToView() {
+    var spriteString = '<div id="sprite' + currentSpriteID + '">';
+    spriteString += '<h4>Sprite ' + (currentSpriteID + 1) + '</h4>'; //begin sprite
+
+    spriteString += '<div class="row">'; //image select row
+    spriteString += '<div class="col-xs-6"><h5>Image</h5></div>';
+    spriteString += '<div class="col-xs-6"><select>';
+    spriteString += createSelectOptions(['Image 1', 'Image 2', 'Custom']);
+    spriteString += '</select></div>';
+    spriteString += '</div>'; //end image select row
+
+    spriteString += '<div class="row">'; //x position row
+    spriteString += '<div class="col-xs-6"><h5>X Position</h5></div>';
+    spriteString += '<div class="col-xs-6"><input type="number" min="0" max="9" value="0"></div>';
+    spriteString += '</div>'; //end x position row
+
+    spriteString += '<div class="row">'; //y position row
+    spriteString += '<div class="col-xs-6"><h5>Y Position</h5></div>';
+    spriteString += '<div class="col-xs-6"><input type="number" min="0" max="9" value="0"></div>';
+    spriteString += '</div>'; //end y position row
+
+    spriteString += '<div class="row">'; //friendly radio row
+    spriteString += '<div class="col-xs-6"><h5>Friendly</h5></div>';
+    spriteString += `<div class="col-xs-6"><input type="radio" name="spriteType${currentSpriteID}" value="Friendly" checked="checked"></div>`;
+    spriteString += '</div>'; //end friendly row
+
+    spriteString += '<div class="row">'; //enemy radio row
+    spriteString += '<div class="col-xs-6"><h5>Enemy</h5></div>';
+    spriteString += `<div class="col-xs-6"><input type="radio" name="spriteType${currentSpriteID}" value="Enemy"></div>`;
+    spriteString += '</div>'; //end enemy row
+
+    spriteString += '</div>'; //end sprite
+
+    //add the sprite to the view
+    $(spriteString).appendTo("#spriteContainer").show("slow");
+    //keep track of this sprite for when we go to push it later
+    spritesToPost.push(new serverSprite(currentSpriteID));
+    //increment the ID of the current sprite
+    currentSpriteID++;
+}
+
+//removes a sprite with the specified ID from the view controller
+function removeSpriteFromView(id) {
+
 }
 
 //add a new lesson

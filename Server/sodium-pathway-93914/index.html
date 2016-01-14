@@ -156,47 +156,10 @@
                             </div>
                             <hr>
                             <h3>Sprites</h3>
-                            <h4>Sprite 1</h4>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5>Image</h5></div>
-                                <div class="col-xs-6">
-                                    <select>
-                                        <option>Image 1</option>
-                                        <option>Image 2</option>
-                                        <option>Custom</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <div id="spriteContainer">
 
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5>X Position</h5></div>
-                                <div class="col-xs-6">
-                                    <input type="number" min="0" max="9" value="0">
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5>Y Position</h5></div>
-                                <div class="col-xs-6">
-                                    <input type="number" min="0" max="9" value="0">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5>Friendly</h5></div>
-                                <div class="col-xs-6">
-                                    <input type="radio" name="spriteType" value="Friendly">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h5>Enemy</h5></div>
-                                <div class="col-xs-6">
-                                    <input type="radio" name="spriteType" value="Enemy">
-                                </div>
-                            </div>
+                            <button type="button" onclick="addSpriteToView()">Add Sprite</button>
                         </form>
                     </div>
                     <div class="loginButtonContainer">
@@ -245,6 +208,42 @@
             </div>
         </div>
     </div>
+    <!--outdated browser modal dialogue-->
+    <div class="modal fade" id="outdatedBrowserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Outdated browser</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Due to some of the technology required for this site to work, it only works with the newest browsers. You are using <span id="browserString"></span>. Try upgrading to one of the browsers listed below for full compatibility.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="https://chrome.google.com" class="thumbnail down browserLogo">
+                                <img src="img/chrome_512x512.png" alt="Google Chrome Logo">
+                                <div class="caption">Google Chrome</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="http://www.apple.com/safari/" class="thumbnail down browserLogo">
+                                <img src="img/safari_512x512.png" alt="Apple Safari Logo">
+                                <div class="caption">Apple Safari</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="https://www.microsoft.com/en-us/windows/microsoft-edge" class="thumbnail down browserLogo">
+                                <img src="img/edge_512x512.png" alt="Microsoft Edge Logo">
+                                <div class="caption">Microsoft Edge</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!--/sse-->
     <footer class="footer">
         <div class="innerFooter">
@@ -258,10 +257,86 @@
     </footer>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        //double check that we can use ES6 classes, otherwise alert the user that they need a new browser
+        try {
+            window.eval("'use strict'\nvar testES6 = class ES6Class {};");
+        } catch (err) {
+            console.log("User's browser is outdated, show error message. The exact reason they failed the check is: " + err.message);
+            var nVer = navigator.appVersion;
+            var browserName = navigator.appName;
+            var fullVersion = '' + parseFloat(navigator.appVersion);
+            var platform = navigator.platform;
+            var nAgt = navigator.userAgent;
+
+            if (platform == "Win32")
+                platform = "Microsoft Windows";
+            else if (platform == "MacIntel")
+                platform = "Mac OS X";
+
+            if (browserName == "Netscape")
+                browserName = "Internet Explorer";
+
+            // In Opera 15+, the true version is after "OPR/" 
+            if ((verOffset = nAgt.indexOf("OPR/")) != -1) {
+                browserName = "Opera";
+                fullVersion = nAgt.substring(verOffset + 4);
+            }
+            // In older Opera, the true version is after "Opera" or after "Version"
+            else if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+                browserName = "Opera";
+                fullVersion = nAgt.substring(verOffset + 6);
+                if ((verOffset = nAgt.indexOf("Version")) != -1)
+                    fullVersion = nAgt.substring(verOffset + 8);
+            }
+            // In MSIE, the true version is after "MSIE" in userAgent
+            else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+                browserName = "Microsoft Internet Explorer";
+                fullVersion = nAgt.substring(verOffset + 5);
+            }
+            // In Chrome, the true version is after "Chrome" 
+            else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+                browserName = "Chrome";
+                fullVersion = nAgt.substring(verOffset + 7);
+            }
+            // In Safari, the true version is after "Safari" or after "Version" 
+            else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+                browserName = "Safari";
+                fullVersion = nAgt.substring(verOffset + 7);
+                if ((verOffset = nAgt.indexOf("Version")) != -1)
+                    fullVersion = nAgt.substring(verOffset + 8);
+            }
+            // In Firefox, the true version is after "Firefox" 
+            else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+                browserName = "Firefox";
+                fullVersion = nAgt.substring(verOffset + 8);
+            }
+            // In most other browsers, "name/version" is at the end of userAgent 
+            else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
+                (verOffset = nAgt.lastIndexOf('/'))) {
+                browserName = nAgt.substring(nameOffset, verOffset);
+                fullVersion = nAgt.substring(verOffset + 1);
+                if (browserName.toLowerCase() == browserName.toUpperCase()) {
+                    browserName = navigator.appName;
+                }
+            }
+            // trim the fullVersion string at semicolon/space if present
+            if ((ix = fullVersion.indexOf(";")) != -1)
+                fullVersion = fullVersion.substring(0, ix);
+            if ((ix = fullVersion.indexOf(" ")) != -1)
+                fullVersion = fullVersion.substring(0, ix);
+
+            $("#browserString").text(browserName + " " + fullVersion + " on " + platform);
+            $('#outdatedBrowserModal').modal({
+                keyboard: false,
+                backdrop: "static"
+            });
+        }
+    </script>
     <script src="js/TweenLite.min.js"></script>
     <script src="js/EasePack.min.js"></script>
-    <script src="js/demo-3.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    <script src="js/triangles.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!--sse-->
     <script src="js/home.js" async defer></script>
     <!--/sse-->
