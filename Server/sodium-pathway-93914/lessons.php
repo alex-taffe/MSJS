@@ -71,13 +71,13 @@
             $lessonSprites = json_decode($_POST['sprites'], true);
             
             $raw = array(
-                'status':'success',
-                'message':null,
-                'isDefault':false,
-                'lessonTitle': $lessonTitle,
-                'lessonMessage': $lessonMessage,
-                'version': $VERSION,
-                'sprites':$lessonSprites
+                'status' => 'success',
+                'message' => null,
+                'isDefault' =>false,
+                'lessonTitle' => $lessonTitle,
+                'lessonMessage' => $lessonMessage,
+                'version' => $VERSION,
+                'sprites' => $lessonSprites
             );
             $JSON = json_encode($raw);
             
