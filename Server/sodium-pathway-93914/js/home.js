@@ -307,7 +307,7 @@ function createSelectOptions(options) {
     return optionsString;
 }
 
-class serverSprite {
+class ServerSprite {
     constructor(listenerID) {
         //setup instance variables
         this.x = 0;
@@ -315,8 +315,29 @@ class serverSprite {
         this.isFriendly = true;
         this.rotation = 0;
         this.image = "";
+
+        //the this keyword disappears once it's in the event listeners so we need to temporarily stpre it so it can be accessed
+        var tempOuter = this;
+
+        //event listeners to keep all this stuff updated as the values change
+        $(`xPosition${listenerID}`).change(function () {
+            tempOuter.x = $(`xPosition${listenerID}`).val();
+        });
+        $(`yPosition${listenerID}`).change(function () {
+            tempOuter.y = $(`yPosition${listenerID}`).val();
+        });
+        $(`imageSelect${listenerID}`).change(function () {
+            tempOuter.image = $(`imageSelect${listenerID}`).val();
+        });
+        $(`input[type=radio][name=spriteType${currentSpriteID}]`).change(function () {
+            if (this.value == 'Friendly')
+                tempOuter.isFriendly = true;
+            else
+                tempOuter.isFriendly = false;
+        });
     }
 
+    //returns the JSON data for this sprite so that it can be submitted to the server
     getJSON() {
         var friendlyResult = '';
         if (isFriendly)
@@ -336,19 +357,19 @@ function addSpriteToView() {
 
     spriteString += '<div class="row">'; //image select row
     spriteString += '<div class="col-xs-6"><h5>Image</h5></div>';
-    spriteString += '<div class="col-xs-6"><select>';
+    spriteString += `<div class="col-xs-6" id="imageSelect${currentSpriteID}"><select>`;
     spriteString += createSelectOptions(['Image 1', 'Image 2', 'Custom']);
     spriteString += '</select></div>';
     spriteString += '</div>'; //end image select row
 
     spriteString += '<div class="row">'; //x position row
     spriteString += '<div class="col-xs-6"><h5>X Position</h5></div>';
-    spriteString += '<div class="col-xs-6"><input type="number" min="0" max="9" value="0"></div>';
+    spriteString += `<div class="col-xs-6"><input type="number" min="0" max="9" value="0" id="xPosition${currentSpriteID}"></div>`;
     spriteString += '</div>'; //end x position row
 
     spriteString += '<div class="row">'; //y position row
     spriteString += '<div class="col-xs-6"><h5>Y Position</h5></div>';
-    spriteString += '<div class="col-xs-6"><input type="number" min="0" max="9" value="0"></div>';
+    spriteString += `<div class="col-xs-6"><input type="number" min="0" max="9" value="0" id="yPosition${currentSpriteID}"></div>`;
     spriteString += '</div>'; //end y position row
 
     spriteString += '<div class="row">'; //friendly radio row
@@ -366,7 +387,7 @@ function addSpriteToView() {
     //add the sprite to the view
     $(spriteString).appendTo("#spriteContainer").show("slow");
     //keep track of this sprite for when we go to push it later
-    spritesToPost.push(new serverSprite(currentSpriteID));
+    spritesToPost.push(new ServerSprite(currentSpriteID));
     //increment the ID of the current sprite
     currentSpriteID++;
 }
@@ -458,4 +479,6 @@ $(document).ready(function () {
     });
     //hide the custom lesson view
     $('#customLessonView').css('visibility', 'hidden');
+    //add at least one sprite to get the user started
+    addSpriteToView();
 });
