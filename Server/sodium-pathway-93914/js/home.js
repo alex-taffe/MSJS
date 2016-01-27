@@ -345,7 +345,7 @@ class ServerSprite {
             friendlyResult = 'true';
         else
             friendlyResult = 'false';
-        return `{x:"${this.x}",y:"${this.y}",isFriendly:${friendlyResult},image:"${this.image}",rotation:${this.rotation}}`;
+        return `{"x":"${this.x}","y":"${this.y}","isFriendly":${friendlyResult},"image":"${this.image}","rotation":${this.rotation}}`;
     }
 }
 
@@ -428,12 +428,16 @@ function removeSpriteFromView(id) {
 //add a new lesson
 function addLesson() {
     var spriteJSON = '';
+    spriteJSON += '[';
     for (var i = 0; i < spritesToPost.length; i++) {
         spriteJSON += spritesToPost[i].getJSON();
         spriteJSON += ',';
     }
     //remove the trailing comma to keep the JSON valid
     spriteJSON = spriteJSON.slice(0, -1);
+    spriteJSON += ']';
+    alert(spriteJSON);
+    debugger;
     //notify the server that we want to add a new lesson
     $.post('lessons', {
             request: 'add',
