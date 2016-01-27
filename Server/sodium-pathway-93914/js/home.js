@@ -1,5 +1,5 @@
 'use strict';
-var debug = false;
+var debug = true;
 
 //check the email field to see if the enter key has been pressed and if so, move to the password field
 function checkNext(e) {
@@ -315,6 +315,7 @@ class ServerSprite {
         this.isFriendly = true;
         this.rotation = 0;
         this.image = "";
+        this.id = listenerID;
 
         //the this keyword disappears once it's in the event listeners so we need to temporarily stpre it so it can be accessed
         var tempOuter = this;
@@ -340,11 +341,11 @@ class ServerSprite {
     //returns the JSON data for this sprite so that it can be submitted to the server
     getJSON() {
         var friendlyResult = '';
-        if (isFriendly)
+        if (this.isFriendly)
             friendlyResult = 'true';
         else
             friendlyResult = 'false';
-        return `{x:"${this.x}",y:"${this.y}",isFriendly:${friendlyResult},image:"${this.image}",rotation:${rotation}}`;
+        return `{x:"${this.x}",y:"${this.y}",isFriendly:${friendlyResult},image:"${this.image}",rotation:${this.rotation}}`;
     }
 }
 
@@ -354,6 +355,7 @@ var spritesToPost = [];
 function addSpriteToView() {
     var spriteString = '<div id="sprite' + currentSpriteID + '">';
     spriteString += '<h4>Sprite ' + (currentSpriteID + 1) + '</h4>'; //begin sprite
+    spriteString += `<button type="button" onclick="removeSpriteFromView(${currentSpriteID})" class="btn btn-danger-outline">Delete Lesson</button>`;
 
     spriteString += '<div class="row">'; //image select row
     spriteString += '<div class="col-xs-6"><h5>Image</h5></div>';
@@ -394,15 +396,50 @@ function addSpriteToView() {
 
 //removes a sprite with the specified ID from the view controller
 function removeSpriteFromView(id) {
-
+    //remove the sprite from the DOM
+    if (spritesToPost.length == 1) {
+        alert("You must have at least 1 sprite");
+    } else {
+        $(`#sprite${id}`).remove();
+        //find the sprite in the array and remove it
+        var index = 0;
+        for (var i = 0; i < spritesToPost.length; i++)
+            if (spritesToPost[i].id == id) {
+                index = i;
+                break;
+            }
+        spritesToPost.splice(index, 1);
+        currentSpriteID--;
+        if (currentSpriteID >= 1) {
+            for (var j = index; j < spritesToPost.length; j++) {
+                $(`#sprite${spritesToPost[j].id} h4`).text(`Sprite ${spritesToPost[j].id}`);
+                $(`#sprite${spritesToPost[j].id}`).attr('id', `sprite${j}`);
+                $(`#imageSelect${spritesToPost[j].id}`).attr('id', `imageSelect${j}`);
+                $(`#xPosition${spritesToPost[j].id}`).attr('id', `xPosition${j}`);
+                $(`#yPosition${spritesToPost[j].id}`).attr('id', `yPosition${j}`);
+                $(`#spriteType${spritesToPost[j].id}`).attr('id', `imageSelect${j}`);
+                $(`input[type=radio][name=imageSelect${spritesToPost[j].id}]`).attr('name', `imageSelect${j}`);
+                spritesToPost[j].id--;
+            }
+        }
+    }
 }
 
 //add a new lesson
 function addLesson() {
+    var spriteJSON = '';
+    for (var i = 0; i < spritesToPost.length; i++) {
+        spriteJSON += spritesToPost[i].getJSON();
+        spriteJSON += ',';
+    }
+    //remove the trailing comma to keep the JSON valid
+    spriteJSON = spriteJSON.slice(0, -1);
     //notify the server that we want to add a new lesson
     $.post('lessons', {
             request: 'add',
-            JSON: $('#enterJSON').val()
+            lessonTitle: $('#lessonTitle').val(),
+            lessonMessage: $('#lessonMessage').val(),
+            sprites: spriteJSON
         })
         .done(function (data) {
             //the lesson got added, hide the modal, reset the JSON text entry field, refresh the lessons
@@ -466,7 +503,7 @@ function changeLessonView(id) {
 $(document).ready(function () {
     //if debug is triggered, show the panel without logging in
     if (debug) {
-        $('#panelNav').load('panel-nav.html', function () {});
+        $('#panelNav').load('panel-nav.html', null);
         $('.container').load('panel.html', null);
     }
     //focus the email field on login modal show
