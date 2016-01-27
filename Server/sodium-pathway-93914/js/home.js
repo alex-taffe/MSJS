@@ -437,8 +437,6 @@ function addLesson() {
     //remove the trailing comma to keep the JSON valid
     spriteJSON = spriteJSON.slice(0, -1);
     spriteJSON += ']';
-    alert(spriteJSON);
-    debugger;
     //notify the server that we want to add a new lesson
     $.post('lessons', {
             request: 'add',
