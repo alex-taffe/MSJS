@@ -1,5 +1,5 @@
 'use strict';
-var debug = true;
+var debug = false;
 
 //check the email field to see if the enter key has been pressed and if so, move to the password field
 function checkNext(e) {
@@ -152,8 +152,9 @@ function getLessons() {
                 if (tempCounter == 1)
                     lessonData += '<div class="row lessonRow">';
                 //card
-                lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '" onclick="goFullScreen(this)">';
-                lessonData += '<button type="button" class="close" aria-label="Close" onclick="confirmDeleteLesson(this.parentNode)"><span aria-hidden="true">×</span></button>';
+                lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '">';
+                lessonData += '<button type="button" class="fullscreen" onclick="goFullScreen(this.parent)"><img src="../img/full-screen.svg"></button>';
+                lessonData += '<button type="button" class="deleteLessonButton" onclick="confirmDeleteLesson(this.parentNode)"><img src="../img/close.svg"></button>';
 
                 var lessonJSON = $.parseJSON(data[i]['JSON']);
                 lessonData += '<h4 class="lessonTitle">'

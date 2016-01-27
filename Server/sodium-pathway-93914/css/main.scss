@@ -287,3 +287,22 @@ canvas {
 .browserLogo .caption {
     text-align: center;
 }
+
+.deleteLessonButton {
+    border-style: none;
+    background-color: transparent;
+    float:right;
+}
+
+.deleteLessonButton img {
+    height: 15px;
+}
+
+.fullscreen {
+    border-style: none;
+    background-color: transparent;
+}
+
+.fullscreen img {
+    height: 15px;
+}
