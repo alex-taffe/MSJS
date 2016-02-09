@@ -9,23 +9,12 @@
         }
         return $randomString;
     }
-    //code must be int or double, message is a string
-    function outputResponse($code,$message){
-        echo '{';
-        echo '"errorCode":';
-        echo $code;
-        echo ',';
-        echo '"message":"';
-        echo $message;
-        echo '"}';
-        exit; 
-    }
     //url is string, data is array
     function performPost($url,$data){
         // use key 'http' even if you send the request to https://...
         $options = array(
                          'http' => array(
-                                         'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                                         'header'  => 'Content-type: application/x-www-form-urlencoded\r\n',
                                          'method'  => 'POST',
                                          'content' => http_build_query($data),
                                          ),
@@ -36,7 +25,7 @@
     }
     //connect to the MySQL database
     $db = null;
-    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
     //connect to the MySQL database on app engine
         $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users',
                   'root',  // username
@@ -53,13 +42,14 @@
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     
     //get all the values that the user submitted
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $password2 = $_POST["password2"];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
 
     //make sure no SQL injection or other trickery is going on
     if(strpos($email,'\'') || strpos($password,'\'')){
-        outputResponse(407,"' is an invalid character.");
+        echo json_encode(array('errorCode' => 407, 'message' => ' is an invalid character'));
+        exit;
     }
     
     //make sure that the user doesn't already exist
@@ -67,59 +57,71 @@
     $stmt->execute(array($email));
     if ($stmt->rowCount() > 0 ) {
         //well they do, may as well try logging them in
-        $loggedInResult = performPost("login",array('email' => $email, 'password' => $password, 'g-recaptcha-response' => $_POST["g-recaptcha-response"]));
+        $loggedInResult = performPost('login',array('email' => $email, 'password' => $password, 'g-recaptcha-response' => $_POST["g-recaptcha-response"]));
         $loggedInJSON = json_decode($loggedInResult);
-        if($loggedInJSON["errorCode"] == 200)
-            outputResponse(300,"User already exists, successfully logged in");
-        else
-            outputResponse(405,"This username already exists, and the password is incorrect. Try logging in with a correct password");
+        if($loggedInJSON["errorCode"] == 200){
+            echo json_encode(array('errorCode' => 300, 'message' => 'User already exists, successfully logged in'));
+            exit;
+        }
+        else{
+            echo json_encode(array('errorCode' => 405, 'message' => 'This username already exists, and the password is incorrect. Try logging in with a correct password'));
+            exit;
+        }
     }
     $stmt = null;
     
     //Password mismatch
     if($password !== $password2){
-        outputResponse(400,"Passwords do not match. Please try again");
+        echo json_encode(array('errorCode' => 400, 'message' => 'Passwords do not match. Please try again'));
+        exit;
     }
     //Password is too short (less than 6 characters)
     if(strlen($password) < 6){
-        outputResponse(400,"Passwords must be at least 6 characters. Please try again");
+        echo json_encode(array('errorCode' => 400, 'message' => 'Passwords must be at least 6 characters. Please try again'));
+        exit;
     }
     
     //nullify the password and salt it so it's not just floating around in memory
     $password2 = null;
     $salt = generateSalt();
-    $saltedPassword = hash("sha256", $salt . $password);
+    $saltedPassword = hash('sha256', $salt . $password);
     $password = null;
     
     //Email is less than 5 chars, save on CPU cycles and don't even try to validate
     if(strlen($email) < 5){
-        outputResponse(403,"This is not a valid email address. Please try again");
+        echo json_encode(array('errorCode' => 403, 'message' => 'This is not a valid email address. Please try again'));
+        exit;
     }
     
     //Email is too long to fit in database and is most likely not valid
     if(
        ($email) > 254){
-        outputResponse(404,"This is not a valid email address. Please try again");
+        echo json_encode(array('errorCode' => 404, 'message' => 'This is not a valid email address. Please try again'));
+        exit;
     }
     
     //Not an email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        outputResponse(401,"This is not a valid email address. Please try again");
+        echo json_encode(array('errorCode' => 401, 'message' => 'This is not a valid email address. Please try again'));
+        exit;
     }
     
     //Cookies not enabled
     if(!(count($_COOKIE) > 0)) {
-        outputResponse(406,"Cookies not enabled. Please enable cookies and try again. If you need help with this, please <a href='http://www.whatarecookies.com/enable.asp'>click here</a>");
+        echo json_encode(array('errorCode' => 406, 'message' => 'Cookies not enabled. Please enable cookies and try again. If you need help with this, please <a href="http://www.whatarecookies.com/enable.asp">click here</a>'));
+        exit;
     }
     
     //recaptcha check (only if on the online app engine)
-    if(isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"],"Google App Engine") !== false){
+    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
         $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array('secret' => '6LfjXAcTAAAAAHUJGMFaC4SNJFvSTgbb_J5emtpV ', 'response' => $_POST["g-recaptcha-response"], 'remoteip' => $_SERVER["HTTP_CF_CONNECTING_IP"]);
+        $data = array('secret' => '6LfjXAcTAAAAAHUJGMFaC4SNJFvSTgbb_J5emtpV ', 'response' => $_POST['g-recaptcha-response'], 'remoteip' => $_SERVER['HTTP_CF_CONNECTING_IP']);
         $recaptchaResponse = performPost($url,$data);
         $recaptchaJSON = json_decode($recaptchaResponse,true);
-        if(!($recaptchaJSON["success"]))
-            outputResponse(408,"Are you a robot? Try the reCAPTCHA again");
+        if(!($recaptchaJSON['success'])){
+            echo json_encode(array('errorCode' => 408, 'message' => 'Are you a robot? Try the reCAPTCHA again'));
+            exit;
+        }
     }
 
     
@@ -129,7 +131,7 @@
     $stmt = null;
     
     $db = null;
-    outputResponse(200,"");
+    echo json_encode(array('errorCode' => 200, 'message' => ''));
     /*
      STATUS CODES
      ============

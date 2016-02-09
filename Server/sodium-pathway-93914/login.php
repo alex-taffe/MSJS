@@ -21,17 +21,6 @@ session_set_cookie_params(
         }
         return $randomString;
     }
-//code must be int or double, message is a string
-    function outputResponse($code,$message){
-        echo '{';
-        echo '"errorCode":';
-        echo $code;
-        echo ',';
-        echo '"message":"';
-        echo $message;
-        echo '"}';
-        exit; 
-    }
 
     //connect to the MySQL database
     $db = null;
@@ -57,7 +46,8 @@ session_set_cookie_params(
 
     //make sure no SQL injection or other trickery is going on
     if(strpos($email,'\'') || strpos($password,'\'')){
-        outputResponse(407,'\' is an invalid character.');
+        echo json_encode(array('errorCode' => 407, 'message' => ' is an invalid character.'));
+        exit;
     }
 
     //attempt to query the database for the user
@@ -71,14 +61,17 @@ session_set_cookie_params(
             $_SESSION['Token'] = $token;
             $_SESSION['Email'] = $email;
             $_SESSION['ID'] = $userResult['ID'];
-            outputResponse(200,'');
+            echo json_encode(array('errorCode' => 200, 'message' => ''));
+            exit;
         }
         else{
-            outputResponse(501,'Incorrect password, please try again');
+            echo json_encode(array('errorCode' => 501, 'message' => 'Incorrect password, please try again'));
+            exit;
         }
     }
     else{
-        outputResponse(500,'Sorry this email does not exist. Please try again');
+        echo json_encode(array('errorCode' => 500, 'message' => 'Sorry this email does not exist. Please try again'));
+        exit;
     }
     /*
      STATUS CODES
