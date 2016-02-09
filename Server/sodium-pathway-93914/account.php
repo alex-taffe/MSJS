@@ -1,6 +1,7 @@
 <?php
 
 include 'checklogged.php';
+require_once 'PHPGangsta/GoogleAuthenticator.php';
 
 $teacherID = $_SESSION['ID'];
 
@@ -98,5 +99,14 @@ else if($_POST['request'] == 'emailUpdate'){
     
     //alert the client
     echo json_encode(array('status' => 'success', 'message' => ''));
+}
+else if($_POST['request'] == 'enableTwoFactor'){
+    
+}
+else if($_POST['request'] == 'confirmTwoFactor'){
+    
+}
+else if($_POST['request'] == 'disableTwoFactor'){
+    
 }
 ?>

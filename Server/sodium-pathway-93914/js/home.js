@@ -126,17 +126,34 @@ function changeNav(destinationItem) {
     }
 }
 
+var isFullscreen = false;
+var previousFullscreenItem = null;
+
 function goFullScreen(gridItem) {
-    if (gridItem.requestFullScreen)
-        gridItem.requestFullScreen();
-    else if (gridItem.msRequestFullscreen)
-        gridItem.msRequestFullscreen();
-    else if (gridItem.mozRequestFullScreen)
-        gridItem.mozRequestFullScreen();
-    else if (gridItem.webkitRequestFullScreen)
-        gridItem.webkitRequestFullScreen();
-    var canvas = document.getElementById('demo-canvas');
-    $(gridItem).css('background', 'element(#demo-canvas)');
+    //debugger;
+    if (!isFullscreen) {
+        isFullscreen = true;
+        previousFullscreenItem = gridItem;
+        if (gridItem.requestFullScreen)
+            gridItem.requestFullScreen();
+        else if (gridItem.msRequestFullscreen)
+            gridItem.msRequestFullscreen();
+        else if (gridItem.mozRequestFullScreen)
+            gridItem.mozRequestFullScreen();
+        else if (gridItem.webkitRequestFullScreen)
+            gridItem.webkitRequestFullScreen();
+    } else {
+
+        isFullscreen = false;
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else if (document.msExitFullscreen)
+            document.msExitRequestFullscreen();
+        else if (document.mozCancelFullscreen)
+            document.mozCancelRequestFullscreen();
+        else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+    }
 }
 
 //gets the lessons from the server and adds them to the UI
@@ -153,7 +170,7 @@ function getLessons() {
                     lessonData += '<div class="row lessonRow">';
                 //card
                 lessonData += '<div class="col-md-3 col-xs-6 lessonCol" data-code="' + data[i]["Code"] + '">';
-                lessonData += '<button type="button" class="fullscreen" onclick="goFullScreen(this.parent)"><img src="../img/full-screen.svg"></button>';
+                lessonData += '<button type="button" class="fullscreen" onclick="goFullScreen($(this).parent()[0])"><img src="../img/full-screen.svg"></button>';
                 lessonData += '<button type="button" class="deleteLessonButton" onclick="confirmDeleteLesson(this.parentNode)"><img src="../img/close.svg"></button>';
 
                 var lessonJSON = $.parseJSON(data[i]['JSON']);

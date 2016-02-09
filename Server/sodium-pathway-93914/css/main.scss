@@ -291,7 +291,7 @@ canvas {
 .deleteLessonButton {
     border-style: none;
     background-color: transparent;
-    float:right;
+    float: right;
 }
 
 .deleteLessonButton img {
@@ -305,4 +305,34 @@ canvas {
 
 .fullscreen img {
     height: 15px;
+}
+
+.lessonCol:-webkit-full-screen {
+    border: none;
+    box-shadow: none;
+    height: 100vh !important;
+    position: absolute;
+    top: 0;
+}
+
+.lessonCol:-webkit-full-screen .deleteLessonButton {
+    display: none;
+}
+
+.lessonCol:-webkit-full-screen .fullscreen img {
+    height: 50px;
+    margin-top: 10px;
+}
+
+.lessonCol:-webkit-full-screen .lessonTitle {
+    font-size: 150px;
+    text-decoration: underline;
+}
+
+.lessonCol:-webkit-full-screen .lessonCode {
+    font-size: 75px;
+}
+
+.lessonCol:-webkit-full-screen .lessonCode::before {
+    content: "Code: ";
 }
