@@ -29,6 +29,9 @@ handlers:
   
 - url: /register
   script: register.php
+  
+- url: /register/*
+  script: register.php
 
 - url: /login
   script: login.php

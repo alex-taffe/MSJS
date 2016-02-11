@@ -57,8 +57,16 @@
     $stmt->execute(array($email));
     if ($stmt->rowCount() > 0 ) {
         //well they do, may as well try logging them in
-        $loggedInResult = performPost('login',array('email' => $email, 'password' => $password, 'g-recaptcha-response' => $_POST["g-recaptcha-response"]));
-        $loggedInJSON = json_decode($loggedInResult);
+        $loginURL = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+        $loginURL .= $_SERVER["SERVER_NAME"];
+        if(!($_SERVER['SERVER_PORT'] == '80' || $_SERVER['SERVER_PORT'] == '443')){
+            $loginURL .= ':' . $_SERVER['SERVER_PORT'];
+        }
+        $loginURL .= '/login';
+        $loggedInResult = performPost($loginURL,array('email' => $email, 'password' => $password, 'g-recaptcha-response' => $_POST["g-recaptcha-response"]));
+        //$loggedInJSON = json_decode($loggedInResult, true);
+        var_dump($loggedInResult);
+        exit;
         if($loggedInJSON["errorCode"] == 200){
             echo json_encode(array('errorCode' => 300, 'message' => 'User already exists, successfully logged in'));
             exit;
