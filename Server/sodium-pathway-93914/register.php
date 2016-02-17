@@ -1,7 +1,6 @@
 <?php
     //returns random string 15 characters in length (alphanumeric)
     function generateSalt() {
-        
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
         for ($i = 0; $i < 15; $i++) {

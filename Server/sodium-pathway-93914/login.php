@@ -98,6 +98,5 @@ session_set_cookie_params(
      500:Username does not exist
      501:Incorrect password
      502:Cookies not enabled
-     
      */
 ?>
