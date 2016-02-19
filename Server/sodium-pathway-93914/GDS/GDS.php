@@ -1,0 +1,9 @@
+<?php
+require_once('Entity.php');
+require_once('Store.php');
+require_once('Schema.php');
+require_once('Gateway.php');
+require_once('Mapper.php');
+require_once('Gateway/ProtoBuf.php');
+require_once('Mapper/ProtoBuf.php');
+?>

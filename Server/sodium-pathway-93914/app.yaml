@@ -30,6 +30,9 @@ handlers:
 - url: /register
   script: register.php
   
+- url: /datastoretest
+  script: datastoretest.php
+  
 - url: /register/*
   script: register.php
 
