@@ -1,4 +1,10 @@
 <?php
+    include 'GDS/GDS.php';
+
+    // Build a new entity
+    $obj_store = new GDS\Store('Teacher');
+    $teacher = new GDS\Entity();
+
     //returns random string 15 characters in length (alphanumeric)
     function generateSalt() {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -22,23 +28,6 @@
         $result = file_get_contents($url, false, $context);
         return $result;
     }
-    //connect to the MySQL database
-    $db = null;
-    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
-    //connect to the MySQL database on app engine
-        $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users',
-                  'root',  // username
-                  'xGQEsWRd39G3UrGU' // password
-                  );
-    }
-    else{
-        $db = new pdo('mysql:host=127.0.0.1:3307;dbname=users',
-                  'root',  // username
-                  'xGQEsWRd39G3UrGU' // password
-                  );
-    }
-    //prevent emulated prepared statements to prevent against SQL injection
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     
     //get all the values that the user submitted
     $email = $_POST['email'];
@@ -52,9 +41,8 @@
     }
     
     //make sure that the user doesn't already exist
-    $stmt = $db->prepare('SELECT Email FROM Users WHERE Email=? LIMIT 1');
-    $stmt->execute(array($email));
-    if ($stmt->rowCount() > 0 ) {
+    $result = $obj_store->fetchOne("SELECT * FROM Teacher WHERE email=@email", ['email'=>$email]);
+    if ($result != null) {
         //well they do, may as well try logging them in
         $loginURL = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
         $loginURL .= $_SERVER["SERVER_NAME"];
@@ -75,7 +63,6 @@
             exit;
         }
     }
-    $stmt = null;
     
     //Password mismatch
     if($password !== $password2){
@@ -114,10 +101,10 @@
     }
     
     //Cookies not enabled
-    if(!(count($_COOKIE) > 0)) {
+    /*if(!(count($_COOKIE) > 0)) {
         echo json_encode(array('errorCode' => 406, 'message' => 'Cookies not enabled. Please enable cookies and try again. If you need help with this, please <a href="http://www.whatarecookies.com/enable.asp">click here</a>'));
         exit;
-    }
+    }*/
     
     //recaptcha check (only if on the online app engine)
     if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
@@ -133,11 +120,10 @@
 
     
     //The user has hopefully done everything corect, let's add them and notify the client
-    $stmt = $db->prepare('INSERT INTO Users (Email, Salt, Password) VALUES (:email, :salt, :password)');
-    $stmt->execute(array(':email' => $email, ':salt' => $salt, ':password' => $saltedPassword));
-    $stmt = null;
-    
-    $db = null;
+    $teacher->email = $email;
+    $teacher->salt = $salt;
+    $teacher->password = $saltedPassword;
+    $obj_store->upsert($teacher);
     echo json_encode(array('errorCode' => 200, 'message' => ''));
     /*
      STATUS CODES

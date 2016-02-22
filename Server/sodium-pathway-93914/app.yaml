@@ -28,10 +28,7 @@ handlers:
   script: index.html
   
 - url: /register
-  script: register.php
-  
-- url: /datastoretest
-  script: datastoretest.php
+  script: register.php 
   
 - url: /register/*
   script: register.php
