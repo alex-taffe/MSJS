@@ -41,7 +41,7 @@
     }
     
     //make sure that the user doesn't already exist
-    $result = $obj_store->fetchOne("SELECT * FROM Teacher WHERE email=@email", ['email'=>$email]);
+    $result = $obj_store->fetchOne('SELECT * FROM Teacher WHERE email=@email', ['email'=>$email]);
     if ($result != null) {
         //well they do, may as well try logging them in
         $loginURL = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
@@ -123,6 +123,10 @@
     $teacher->email = $email;
     $teacher->salt = $salt;
     $teacher->password = $saltedPassword;
+    $teacher->lifetimeLessons = 0;
+    $teacher->lifetimeUsers = 0;
+    $teacher->twoFactorEnabled = false;
+    $teacher->secret = '';
     $obj_store->upsert($teacher);
     echo json_encode(array('errorCode' => 200, 'message' => ''));
     /*
