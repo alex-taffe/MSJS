@@ -1,7 +1,9 @@
 <?php
 
 include 'checklogged.php';
+include 'GDS/GDS.php';
 require_once 'PHPGangsta/GoogleAuthenticator.php';
+$obj_store = new GDS\Store('Teacher');
 
 $teacherID = $_SESSION['ID'];
 
