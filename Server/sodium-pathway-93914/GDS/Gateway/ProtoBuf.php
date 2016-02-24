@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 namespace GDS\Gateway;
-require_once('GDS/Mapper/ProtoBufGQLParser.php');
-require_Once('GDS/Exception/GQL.php');
 use GDS\Entity;
 use GDS\Exception\Contention;
 use GDS\Mapper\ProtoBufGQLParser;

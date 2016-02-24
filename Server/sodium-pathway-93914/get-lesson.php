@@ -1,5 +1,4 @@
 <?php
-    include 'checklogged.php';
     include 'GDS/GDS.php';
     $code = $_GET['code'];
     $obj_store = new GDS\Store('Lessons');
