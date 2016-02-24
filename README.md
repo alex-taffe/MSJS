@@ -8,3 +8,14 @@ Check back later
 Check back later
 # I found a bug!
 We're glad to help! Submit your bug report using the reporter tool on the right side.
+# Dependencies
+A special thanks to the creators of these libraries, programs, and tools:
+* jQuery https://github.com/jquery/jquery
+* Bootstrap https://github.com/twbs/bootstrap
+* Code Mirror https://github.com/codemirror/CodeMirror
+* Paper.js https://github.com/paperjs/paper.js
+* TweenJS https://github.com/CreateJS/TweenJS
+* php-gds https://github.com/tomwalder/php-gds
+* GoogleAuthenticator https://github.com/PHPGangsta/GoogleAuthenticator
+* Brackets https://github.com/adobe/brackets
+* Sass https://github.com/sass/sass
