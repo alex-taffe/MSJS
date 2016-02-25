@@ -1,6 +1,8 @@
 <?php
     include 'checklogged.php';
     include 'globals.php';
+    include 'GDS/GDS.php';
+    $obj_store = new GDS\Store('Lessons');
     
     //generate the code to be used for the lesson
     function generateCode() {
@@ -12,41 +14,21 @@
         }
         return $randomString;
     }
-
     if(!isset($_SESSION['ID']))
         die();
     
     $teacherID = $_SESSION['ID'];
-    
-    //connect to the MySQL database
-    $db = null;
-    if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false){
-    //connect to the MySQL database on app engine
-        $db = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=lessons',
-                  'root',  // username
-                  'xGQEsWRd39G3UrGU' // password
-                  );
-    }
-    else{
-        //connect to the app engine
-        $db = new pdo('mysql:host=127.0.0.1:3307;dbname=lessons',
-                  'root',  // username
-                  'xGQEsWRd39G3UrGU' // password
-                  );
-    }
-    //prevent emulated prepared statements to prevent against SQL injection
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
     //user wants to retrieve lessons
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         //attempt to query the database for the user
-        $stmt = $db->prepare('SELECT JSON, AddDate, Code FROM lessons WHERE TeacherID=:id');
-        $stmt->execute(array(':id' => $teacherID));
+        $obj_store->query('SELECT * FROM Lessons WHERE TeacherID=@id',['id'=>$teacherID]);
+        $result = $obj_store->fetchAll();
         $lessons = array();
-        if ($stmt->rowCount() > 0 ) {
+        if (count($result) > 0) {
             //well we have some lessons, iterate through them and start dumping them into an array
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $lessons[] = array('JSON' => $row['JSON'], 'Code' => $row['Code']);
+            foreach($result as $lesson) {
+                $lessons[] = array('JSON' => $lesson->JSON, 'Code' => $lesson->Code);
             }
         }
         //return to the client
@@ -56,15 +38,18 @@
     else if($_SERVER['REQUEST_METHOD'] == 'POST'){
         //user wants to delete a lesson
         if($_POST['request'] == 'delete'){
-            $stmt = $db->prepare('DELETE FROM lessons WHERE TeacherID=:id AND Code=:code');
-            $stmt->execute(array(':id' => $teacherID, ':code' => $_POST['code']));
-            if($stmt->rowCount() > 0)
+            $lessonToDelete = $obj_store->fetchOne('SELECT * FROM Lessons WHERE TeacherID=@id AND Code=@code',['id'=>$teacherID,'code'=>$_POST['code']]);
+            if($lessonToDelete != null){
+                $obj_store->delete($lessonToDelete);
                 echo '{"status":"Success"}';
+            }
             else
                 echo '{"status":"Lesson or user not found"}';
         }
+        
         //user wants to add a lesson
-        elseif($_POST['request'] == 'add'){
+        
+        else if($_POST['request'] == 'add'){
             $code = generateCode();
             $lessonTitle = $_POST['lessonTitle'];
             $lessonMessage = $_POST['lessonMessage'];
@@ -81,8 +66,13 @@
             );
             $JSON = json_encode($raw);
             
-            $stmt = $db->prepare('INSERT INTO Lessons (TeacherID, JSON, Code) VALUES (:id, :json, :code)');
-            $stmt->execute(array(':id' => $teacherID, ':json' => $JSON, ':code' => $code));
+            $lesson = new GDS\Entity();
+            $lesson->TeacherID = $teacherID;
+            $lesson->JSON = $JSON;
+            $lesson->Code = $code;
+            
+            $obj_store->upsert($lesson);
+            
             echo $code;
         }
     }

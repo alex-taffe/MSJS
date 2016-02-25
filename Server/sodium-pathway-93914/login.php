@@ -44,7 +44,7 @@ $obj_store = new GDS\Store('Teacher');
             setcookie('Token', $token);
             $_SESSION['Token'] = $token;
             $_SESSION['Email'] = $email;
-            $_SESSION['ID'] = $userResult['ID'];
+            $_SESSION['ID'] = $result->getKeyId();
             echo json_encode(array('errorCode' => 200, 'message' => ''));
             exit;
         }
