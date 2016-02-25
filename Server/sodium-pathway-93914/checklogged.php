@@ -11,7 +11,7 @@ session_set_cookie_params(
     $currentCookieParams['httponly'] 
 ); 
 session_start();
-if(!isset($_COOKIE['Token']) || !isset($_SESSION['Token']) || $_SESSION['Token'] != $_COOKIE['Token']) {
+
+if(!isset($_COOKIE['Token']) || !isset($_SESSION['Token']) || $_SESSION['Token'] != $_COOKIE['Token'])
     header('Location: /');
-}
 ?>
