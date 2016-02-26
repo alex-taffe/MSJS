@@ -2,7 +2,7 @@
 include 'GDS/GDS.php';
 
 $code = $_GET['code'];
-$obj_store = new GDSStore('Lessons');
+$obj_store = new GDS\Store('Lessons');
 
 // make code uppercase cause the user probably screwed up
 $code = strtoupper($code);

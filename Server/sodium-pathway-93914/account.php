@@ -3,7 +3,8 @@ include 'checklogged.php';
 include 'GDS/GDS.php';
 require_once 'PHPGangsta/GoogleAuthenticator.php';
 
-$obj_store = new GDSStore('Teacher');
+$teacherStore = new GDS\Store('Teacher');
+$lessonStore = new GDS\Store('Lessons');
 $teacherID = $_SESSION['ID'];
 
 function generateSalt()
@@ -17,65 +18,18 @@ function generateSalt()
 	return $randomString;
 }
 
-// connect to the MySQL databases
-
-$userDB = null;
-$lessonsDB = null;
-
-if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false) {
-
-	// connect to the MySQL database on app engine
-
-	$lessonsDB = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=lessons', 'root', // username
-	'xGQEsWRd39G3UrGU'
-
-	// password
-
-	);
-	$userDB = new pdo('mysql:unix_socket=/cloudsql/sodium-pathway-93914:users;dbname=users', 'root', // username
-	'xGQEsWRd39G3UrGU'
-
-	// password
-
-	);
-}
-else {
-
-	// connect to the local SQL server
-	$lessonsDB = new pdo('mysql:host=127.0.0.1:3307;dbname=lessons', 'root', // username
-	'xGQEsWRd39G3UrGU'
-	);
-	$userDB = new pdo('mysql:host=127.0.0.1:3307;dbname=users', 'root', // username
-	'xGQEsWRd39G3UrGU'
-
-	// password
-
-	);
-}
-
-// prevent emulated prepared statements to prevent against SQL injection
-
-$userDB->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-// $userDB->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
-
-$lessonsDB->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
 // user wants account deleted
 
 if ($_POST['request'] == 'delete') {
 
 	// remove all of their lessons so they aren't taking up tons of space
-	$stmt = $lessonsDB->prepare('DELETE FROM lessons WHERE TeacherID=:id');
-	$stmt->execute(array(
-		':id' => $teacherID
-	));
+    $teacherLessons = $lessonStore->fetchAll('SELECT * From Lessons WHERE TeacherID=@id',['id'=>$teacherID]);
+	foreach($teacherLessons as $lesson)
+        $lessonStore->delete($lesson);
 
 	// delete their account
-	$stmt = $userDB->prepare('DELETE FROM Users WHERE id=:id');
-	$stmt->execute(array(
-		':id' => $teacherID
-	));
+	
+    $teacherStore->delete($teacher);
 }
 else if ($_POST['request'] == 'passwordUpdate') {
 
@@ -89,12 +43,10 @@ else if ($_POST['request'] == 'passwordUpdate') {
 	else {
 		$newSalt = generateSalt();
 		$saltedPassword = hash('sha256', $newSalt . $_POST['password1']);
-		$stmt = $userDB->prepare('UPDATE users SET Salt = :salt , Password = :password WHERE id = :id');
-		$stmt->execute(array(
-			':salt' => $newSalt,
-			':password' => $saltedPassword,
-			':id' => $teacherID
-		));
+        $teacher = $teacherStore->fetchById($teacherID);
+		$teacher->salt = $newSalt;
+        $teacher->password = $saltedPassword;
+        $teacherStore->upsert($teacher);
 	}
 }
 else if ($_POST['request'] == 'emailUpdate') {
@@ -138,11 +90,9 @@ else if ($_POST['request'] == 'emailUpdate') {
 	}
 
 	// the email is most likely valid, so update the database
-	$stmt = $userDB->prepare('UPDATE users SET Email = :email WHERE id = :id');
-	$stmt->execute(array(
-		':email' => $email,
-		':id' => $teacherID
-	));
+	$teacher = $teacherStore->fetchById($teacherID);
+    $teacher->email = $email;
+    $teacherStore->upsert($teacher);
 
 	// alert the client
 	echo json_encode(array(

@@ -2,8 +2,8 @@
 include 'GDS/GDS.php';
 
 // Build a new entity
-$obj_store = new GDSStore('Teacher');
-$teacher = new GDSEntity();
+$obj_store = new GDS\Store('Teacher');
+$teacher = new GDS\Entity();
 
 // returns random string 15 characters in length (alphanumeric)
 function generateSalt()

@@ -3,7 +3,7 @@ include 'checklogged.php';
 include 'globals.php';
 include 'GDS/GDS.php';
 
-$obj_store = new GDSStore('Lessons');
+$obj_store = new GDS\Store('Lessons');
 
 // generate the code to be used for the lesson
 
@@ -78,7 +78,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			'sprites' => $lessonSprites
 		);
 		$JSON = json_encode($raw);
-		$lesson = new GDSEntity();
+		$lesson = new GDS\Entity();
 		$lesson->TeacherID = $teacherID;
 		$lesson->JSON = $JSON;
 		$lesson->Code = $code;
