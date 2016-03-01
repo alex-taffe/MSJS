@@ -680,62 +680,61 @@ function getKeyCodeFromCharacter(key) {
         return 191;
     else if (key == ';')
         return 186;
-    else if (key == ''
-        ')
+    else if (key == '\'')
         return 222;
-        else if (key == '[')
-            return 219;
-        else if (key == ']')
-            return 221;
-        else if (key == 'clear' || key == 'clr')
-            return 12;
-        else if (key == 'f1')
-            return 112;
-        else if (key == 'f2')
-            return 113;
-        else if (key == 'f3')
-            return 114;
-        else if (key == 'f4')
-            return 115;
-        else if (key == 'f5')
-            return 116;
-        else if (key == 'f6')
-            return 117;
-        else if (key == 'f7')
-            return 118;
-        else if (key == 'f8')
-            return 119;
-        else if (key == 'f9')
-            return 120;
-        else if (key == 'f10')
-            return 121;
-        else if (key == 'f11')
-            return 122;
-        else if (key == 'f12')
-            return 123;
-        else if (key == 'f13')
-            return 124;
-        else if (key == 'f14')
-            return 125;
-        else if (key == 'f15')
-            return 126;
-        else if (key == 'f16')
-            return 127;
-        else if (key == 'f17')
-            return 128;
-        else if (key == 'f18')
-            return 129;
-        else if (key == 'f19')
-            return 130;
-        //probably one of the number keys
-        else if (!isNaN(key)) {
-            if (Number.parseInt(key) >= 10)
-                throw 'Not a key';
-            return Number.parseInt(key) + 48;
-        }
-        //probably a letter
-        else if (key.length == 1 && key.match(/[a-z]/i))
-            return key.charCodeAt(0) - 32;
-        else
+    else if (key == '[')
+        return 219;
+    else if (key == ']')
+        return 221;
+    else if (key == 'clear' || key == 'clr')
+        return 12;
+    else if (key == 'f1')
+        return 112;
+    else if (key == 'f2')
+        return 113;
+    else if (key == 'f3')
+        return 114;
+    else if (key == 'f4')
+        return 115;
+    else if (key == 'f5')
+        return 116;
+    else if (key == 'f6')
+        return 117;
+    else if (key == 'f7')
+        return 118;
+    else if (key == 'f8')
+        return 119;
+    else if (key == 'f9')
+        return 120;
+    else if (key == 'f10')
+        return 121;
+    else if (key == 'f11')
+        return 122;
+    else if (key == 'f12')
+        return 123;
+    else if (key == 'f13')
+        return 124;
+    else if (key == 'f14')
+        return 125;
+    else if (key == 'f15')
+        return 126;
+    else if (key == 'f16')
+        return 127;
+    else if (key == 'f17')
+        return 128;
+    else if (key == 'f18')
+        return 129;
+    else if (key == 'f19')
+        return 130;
+    //probably one of the number keys
+    else if (!isNaN(key)) {
+        if (Number.parseInt(key) >= 10)
             throw 'Not a key';
+        return Number.parseInt(key) + 48;
     }
+    //probably a letter
+    else if (key.length == 1 && key.match(/[a-z]/i))
+        return key.charCodeAt(0) - 32;
+    else
+        throw 'Not a key';
+}

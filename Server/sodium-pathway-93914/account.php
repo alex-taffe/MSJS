@@ -100,7 +100,13 @@ else if ($_POST['request'] == 'emailUpdate') {
 		'message' => ''
 	));
 }
-else if ($_POST['request'] == 'enableTwoFactor') {
+else if (true == true || $_POST['request'] == 'enableTwoFactor') {
+    $ga = new PHPGangsta_GoogleAuthenticator();
+    $secret = $ga->createSecret();
+    $teacher = $teacherStore->fetchById($teacherID);
+    $teacher->secret = $secret;
+    $teacherStore->upsert($teacher);
+    echo $secret;
 }
 else if ($_POST['request'] == 'confirmTwoFactor') {
 }
