@@ -18,6 +18,27 @@ String.prototype.splice = function (idx, rem, s) {
     return (this.slice(0, idx) + s + this.slice(idx + Math.abs(rem)));
 };
 
+//cache images to avoid slow loading times during run. From jfriend00 @ http://stackoverflow.com/questions/10240110/how-do-you-cache-an-image-in-javascript
+function preloadImages(array) {
+    if (!preloadImages.list) {
+        preloadImages.list = [];
+    }
+    var list = preloadImages.list;
+    for (var i = 0; i < array.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+            var index = list.indexOf(this);
+            if (index !== -1) {
+                // remove image from the array once it's loaded
+                // for memory consumption reasons
+                list.splice(index, 1);
+            }
+        }
+        list.push(img);
+        img.src = array[i];
+    }
+}
+
 //last pressed key
 var lastDown;
 
@@ -58,6 +79,8 @@ $(document).ready(function () {
         });
 
 
+    //cache default sprites in the browser
+    preloadImages(["url1.jpg", "url2.jpg", "url3.jpg"]);
 });
 
 //listen for the press of the enter key on the student check code box
@@ -178,21 +201,23 @@ function isNewStatementCharacter(character) {
 }
 
 //finds the incdices of the items that need to have callback statements for synchronous code running
-function getReplaceIndices(code) {
-    var imageIndices = getIndicesOf('.setImage(', code, false);
-    var moveIndices = getIndicesOf('.move(', code, false);
-    var moveToIndices = getIndicesOf('.moveTo(', code, false);
+function getReplaceIndices(code, items) {
+    var indices = new Aray(items.length);
+    for(item in items){
+        indices.concat(getIndicesOf(item, code, false));
+    }
 
     //return all the indices combined
-    return imageIndices.concat(moveIndices).concat(moveToIndices);
+    return indices;
 }
 
-//compile code to avoid async results conflicting
+//refactors code to improve syntax
 function compileCode(code) {
     //add terminal message to indicate code has finished running
     code += " Terminal.log('Finished running');";
 
-    var searchIndices = getReplaceIndices(code);
+    //compile code to avoid async results conflicting
+    var searchIndices = getReplaceIndices(code, ['.setImage(','.move(','.moveTo(']);
     //iterate through all necessary changes
     for (var i = 0; i < searchIndices.length; i++) {
         var innerCounter = searchIndices[i];
@@ -220,6 +245,9 @@ function compileCode(code) {
         //reset the indices because the string length has changed
         searchIndices = getReplaceIndices(code);
     }
+    
+    searchIndices = getReplaceIndices(code, ['Images.Friendly1']);
+    
     return code;
 }
 

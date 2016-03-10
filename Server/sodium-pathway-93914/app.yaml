@@ -75,5 +75,8 @@ handlers:
 - url: /student
   script: student.html
   
+- url: /injection
+  script: injection.php
+  
 - url: /example
   script: example.json
