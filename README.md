@@ -8,6 +8,8 @@ Check back later
 Check back later
 # I found a bug!
 We're glad to help! Submit your bug report using the reporter tool on the right side.
+# Images
+The default sprite images in this program were graciously created by Leah Fulton
 # Dependencies
 A special thanks to the creators of these libraries, programs, and tools:
 * jQuery: https://github.com/jquery/jquery
