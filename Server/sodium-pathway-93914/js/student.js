@@ -1,5 +1,8 @@
 'use strict';
-var debug = false;
+var debug = true;
+
+var defaultImages = ['Images.Friendly1', 'Images.Friendly2', 'Images.Friendly3', 'Images.Evil1', 'Images.Evil2', 'Images.Evil3'];
+var defaultImagesURLS = ["img/Sprites/Evil1.png", "img/Sprites/Evil2.png", "img/Sprites/Evil3.png", "img/Sprites/Hero1.png", "img/Sprites/Hero2.png", "img/Sprites/Hero3.png"];
 
 class Terminal {
     //logs to console
@@ -80,7 +83,7 @@ $(document).ready(function () {
 
 
     //cache default sprites in the browser
-    preloadImages(["url1.jpg", "url2.jpg", "url3.jpg"]);
+    preloadImages(defaultImagesURLS);
 });
 
 //listen for the press of the enter key on the student check code box
@@ -159,7 +162,7 @@ function drawCanvasGrid() {
         path2.strokeColor = 'black';
         path2.moveTo(0, canvasHeight * (i / 10));
         path2.lineTo(canvasWidth, canvasHeight * (i / 10));
-        view.draw()
+        view.draw();
     }
 }
 
@@ -202,8 +205,8 @@ function isNewStatementCharacter(character) {
 
 //finds the incdices of the items that need to have callback statements for synchronous code running
 function getReplaceIndices(code, items) {
-    var indices = new Aray(items.length);
-    for(item in items){
+    var indices = new Array(items.length);
+    for(var item in items){
         indices.concat(getIndicesOf(item, code, false));
     }
 
@@ -243,11 +246,21 @@ function compileCode(code) {
             code = code + '}';
 
         //reset the indices because the string length has changed
-        searchIndices = getReplaceIndices(code);
+        searchIndices = getReplaceIndices(code, ['.setImage(','.move(','.moveTo(']);
     }
     
-    searchIndices = getReplaceIndices(code, ['Images.Friendly1']);
     
+    for(var i = 0; i < defaultImages.length; i++){
+        searchIndices = getReplaceIndices(code, defaultImages[i]);
+        for(var j = 0; j < searchIndices.length; j++){
+            code = code.splice(searchIndices[j], defaultImages[i].length, defaultImagesURLS[i]);
+            //we changed the string so we need to get the indices again
+            searchIndices = getReplaceIndices(code, defaultImages[i]);
+        }
+    }
+    
+    console.log(code);
+    //debugger;
     return code;
 }
 
